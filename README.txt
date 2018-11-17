@@ -6,7 +6,7 @@
  
  Brandon will be working on Menu design and backend
  
- Ferdinand still unknown
+ Ferdinand will be assisting with algorithm and UI design
  
  Steps for accessing the project
  
