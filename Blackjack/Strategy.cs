@@ -6,12 +6,15 @@ using System.Threading.Tasks;
 
 namespace Blackjack
 {
-    class Strategy
+    class Strategy : IComparable<Strategy>
     {
         private List<string> playerCards = new List<string>();
         private string dealerCard { get; set; }
 
-        public Strategy() { }
+        Strategy()
+        {
+
+        }
 
         /// <summary>
         /// List of basic strategy to guide the player in their decision.

@@ -113,6 +113,11 @@ namespace Blackjack
             throw new NotImplementedException();
         }
 
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
         public override string ToString()
         {
             string gameState = "Player Hand: \n" +

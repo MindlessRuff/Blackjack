@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Blackjack
 {
-    class Deck
+    class Deck : IComparable<Deck>
     {
          private const int num_Faces = 13; 
          private const int num_Suits = 4;
@@ -87,6 +87,19 @@ namespace Blackjack
         {
             return deck.Count();
         }
-        
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public int CompareTo(Deck other)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string ToString()
+        {
+            return base.ToString();
+        }
     }
 }
