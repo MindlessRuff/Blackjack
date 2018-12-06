@@ -92,6 +92,7 @@ namespace Blackjack
 
         public void DoubleDown()
         {
+            //Implment the chips being doubled 
             player.AddCard(newDeck.Deal_Card());
             Stand();
         }
@@ -101,10 +102,10 @@ namespace Blackjack
             throw new NotImplementedException();
         }
 
-        public int Surrender()
+        public void Surrender()
         {
             //Here the player losses half their bet 
-            return 0;
+            NextRound();
         }
 
         /// <summary>
