@@ -68,7 +68,14 @@ namespace Blackjack
 
             // Print the Hands out
             System.Diagnostics.Debug.Write(player.ToString());
-            
+
+            // Testing out the values of each card in the list of handVals.
+            // First two cards in hand will determine which strategy to provide to the player.
+            System.Diagnostics.Debug.WriteLine(player.handVals[0].ToString());
+            System.Diagnostics.Debug.WriteLine(player.handVals[1].ToString());
+            System.Diagnostics.Debug.WriteLine(dealer.handVals[0].ToString());
+            System.Diagnostics.Debug.WriteLine(dealer.handVals[1].ToString());
+
             if (player.handValue > 21)
             {
                 busted = true;
@@ -121,7 +128,6 @@ namespace Blackjack
 
             // Print the game state to the Debug Console
             System.Diagnostics.Debug.Write(this.ToString());
-
             busted = false;  // Reset busted flag.
 
         }
@@ -139,5 +145,25 @@ namespace Blackjack
                 $"{dealer.ToString()}\n";
             return gameState;            
         }
+
+        /// <summary>
+        /// List of basic strategy to guide the player in their decision.
+        /// This method strictly utilizes the first two cards in the list of 'handVals'
+        /// to determine which strategy to provide to the player.
+        /// 
+        /// Strategy Reference: https://www.blackjackapprenticeship.com/blackjack-strategy-charts/
+        /// Feel free to change this method of strategy if you feel that there is a better approach.
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        //public string Strategy()
+        //{
+        //    string strategy = "";
+        //    
+        //    Implement if, else-if statements
+        //    Or cases...
+        //
+        //    return strategy;
+        //}
     }
 }

@@ -10,6 +10,7 @@ namespace Blackjack
     {
         public int handValue { get; set; }
         public List<string> playerHand = new List<string>();
+        public List<int> handVals = new List<int>();
 
         private int cardVal = 0;
 
@@ -21,6 +22,7 @@ namespace Blackjack
 
         public void PlayerHandValue(int value)
         {
+            handVals.Add(value);
             handValue += value;
         }
 
