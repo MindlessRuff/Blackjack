@@ -9,50 +9,11 @@ namespace Blackjack
     class Strategy : IComparable<Strategy>
     {
         private List<string> playerCards = new List<string>();
-        private string dealerCard = "";
+        private string dealerCard { get; set; }
 
         public Strategy()
         {
-            //string strategy = "";
 
-            //if (player.handValue < 17 && dealer.handValue >= 17)
-            //{
-            //    strategy = "Book says to hit";
-            //}
-
-            //else if (player.handValue == 11)
-            //{
-            //    strategy = "Book says to double down";
-            //}
-
-            //else if (player.handValue >= 9 && player.handValue <= 11 && dealer.handValue == 5 || dealer.handValue == 6)
-            //{
-            //    strategy = "Book says to double down";
-            //}
-
-            //else if (player.handValue == 17)
-            //{
-            //    strategy = "Book says to stand";
-            //}
-
-            //else if (player.handValue >= 12 && player.handValue <= 16 && dealer.handValue >= 4 && dealer.handValue <= 6)
-            //{
-            //    strategy = "Book says to stand";
-            //}
-            //Implement if, else-if statements
-            //Or cases...
-
-           // return strategy;
-        }
-
-        public Strategy(List<string> cards, string shownCard)
-        {
-            playerCards = cards;
-            dealerCard = shownCard;
-        }
-        public int CompareTo(Strategy other)
-        {
-            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -65,11 +26,20 @@ namespace Blackjack
         /// 
         /// </summary>
         /// <returns></returns>
-        public string Tips()
+        public string Hints(string playerC0, string playerC1, string dealerC1)
         {
-            string tip = "";
+            playerCards.Add(playerC0);
+            playerCards.Add(playerC1);
+            dealerCard = dealerC1;
 
-            //if (player.handValue < 17 && dealer.handValue >= 17)
+            string hint = "";
+
+            if (playerCards[0] == "Assets/A_C.png" && playerCards[1] == "Assets/T_C.png" && dealerCard == "Assets/5_C.png")
+            {
+                hint = "Tip: Doubledown";
+            }
+
+            //if (playerCar < 17 && dealer.handValue >= 17)
             //{
             //    strategy = "Book says to hit";
             //}
@@ -84,7 +54,13 @@ namespace Blackjack
             //    strategy = "Book says to double down";
             //}
 
-            return tip;
+            playerCards.Clear();
+            return hint;
+        }
+
+        public int CompareTo(Strategy other)
+        {
+            throw new NotImplementedException();
         }
     }
 }

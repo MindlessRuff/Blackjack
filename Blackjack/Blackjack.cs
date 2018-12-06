@@ -13,6 +13,7 @@ namespace Blackjack
     class Blackjack : IComparable<Blackjack>
     {
         Deck newDeck = new Deck();
+        public Strategy newHint = new Strategy();
         public Player player = new Player();
         private Player dealer = new Player();
         bool hit { get; set; }
@@ -124,6 +125,13 @@ namespace Blackjack
                 $"Dealer Hand: \n" +
                 $"{dealer.ToString()}\n";
             return gameState;            
+        }
+
+        public string Hints()
+        {
+            string hint = "";
+            hint = newHint.Hints(player.playerHand[0], player.playerHand[1], dealer.playerHand[1]);
+            return hint;
         }
     }
 }
