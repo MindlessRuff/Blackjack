@@ -102,7 +102,8 @@ namespace Blackjack
 
         public int Surrender()
         {
-            throw new NotImplementedException();
+            //Here the player losses half their bet 
+            return 0;
         }
 
         /// <summary>
