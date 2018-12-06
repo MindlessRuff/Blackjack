@@ -47,27 +47,17 @@ namespace Blackjack
         /// </summary>
         public void Hit()
         {
-
             // TODO: add logic to check for bust            
             player.AddCard(newDeck.Deal_Card());
 
             // Print the Hands out
             System.Diagnostics.Debug.Write(player.ToString());
 
-            // Testing out the values of each card in the list of handVals.
-            // First two cards in hand will determine which strategy to provide to the player.
-            System.Diagnostics.Debug.WriteLine(player.handVals[0].ToString());
-            System.Diagnostics.Debug.WriteLine(player.handVals[1].ToString());
-            System.Diagnostics.Debug.WriteLine(dealer.handVals[0].ToString());
-            System.Diagnostics.Debug.WriteLine(dealer.handVals[1].ToString());
-
             if (player.handValue > 21)
             {
                 busted = true;
                 
             }
-
-
         }
 
         public void Stand()
