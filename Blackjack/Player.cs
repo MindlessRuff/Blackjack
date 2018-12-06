@@ -70,5 +70,10 @@ namespace Blackjack
             printedHand += Total_Value();
             return printedHand;
         }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }

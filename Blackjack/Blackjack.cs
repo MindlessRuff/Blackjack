@@ -6,21 +6,20 @@ using System.Threading.Tasks;
 
 namespace Blackjack
 {
-    //test
+    
     /// <summary>
     /// This class will handle the player and dealer hands as well as the Hit, Stand, DoubleDown, Split, and Surrender methods
     /// </summary>
     class Blackjack : IComparable<Blackjack>
     {
         Deck newDeck = new Deck();
+        public Strategy newHint = new Strategy();
         public Player player = new Player();
         private Player dealer = new Player();
         bool hit { get; set; }
         bool stand { get; set; }
         bool doubleDown { get; set; }
         public bool busted { get; set; }    // Variable will be set when playerHand > 21, only UI class will reset this variable.
-
-      
 
         /// <summary>
         /// This constructor will shuffle the deck, deal cards to the dealer and player, and display the values in the 
@@ -33,7 +32,6 @@ namespace Blackjack
             newDeck.Shuffle_Deck();
             
             // Deal the cards to the player and the dealer
-
             player.AddCard(newDeck.Deal_Card());
             dealer.AddCard(newDeck.Deal_Card());
             player.AddCard(newDeck.Deal_Card());
@@ -42,24 +40,22 @@ namespace Blackjack
             // Print the game state to the Debug Console
             System.Diagnostics.Debug.Write(this.ToString());
         }    
-        
-
         /// <summary>
         /// 
         /// </summary>
         public void Hit()
         {
-         
+            // TODO: add logic to check for bust            
             player.AddCard(newDeck.Deal_Card());
 
-            // TODO: ADD CALL TO STRATEGY/LOGIC
+            // Print the Hands out
+            System.Diagnostics.Debug.Write(player.ToString());
 
             if (player.handValue > 21)
             {
                 busted = true;
+                
             }
-
-
         }
 
         public void Stand()
@@ -67,9 +63,11 @@ namespace Blackjack
             System.Diagnostics.Debug.Write(player.ToString());
         }
 
-        public int DoubleDown()
+        public void DoubleDown()
         {
-            throw new NotImplementedException();
+            //Implment the chips being doubled 
+            player.AddCard(newDeck.Deal_Card());
+            Stand();
         }
 
         public int Split()
@@ -77,10 +75,10 @@ namespace Blackjack
             throw new NotImplementedException();
         }
 
-        public int Surrender()
+        public void Surrender()
         {
             //Here the player losses half their bet 
-            return 0;
+            NextRound();
         }
 
         /// <summary>
@@ -108,12 +106,16 @@ namespace Blackjack
             // Print the game state to the Debug Console
             System.Diagnostics.Debug.Write(this.ToString());
             busted = false;  // Reset busted flag.
-
         }
 
         public int CompareTo(Blackjack other)
         {
             throw new NotImplementedException();
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
 
         public override string ToString()
@@ -125,38 +127,11 @@ namespace Blackjack
             return gameState;            
         }
 
-        /// <summary>
-        /// List of basic strategy to guide the player in their decision.
-        /// This method strictly utilizes the first two cards in the list of 'handVals'
-        /// to determine which strategy to provide to the player.
-        /// 
-        /// Strategy Reference: https://www.blackjackapprenticeship.com/blackjack-strategy-charts/
-        /// Feel free to change this method of strategy if you feel that there is a better approach.
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public string Strategy()
+        public string Hints()
         {
-            string strategy = "";
-
-            if (player.handValue < 17 && dealer.handValue >= 17)
-            {
-                strategy = "Book says to hit";
-            }
-
-            else if (player.handValue == 11)
-            {
-                strategy = "Book says to double down";
-            }
-
-            else if (player.handValue >= 9 && player.handValue <= 11 && dealer.handValue == 5 || dealer.handValue == 6)
-            {
-                strategy = "Book says to double down";
-            }
-            //Implement if, else-if statements
-            //Or cases...
-        
-            return strategy;
+            string hint = "";
+            hint = newHint.Hints(player.playerHand[0], player.playerHand[1], dealer.playerHand[1]);
+            return hint;
         }
     }
 }
