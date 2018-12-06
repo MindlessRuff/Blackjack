@@ -6,14 +6,24 @@ using System.Threading.Tasks;
 
 namespace Blackjack
 {
-    class Strategy
+    class Strategy : IComparable<Strategy>
     {
         private List<string> playerCards = new List<string>();
         private string dealerCard = "";
 
-        Strategy()
+        public Strategy()
         {
 
+        }
+
+        public Strategy(List<string> cards, string shownCard)
+        {
+            playerCards = cards;
+            dealerCard = shownCard;
+        }
+        public int CompareTo(Strategy other)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>

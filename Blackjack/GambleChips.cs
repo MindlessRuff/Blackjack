@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 namespace Blackjack
 {
-	class GambleChips
+	class GambleChips : IComparable<GambleChips>
 	{
         public List<int> Chips = new List<int>();
 
@@ -43,7 +43,20 @@ namespace Blackjack
 			return surrendingHand;
 
 		}
-	
-		
-	}
+
+        public int CompareTo(GambleChips other)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return base.ToString();
+        }
+    }
 }
