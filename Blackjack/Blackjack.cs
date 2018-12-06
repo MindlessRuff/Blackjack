@@ -103,7 +103,8 @@ namespace Blackjack
 
         public int Surrender()
         {
-            throw new NotImplementedException();
+            //Here the player losses half their bet 
+            return 0;
         }
 
         /// <summary>
@@ -158,14 +159,28 @@ namespace Blackjack
         /// 
         /// </summary>
         /// <returns></returns>
-        //public string Strategy()
-        //{
-        //    string strategy = "";
-        //    
-        //    Implement if, else-if statements
-        //    Or cases...
-        //
-        //    return strategy;
-        //}
+        public string Strategy()
+        {
+            string strategy = "";
+
+            if (player.handValue < 17 && dealer.handValue >= 17)
+            {
+                strategy = "Book says to hit";
+            }
+
+            else if (player.handValue == 11)
+            {
+                strategy = "Book says to double down";
+            }
+
+            else if (player.handValue >= 9 && player.handValue <= 11 && dealer.handValue == 5 || dealer.handValue == 6)
+            {
+                strategy = "Book says to double down";
+            }
+            //Implement if, else-if statements
+            //Or cases...
+        
+            return strategy;
+        }
     }
 }
