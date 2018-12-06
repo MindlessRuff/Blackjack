@@ -19,7 +19,7 @@ namespace Blackjack
 		int surrendingHand;
 		int doubledownHand;
 		
-		public int WinChips()
+		public int DoubleChips()
 		{
 			// TODO: Algorithm and code to add up total chips won
 			winningHand = userBet * 2;
