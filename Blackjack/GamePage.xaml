@@ -37,7 +37,7 @@
                         <!--Game Rules-->
                         <StackPanel Orientation="Horizontal">
                             <Button FontSize="30" Margin="0,0,0,0" Background="{x:Null}" x:Name="Button1" 
-                                FontFamily="Segoe MDL2 Assets" Content="&#xE7fc;"/>
+                                FontFamily="Segoe MDL2 Assets" Content="&#xE7fc;" Click="Button1_Click"/>
                             <TextBlock Text="Game Rules" FontSize="16" VerticalAlignment="Center"/>
                         </StackPanel>
                         <!--Player Stats-->
@@ -55,7 +55,7 @@
                         <!--Creators-->
                         <StackPanel Orientation="Horizontal">
                             <Button FontSize="30" Margin="0,0,0,0" Background="{x:Null}" x:Name="Button4" 
-                                FontFamily="Segoe MDL2 Assets" Content="&#xE70f;"/>
+                                FontFamily="Segoe MDL2 Assets" Content="&#xE70f;" Click="Button4_Click"/>
                             <TextBlock Text="Creators" FontSize="16" VerticalAlignment="Center"/>
                         </StackPanel>
                         <!--Github Link-->
@@ -103,9 +103,8 @@
                 </SplitView.Pane>
             </SplitView>
 
-
+            <!--This block generates the player hand-->
             <StackPanel Grid.Row="2" Grid.Column="1" VerticalAlignment="Center">
-                <!--This block generates the player hand-->
                 <GridView HorizontalAlignment="Center" x:Name="PlayerHand">
                     <GridView.ItemTemplate>
                         <DataTemplate>
@@ -121,7 +120,7 @@
                        FontSize="50" Foreground="WhiteSmoke" FontWeight="ExtraBlack"
                        Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" 
                        VerticalAlignment="Bottom" Visibility="Collapsed" />
-            
+
             <!-- Logos -->
             <Image x:Name="Logo" Grid.Column="1" Grid.Row="0" 
                    MaxHeight="100" HorizontalAlignment="Center" VerticalAlignment="Bottom" 
@@ -145,13 +144,21 @@
 
             <!--Stats-->
             <StackPanel Grid.Row="2" Grid.Column="0">
-                <Button Name="BetAmount" Content="Bet Amount" Margin="0,25,0,20"
+                <Button Name="BetAmount" Content="Bet Amount" Margin="0,20,0,20"
                         FontSize="20" HorizontalAlignment="Stretch" 
-                        Background="#66FFFFFF" Width="150" Height="75"
-                        BorderThickness="6" BorderBrush="Black"/>
+                        Background="#66FFFFFF" Height="75" Width="150"
+                        BorderThickness="6" BorderBrush="Black" RenderTransformOrigin="0.5,0.5" Click="BetAmount_Click" UseLayoutRounding="False" VerticalAlignment="Center" d:LayoutRounding="Auto">
+                    <Button.RenderTransform>
+                        <CompositeTransform Rotation="0.393"/>
+                    </Button.RenderTransform>
+                </Button>
                 <Button Name="PlayerChips" Content="Available Chips" FontSize="20" 
                         Background="#66FFFFFF" Width="165" Height="75" Margin="0,0,0,0"
-                        HorizontalAlignment="Stretch" BorderThickness="6" BorderBrush="Black"/>
+                        HorizontalAlignment="Stretch" BorderThickness="6" BorderBrush="Black" RenderTransformOrigin="0.5,0.5">
+                    <Button.RenderTransform>
+                        <CompositeTransform Rotation="0.251"/>
+                    </Button.RenderTransform>
+                </Button>
             </StackPanel>
 
         </Grid>
