@@ -9,7 +9,7 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-
+    <!--Grid Definitions-->
     <ScrollViewer VerticalScrollBarVisibility="Visible">
         <Grid x:Name="GridBackground" Background="DarkGreen">
             <Grid.RowDefinitions>
@@ -96,7 +96,28 @@
                         <!--Exits Game-->
                         <StackPanel Orientation="Horizontal">
                             <Button FontSize="30" Margin="0,0,0,0" Background="{x:Null}" x:Name="Button7" 
-                                FontFamily="Segoe MDL2 Assets" Content="&#xE7e8;"/>
+                                FontFamily="Segoe MDL2 Assets" Content="&#xE7e8;">
+                                <Button.Flyout>
+                                    <Flyout x:Name="QuitFlyout">
+                                        <RelativePanel>
+                                            <TextBlock Name="Quit"
+                                                Text="Quit Game?"
+                                                HorizontalAlignment="Center"
+                                                Margin="8,0,0,8"/>
+                                            <Button Name="QuitConfirm"
+                                                RelativePanel.Below="Quit"
+                                                Content="Yes"
+                                                Click="Quit_Game"
+                                                Margin="0,0,10,0"/>
+                                            <Button Name="Quit_Cancel"
+                                                RelativePanel.RightOf="QuitConfirm"
+                                                RelativePanel.Below="Quit"
+                                                Content="No"
+                                                Click="Close_Flyout"/>
+                                        </RelativePanel>
+                                    </Flyout>
+                                </Button.Flyout>
+                            </Button>
                             <TextBlock Text="Exit Game" FontSize="16" VerticalAlignment="Center"/>
                         </StackPanel>
                     </StackPanel>
@@ -117,7 +138,7 @@
 
             <!-- Busted Messsage, Initially not visible-->
             <TextBlock Name="BustMessage" Text="YOU BUSTED!" 
-                       FontSize="50" Foreground="WhiteSmoke" FontWeight="ExtraBlack"
+                       FontSize="50" Foreground="DarkRed" FontWeight="ExtraBlack"
                        Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" 
                        VerticalAlignment="Bottom" Visibility="Collapsed" />
 
