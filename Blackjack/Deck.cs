@@ -25,8 +25,8 @@ namespace Blackjack
                 int count = 0;
                 // T is 10, J is Jack, and so on.
                 char[] faces = { 'A', '2', '3', '4',  '5',
-                             '6', '7', '8', '9', 'T',
-                             'J', 'Q', 'K' };
+                                 '6', '7', '8', '9', 'T',
+                                 'J', 'Q', 'K' };
 
                 //suits: Clubs, Diamonds, Hearts, Spades
                 char[] suits = { 'C', 'D', 'H', 'S' };
@@ -41,7 +41,6 @@ namespace Blackjack
                     }
                 }
             }
-
          }
 
          //Reference: https://bit.ly/2OVo1G9

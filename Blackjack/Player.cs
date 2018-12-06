@@ -32,7 +32,9 @@ namespace Blackjack
 
         public string Total_Value()
         {
-            return $"Total value of cards: {handValue}";
+            string totalValue = "";
+            totalValue =  $"Total value of cards: {handValue} \n";
+            return totalValue;
         }
 
         /// <summary>
@@ -136,12 +138,9 @@ namespace Blackjack
             string printedHand = "";
             foreach (string s in playerHand)
             {
-                printedHand += s;
-                printedHand += "\n";
+                printedHand += s + "\n";
             }
-
             printedHand += Total_Value();
-
             return printedHand;
         }
     }
