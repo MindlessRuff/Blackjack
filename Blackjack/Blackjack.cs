@@ -162,6 +162,16 @@ namespace Blackjack
             {
                 strategy = "Book says to double down";
             }
+
+            else if (player.handValue == 17)
+            {
+                strategy = "Book says to stand";
+            }
+
+            else if (player.handValue >= 12 && player.handValue <= 16 && dealer.handValue >= 4 && dealer.handValue <= 6 )
+            {
+                strategy = "Book says to stand";
+            }
             //Implement if, else-if statements
             //Or cases...
         
