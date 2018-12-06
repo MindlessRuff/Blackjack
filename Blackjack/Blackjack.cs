@@ -90,9 +90,10 @@ namespace Blackjack
             System.Diagnostics.Debug.Write(player.ToString());
         }
 
-        public int DoubleDown()
+        public void DoubleDown()
         {
-            throw new NotImplementedException();
+            player.AddCard(newDeck.Deal_Card());
+            Stand();
         }
 
         public int Split()
