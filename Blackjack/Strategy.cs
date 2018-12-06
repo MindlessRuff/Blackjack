@@ -11,10 +11,7 @@ namespace Blackjack
         private List<string> playerCards = new List<string>();
         private string dealerCard { get; set; }
 
-        public Strategy()
-        {
-
-        }
+        public Strategy() { }
 
         /// <summary>
         /// List of basic strategy to guide the player in their decision.
@@ -31,7 +28,6 @@ namespace Blackjack
             playerCards.Add(playerC0);
             playerCards.Add(playerC1);
             dealerCard = dealerC1;
-
             string hint = "";
 
             if (playerCards[0] == "Assets/A_C.png" && playerCards[1] == "Assets/T_C.png" && dealerCard == "Assets/5_C.png")
