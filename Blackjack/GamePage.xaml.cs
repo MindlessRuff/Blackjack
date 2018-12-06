@@ -150,5 +150,16 @@ namespace Blackjack
                 "If he doesn't, then the players get to decide how to play their hands.");
             myMessage.ShowAsync();
         }
+
+        private void Button4_Click(object sender, RoutedEventArgs e)
+        {
+            MessageDialog myMessage2 = new MessageDialog("Brandon, " +
+                "Carlo, " +
+                "Ferdinand, " +
+                "Matt, " +
+                "Huy, " +
+                "Anush. ");
+            myMessage2.ShowAsync();
+        }
     }
 }
