@@ -7,6 +7,9 @@ namespace Blackjack
 {
 	class GambleChips
 	{
+        public List<int> Chips = new List<int>();
+
+
 		private const int OneDollarChip = 1;
 		private const int FiveDollarChip = 5;
 		private const int TwentyFiveDollarChip = 25;
