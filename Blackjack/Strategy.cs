@@ -11,7 +11,7 @@ namespace Blackjack
         private List<string> playerCards = new List<string>();
         private string dealerCard { get; set; }
 
-        Strategy()
+        public Strategy()
         {
 
         }
@@ -56,6 +56,11 @@ namespace Blackjack
 
             playerCards.Clear();
             return hint;
+        }
+
+        public int CompareTo(Strategy other)
+        {
+            throw new NotImplementedException();
         }
     }
 }
