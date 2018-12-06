@@ -42,22 +42,6 @@ namespace Blackjack
             // Print the game state to the Debug Console
             System.Diagnostics.Debug.Write(this.ToString());
         }    
-        /*
-            playerHand.Add(newDeck.Deal_Card());
-            dealerHand.Add(newDeck.Deal_Card());
-            playerHand.Add(newDeck.Deal_Card());
-            dealerHand.Add(newDeck.Deal_Card());
-
-            // Add their values
-            playerHandValue += Card_Value(playerHand[0]);
-            playerHandValue += Card_Value(playerHand[1]);
-            dealerHandValue += Card_Value(dealerHand[0]);
-            dealerHandValue += Card_Value(dealerHand[1]);
-            */
-            
-        
-
-
         /// <summary>
         /// 
         /// </summary>
