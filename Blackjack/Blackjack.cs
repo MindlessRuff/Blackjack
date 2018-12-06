@@ -20,8 +20,6 @@ namespace Blackjack
         bool doubleDown { get; set; }
         public bool busted { get; set; }    // Variable will be set when playerHand > 21, only UI class will reset this variable.
 
-      
-
         /// <summary>
         /// This constructor will shuffle the deck, deal cards to the dealer and player, and display the values in the 
         /// debug console for testing
@@ -33,7 +31,6 @@ namespace Blackjack
             newDeck.Shuffle_Deck();
             
             // Deal the cards to the player and the dealer
-
             player.AddCard(newDeck.Deal_Card());
             dealer.AddCard(newDeck.Deal_Card());
             player.AddCard(newDeck.Deal_Card());
@@ -107,7 +104,6 @@ namespace Blackjack
             // Print the game state to the Debug Console
             System.Diagnostics.Debug.Write(this.ToString());
             busted = false;  // Reset busted flag.
-
         }
 
         public int CompareTo(Blackjack other)
@@ -122,40 +118,6 @@ namespace Blackjack
                 $"Dealer Hand: \n" +
                 $"{dealer.ToString()}\n";
             return gameState;            
-        }
-
-        /// <summary>
-        /// List of basic strategy to guide the player in their decision.
-        /// This method strictly utilizes the first two cards in the list of 'handVals'
-        /// to determine which strategy to provide to the player.
-        /// 
-        /// Strategy Reference: https://www.blackjackapprenticeship.com/blackjack-strategy-charts/
-        /// Feel free to change this method of strategy if you feel that there is a better approach.
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public string Strategy()
-        {
-            string strategy = "";
-
-            if (player.handValue < 17 && dealer.handValue >= 17)
-            {
-                strategy = "Book says to hit";
-            }
-
-            else if (player.handValue == 11)
-            {
-                strategy = "Book says to double down";
-            }
-
-            else if (player.handValue >= 9 && player.handValue <= 11 && dealer.handValue == 5 || dealer.handValue == 6)
-            {
-                strategy = "Book says to double down";
-            }
-            //Implement if, else-if statements
-            //Or cases...
-        
-            return strategy;
         }
     }
 }
