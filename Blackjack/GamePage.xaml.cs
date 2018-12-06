@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using Windows.UI.Popups;
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace Blackjack
@@ -130,6 +131,24 @@ namespace Blackjack
         {
             blackjack.Stand();
         }
-        
+
+        private void BetAmount_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button1_Click(object sender, RoutedEventArgs e)
+        {
+            MessageDialog myMessage = new MessageDialog("BlackJack Rules: The dealer deals the cards and runs all the action at the blackjack table. " +
+                "The game starts after the player places their bet.Blackjack games use chips instead of cash.You'll buy your chips from the side menu bar. " +
+                "You should buy your chips between hands—don't try to interrupt a hand that's being played to get chips." +
+                "You place your bet by putting your chips in the designated spot in front of your seat. " +
+                "It's a circle drawn onto the table. Once you and the other players have placed their bets, the dealer starts the game." +
+                "The game begins when the dealer deals 2 cards.The dealer deals himself a 2 card hand, but he deals himself one card face up and the other card face down." +
+                "This is important, because that face up card gives the player a lot of information about how she should play her hand.Since you're starting with a 2 card hand, " +
+                "the highest possible total you could have is 21—that's an ace(which counts as 11) and a ten.Once all the cards are dealt, the dealer peeks to see if he has blackjack. " +
+                "If he doesn't, then the players get to decide how to play their hands.");
+            myMessage.ShowAsync();
+        }
     }
 }

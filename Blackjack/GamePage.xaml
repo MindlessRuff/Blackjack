@@ -37,7 +37,7 @@
                         <!--Game Rules-->
                         <StackPanel Orientation="Horizontal">
                             <Button FontSize="30" Margin="0,0,0,0" Background="{x:Null}" x:Name="Button1" 
-                                FontFamily="Segoe MDL2 Assets" Content="&#xE7fc;"/>
+                                FontFamily="Segoe MDL2 Assets" Content="&#xE7fc;" Click="Button1_Click"/>
                             <TextBlock Text="Game Rules" FontSize="16" VerticalAlignment="Center"/>
                         </StackPanel>
                         <!--Player Stats-->
@@ -103,9 +103,8 @@
                 </SplitView.Pane>
             </SplitView>
 
-
+            <!--This block generates the player hand-->
             <StackPanel Grid.Row="2" Grid.Column="1" VerticalAlignment="Center">
-                <!--This block generates the player hand-->
                 <GridView HorizontalAlignment="Center" x:Name="PlayerHand">
                     <GridView.ItemTemplate>
                         <DataTemplate>
@@ -148,7 +147,11 @@
                 <Button Name="BetAmount" Content="Bet Amount" Margin="0,25,0,20"
                         FontSize="20" HorizontalAlignment="Stretch" 
                         Background="#66FFFFFF" Width="150" Height="75"
-                        BorderThickness="6" BorderBrush="Black"/>
+                        BorderThickness="6" BorderBrush="Black" RenderTransformOrigin="0.5,0.5" Click="BetAmount_Click">
+                    <Button.RenderTransform>
+                        <CompositeTransform Rotation="11.877"/>
+                    </Button.RenderTransform>
+                </Button>
                 <Button Name="PlayerChips" Content="Available Chips" FontSize="20" 
                         Background="#66FFFFFF" Width="165" Height="75" Margin="0,0,0,0"
                         HorizontalAlignment="Stretch" BorderThickness="6" BorderBrush="Black"/>
