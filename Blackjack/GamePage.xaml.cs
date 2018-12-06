@@ -56,7 +56,7 @@ namespace Blackjack
         /// <param name="e"></param>
         private void Close_Flyout(object sender, RoutedEventArgs e)
         {
-            ReturnToTitleFlyout.Hide();
+            QuitFlyout.Hide();
         }
 
         /// <summary>
@@ -158,6 +158,11 @@ namespace Blackjack
                 "Huy, " +
                 "Anush. ");
             myMessage2.ShowAsync();
+        }
+
+        private void Quit_Game(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Exit();
         }
     }
 }
