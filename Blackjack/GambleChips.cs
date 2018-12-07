@@ -5,8 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 namespace Blackjack
 {
-	class GambleChips
+	class GambleChips : IComparable<GambleChips>
 	{
+        public List<int> Chips = new List<int>();
+
+
 		private const int OneDollarChip = 1;
 		private const int FiveDollarChip = 5;
 		private const int TwentyFiveDollarChip = 25;
@@ -19,7 +22,7 @@ namespace Blackjack
 		int surrendingHand;
 		int doubledownHand;
 		
-		public int WinChips()
+		public int DoubleChips()
 		{
 			// TODO: Algorithm and code to add up total chips won
 			winningHand = userBet * 2;
@@ -40,7 +43,20 @@ namespace Blackjack
 			return surrendingHand;
 
 		}
-	
-		
-	}
+
+        public int CompareTo(GambleChips other)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return base.ToString();
+        }
+    }
 }
