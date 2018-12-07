@@ -233,5 +233,10 @@ namespace Blackjack
         {
             Application.Current.Exit();
         }
+
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

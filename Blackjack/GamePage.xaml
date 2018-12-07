@@ -39,54 +39,62 @@
                     <SplitView OpenPaneLength="200" RelativePanel.Below="Menu" Name="Settings"
                            DisplayMode="Inline" RequestedTheme="Default" CompactPaneLength="50">
                     <SplitView.Pane>
-                        <ListBox SelectionMode="Single">
+                        <ListBox SelectionMode="Single" SelectionChanged="ListBox_SelectionChanged">
                             <!--Game Rules-->
                                 <ListBoxItem Background="Pink">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE7fc;"/>
-                                    <TextBlock Margin="20,0,0,0" FontSize="20">Game Rules</TextBlock>
+                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                               Margin="20,0,0,0" FontSize="20">Game Rules</TextBlock>
+                                        
                                     </StackPanel>
                                 </ListBoxItem>
                             <!--Player Stats-->
                                 <ListBoxItem Background="Purple">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE76e;"/>
-                                    <TextBlock Margin="20,0,0,0" FontSize="20">Player Stats</TextBlock>
+                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                               Margin="20,0,0,0" FontSize="20">Player Stats</TextBlock>
                                     </StackPanel>
                                 </ListBoxItem>
                             <!--Get More Chips-->
                             <ListBoxItem Background="Blue">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE7bf;"/>
-                                    <TextBlock Margin="20,0,0,0" FontSize="20">More Chips</TextBlock>
+                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                               Margin="20,0,0,0" FontSize="20">More Chips</TextBlock>
                                 </StackPanel>
                             </ListBoxItem>
                             <!--Creators-->
                             <ListBoxItem Background="Green">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE70f;"/>
-                                    <TextBlock Margin="29,0,0,0" FontSize="20">Creators</TextBlock>
+                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                               Margin="20,0,0,0" FontSize="20">Creators</TextBlock>
                                 </StackPanel>
                             </ListBoxItem>
                             <!--Github Link-->
                             <ListBoxItem Background="Yellow">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE72d;"/>
-                                    <TextBlock Margin="20,0,0,0" FontSize="20">Github Link</TextBlock>
+                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                               Margin="20,0,0,0" FontSize="20">Github Link</TextBlock>
                                 </StackPanel>
                             </ListBoxItem>
                             <!--Return to Title Page-->
                             <ListBoxItem Background="Orange">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE97a;"/>
-                                    <TextBlock Margin="10,0,0,0" FontSize="20">Return To Title</TextBlock>
+                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                               Margin="10,0,0,0" FontSize="20">Return To Title</TextBlock>
                                 </StackPanel>
                             </ListBoxItem>
                             <!--Exit Game-->
                             <ListBoxItem Background="Red">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE7e8;"/>
-                                    <TextBlock Margin="25,0,0,0" FontSize="20">Exit Game</TextBlock>
+                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                               Margin="20,0,0,0" FontSize="20">Exit Game</TextBlock>
                                 </StackPanel>
                             </ListBoxItem>
                         </ListBox>
