@@ -97,7 +97,7 @@ namespace Blackjack
         /// <param name="e"></param>
         private void Close_Flyout(object sender, RoutedEventArgs e)
         {
-            QuitFlyout.Hide();
+            //QuitFlyout.Hide();
         }
 
         /// <summary>
@@ -105,9 +105,9 @@ namespace Blackjack
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MenuButton_Click(object sender, RoutedEventArgs e)
+        private void Settings_Click(object sender, RoutedEventArgs e)
         {
-            CoolMenu.IsPaneOpen = !CoolMenu.IsPaneOpen;
+            Settings.IsPaneOpen = !Settings.IsPaneOpen;
         }
 
         /// <summary>

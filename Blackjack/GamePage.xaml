@@ -26,106 +26,75 @@
                 <ColumnDefinition Width= "*" />
             </Grid.ColumnDefinitions>
 
-            <!--Side Menu Bar-->
-            <SplitView x:Name="CoolMenu" IsPaneOpen="False" 
-                       DisplayMode="CompactOverlay" CompactPaneLength="50" 
-                       Grid.RowSpan="1" Grid.ColumnSpan="1" OpenPaneLength="300">
-                <SplitView.Pane>
-                    <StackPanel Background="DarkRed">
-                        <!--https://docs.microsoft.com/en-us/windows/uwp/design/style/segoe-ui-symbol-font-->
-                        <Button x:Name="MenuButton" FontFamily="Segoe MDL2 Assets" Content="&#xE700;" Background="{x:Null}"
-                            Click="MenuButton_Click" FontSize="30"/>
-                        <!--Game Rules-->
-                        <StackPanel Orientation="Horizontal">
-                            <Button FontSize="30" Margin="0,0,0,0" Background="{x:Null}" x:Name="Button1" 
-                                FontFamily="Segoe MDL2 Assets" Content="&#xE7fc;" Click="Button1_Click"/>
-                            <TextBlock Text="Game Rules" FontSize="16" VerticalAlignment="Center"/>
-                        </StackPanel>
-                        <!--Player Stats-->
-                        <StackPanel Orientation="Horizontal">
-                            <Button FontSize="30" Margin="0,0,0,0" Background="{x:Null}" x:Name="Button2" 
-                                FontFamily="Segoe MDL2 Assets" Content="&#xE76e;"/>
-                            <TextBlock Text="Player Stats" FontSize="16" VerticalAlignment="Center"/>
-                        </StackPanel>
-                        <!--Get More Chips-->
-                        <StackPanel Orientation="Horizontal">
-                            <Button FontSize="30" Margin="0,0,0,0" Background="{x:Null}" x:Name="Button3" 
-                                FontFamily="Segoe MDL2 Assets" Content="&#xE7bf;"/>
-                            <TextBlock Text="Get More Chips" FontSize="16" VerticalAlignment="Center"/>
-                        </StackPanel>
-                        <!--Creators-->
-                        <StackPanel Orientation="Horizontal">
-                            <Button FontSize="30" Margin="0,0,0,0" Background="{x:Null}" x:Name="Button4" 
-                                FontFamily="Segoe MDL2 Assets" Content="&#xE70f;" Click="Button4_Click"/>
-                            <TextBlock Text="Creators" FontSize="16" VerticalAlignment="Center"/>
-                        </StackPanel>
-                        <!--Github Link-->
-                        <StackPanel Orientation="Horizontal">
-                            <Button FontSize="30" Margin="0,0,0,0" Background="{x:Null}" x:Name="Button5" 
-                                FontFamily="Segoe MDL2 Assets" Content="&#xE72d;"/>
-                            <HyperlinkButton Content="GitHub Link" NavigateUri="https://github.com/bveltre/Blackjack" FontSize="16"/>
-                        </StackPanel>
-                        <!--Return to Title Page-->
-                        <StackPanel Orientation="Horizontal">
-                            <Button FontSize="30" Margin="0,0,0,0" Background="{x:Null}" x:Name="Button6" 
-                                FontFamily="Segoe MDL2 Assets" Content="&#xE97a;">
-                                <!--Flyout to confirm return to title-->
-                                <Button.Flyout>
-                                    <Flyout x:Name ="ReturnToTitleFlyout">
-                                        <RelativePanel>
-                                            <TextBlock Name="Title"
-                                                       Text="Return to Main Menu?"
-                                                       HorizontalAlignment="Center"
-                                                       Margin="8,0,0,8"/>
-                                            <Button Name="TitleConfirm"
-                                                    RelativePanel.Below="Title"
-                                                    Content="Yes"
-                                                    Click="Return_Title"
-                                                    Margin="0,0,10,0"/>
-                                            <Button Name="QuitCancel"
-                                                    RelativePanel.RightOf="TitleConfirm"
-                                                    RelativePanel.Below="Title"
-                                                    Content="No"
-                                                    Click="Close_Flyout"/>
-                                        </RelativePanel>
-                                    </Flyout>
-                                </Button.Flyout>
-                            </Button>
+                <!--Side Menu Bar-->
+                <RelativePanel Grid.ColumnSpan="2">
+                    
+                <!--Settings Menu Button-->
+                <Button
+                Name="Menu" Content="&#xE700;" FontFamily="Segoe MDL2 Assets" FontSize="25"  
+                Click="Settings_Click" VerticalAlignment="Top" RequestedTheme="Default" FontWeight="Bold"
+                IsDoubleTapEnabled="False" Foreground="White"/>
+                    
+                <!--Settings Menu-->
+                    <SplitView OpenPaneLength="200" RelativePanel.Below="Menu" Name="Settings"
+                           DisplayMode="Inline" RequestedTheme="Default" CompactPaneLength="50">
+                    <SplitView.Pane>
+                        <ListBox SelectionMode="Single">
+                            <!--Game Rules-->
+                                <ListBoxItem Background="Pink">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE7fc;"/>
+                                    <TextBlock Margin="20,0,0,0" FontSize="20">Game Rules</TextBlock>
+                                    </StackPanel>
+                                </ListBoxItem>
+                            <!--Player Stats-->
+                                <ListBoxItem Background="Purple">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE76e;"/>
+                                    <TextBlock Margin="20,0,0,0" FontSize="20">Player Stats</TextBlock>
+                                    </StackPanel>
+                                </ListBoxItem>
+                            <!--Get More Chips-->
+                            <ListBoxItem Background="Blue">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE7bf;"/>
+                                    <TextBlock Margin="20,0,0,0" FontSize="20">More Chips</TextBlock>
+                                </StackPanel>
+                            </ListBoxItem>
+                            <!--Creators-->
+                            <ListBoxItem Background="Green">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE70f;"/>
+                                    <TextBlock Margin="29,0,0,0" FontSize="20">Creators</TextBlock>
+                                </StackPanel>
+                            </ListBoxItem>
+                            <!--Github Link-->
+                            <ListBoxItem Background="Yellow">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE72d;"/>
+                                    <TextBlock Margin="20,0,0,0" FontSize="20">Github Link</TextBlock>
+                                </StackPanel>
+                            </ListBoxItem>
+                            <!--Return to Title Page-->
+                            <ListBoxItem Background="Orange">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE97a;"/>
+                                    <TextBlock Margin="10,0,0,0" FontSize="20">Return To Title</TextBlock>
+                                </StackPanel>
+                            </ListBoxItem>
+                            <!--Exit Game-->
+                            <ListBoxItem Background="Red">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE7e8;"/>
+                                    <TextBlock Margin="25,0,0,0" FontSize="20">Exit Game</TextBlock>
+                                </StackPanel>
+                            </ListBoxItem>
+                        </ListBox>
+                        </SplitView.Pane>
+                    </SplitView>
+                </RelativePanel>
 
-                            <TextBlock Text="Return To Front" FontSize="16" VerticalAlignment="Center"/>
-                        </StackPanel>
-                        <!--Exits Game-->
-                        <StackPanel Orientation="Horizontal">
-                            <Button FontSize="30" Margin="0,0,0,0" Background="{x:Null}" x:Name="Button7" 
-                                FontFamily="Segoe MDL2 Assets" Content="&#xE7e8;">
-                                <Button.Flyout>
-                                    <Flyout x:Name="QuitFlyout">
-                                        <RelativePanel>
-                                            <TextBlock Name="Quit"
-                                                Text="Quit Game?"
-                                                HorizontalAlignment="Center"
-                                                Margin="8,0,0,8"/>
-                                            <Button Name="QuitConfirm"
-                                                RelativePanel.Below="Quit"
-                                                Content="Yes"
-                                                Click="Quit_Game"
-                                                Margin="0,0,10,0"/>
-                                            <Button Name="Quit_Cancel"
-                                                RelativePanel.RightOf="QuitConfirm"
-                                                RelativePanel.Below="Quit"
-                                                Content="No"
-                                                Click="Close_Flyout"/>
-                                        </RelativePanel>
-                                    </Flyout>
-                                </Button.Flyout>
-                            </Button>
-                            <TextBlock Text="Exit Game" FontSize="16" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </StackPanel>
-                </SplitView.Pane>
-            </SplitView>
-
-            <!--This block generates the player hand-->
+                <!--This block generates the player hand-->
             <StackPanel Grid.Row="2" Grid.Column="1" VerticalAlignment="Center">
                 <GridView HorizontalAlignment="Center" x:Name="PlayerHand">
                     <GridView.ItemTemplate>
