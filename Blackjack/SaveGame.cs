@@ -19,18 +19,19 @@ namespace Blackjack
 
         public SaveGame(object save)
         {
-            json = JsonConvert.SerializeObject(save, Formatting.Indented);
+            if (!File.Exists(path))
+            {
+                File.WriteAllText(path, JsonConvert.SerializeObject(save));
+            }
+            else
+            {
+                File.Create(path);
+                File.WriteAllText(path, JsonConvert.SerializeObject(save));
+            }
         }
 
         public void SaveObject()
         {
-            if (!File.Exists(path))
-            {
-                using (FileStream fs = File.Create(path))
-                {
-                
-                }
-            }
         }
     }
 }
