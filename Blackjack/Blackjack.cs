@@ -13,6 +13,7 @@ namespace Blackjack
     class Blackjack : IComparable<Blackjack>
     {
         Deck newDeck = new Deck();
+        GambleChips chips = new GambleChips();
         public Strategy newHint = new Strategy();
         public Player player = new Player();
         private Player dealer = new Player();

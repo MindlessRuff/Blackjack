@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Windows.Storage;
+
 
 namespace Blackjack
 {
@@ -14,11 +16,25 @@ namespace Blackjack
         string path { get; set; } 
         public SaveGame()
         {
-            path = @"Saves/SaveGame.txt";
+            path = ApplicationData.Current.LocalFolder.Path;
         }
 
         public SaveGame(object save)
         {
+            path = @"Saves/SaveGame.txt";
+        }
+
+        public void SaveObject(object save)
+        {
+            System.Threading.ManualResetEvent mre = new System.Threading.ManualResetEvent(false);
+            Task.Factory.StartNew(async () =>
+            {
+                await ApplicationData.Current.LocalFolder.CreateFolderAsync("BlackjackSaves");
+                mre.Set();
+            });
+            mre.WaitOne();
+
+            Path.Combine(path, "SaveGame.txt");
             if (!File.Exists(path))
             {
                 File.WriteAllText(path, JsonConvert.SerializeObject(save));
@@ -28,10 +44,6 @@ namespace Blackjack
                 File.Create(path);
                 File.WriteAllText(path, JsonConvert.SerializeObject(save));
             }
-        }
-
-        public void SaveObject()
-        {
         }
     }
 }

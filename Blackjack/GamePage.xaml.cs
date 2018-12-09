@@ -27,6 +27,7 @@ namespace Blackjack
     {
         // These need to be outside of the constructor so they can be acessed be the other methods
         Blackjack blackjack = new Blackjack();
+        SaveGame save = new SaveGame();
         ObservableCollection<String> myHand = new ObservableCollection<string>();
 
         // The bool and event will control all user buttons
@@ -149,6 +150,8 @@ namespace Blackjack
         private void Stand(object sender, RoutedEventArgs e)
         {
             blackjack.Stand();
+            save.SaveObject(blackjack);
+
         }
 
         private void BetAmount_Click(object sender, RoutedEventArgs e)
