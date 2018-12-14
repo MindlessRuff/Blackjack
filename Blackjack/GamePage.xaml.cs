@@ -177,6 +177,7 @@ namespace Blackjack
                 // Delay and turn logo on before dealing new cards.
                 Loading.IsActive = true;                        // Loading ring on
                 await Task.Delay(TimeSpan.FromSeconds(3));      // 3 Sec Delay
+                PlayerBlackjackMessage.Visibility = Visibility.Collapsed;
                 Logo.Visibility = Visibility;
                 Loading.IsActive = false;                       // Loading ring off
 
@@ -200,8 +201,8 @@ namespace Blackjack
                     catch (ArgumentOutOfRangeException)     // No more cards to add.
                     {
                         // Change display message based on hand values and display.
-                        if (blackjack.player.handValue > blackjack.dealer.handValue) PlayerBlackjackMessage.Text = "You Win!";
-                        else if (blackjack.player.handValue < blackjack.dealer.handValue) PlayerBlackjackMessage.Text = "You Lose!";
+                        if (blackjack.player.handValue > blackjack.dealer.handValue || blackjack.dealer.handValue > 21) PlayerBlackjackMessage.Text = "You Win!";
+                        else if (blackjack.player.handValue < blackjack.dealer.handValue && blackjack.dealer.handValue <= 21) PlayerBlackjackMessage.Text = "You Lose!";
                         else PlayerBlackjackMessage.Text = "Push!";
 
                         // TODO: Change display message/delay to its own function.
