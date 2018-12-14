@@ -138,7 +138,7 @@ namespace Blackjack
             }
 
             myHand.Add(blackjack.player.hand[blackjack.player.hand.Count - 1]);   // Add last card if hit was successful.
-            System.Diagnostics.Debug.WriteLine(myHand[myHand.Count - 1]);
+            
             // If bust, reinitialize UI hand to the now-reset Blackjack.cs hand.
             if (blackjack.busted)
             {

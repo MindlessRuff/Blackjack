@@ -140,7 +140,7 @@
             <!-- Player Blackjack Messsage, Initially not visible-->
             <TextBlock Name="PlayerBlackjackMessage" Text="Blackjack!" 
                        FontSize="50" Foreground="Yellow" FontWeight="ExtraBlack"
-                       Grid.Row="`" Grid.Column="1" HorizontalAlignment="Center" 
+                       Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" 
                        VerticalAlignment="Bottom" Visibility="Collapsed" />
             
             <!-- Logos -->
