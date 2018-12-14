@@ -25,7 +25,7 @@ namespace Blackjack
     /// </summary>
     public sealed partial class GamePage : Page, INotifyPropertyChanged
     {
-        // These need to be outside of the constructor so they can be acessed be the other methods
+        // These need to be outside of the constructor so they can be accessed be the other methods
         Blackjack blackjack = new Blackjack();
         SaveGame save = new SaveGame();
         ObservableCollection<String> myHand = new ObservableCollection<string>();
@@ -57,7 +57,7 @@ namespace Blackjack
 
             // If first two cards add to 21, call blackjack to print msg and handle logic.
             // Then pass logic to NextRoundUI method.
-            if (blackjack.player.handValue == 21)
+            if (blackjack.player.handValue == 21 && blackjack.CompareTo(blackjack) == 1) // ensure the dealer does not also have 21
             {
                 NaturalBlackjack();
             }
@@ -129,7 +129,7 @@ namespace Blackjack
         {
             try
             {
-                blackjack.Hit();    // Hit in blackjack class
+                blackjack.Hit(blackjack.player);    // Hit in blackjack class
             }
             // TODO: Figure out what exceptions can be raised and handle.
             catch(Exception ex)
@@ -162,6 +162,19 @@ namespace Blackjack
         private void Stand(object sender, RoutedEventArgs e)
         {
             blackjack.Stand();
+            if (blackjack.CompareTo(blackjack) == 1)
+            {
+                // Player handValue is greater, PLAYER WINS
+            }
+            else if (blackjack.CompareTo(blackjack) == 0)
+            {
+                // Dealer wins =(
+            }
+            else
+            {
+                // object is null error
+            }
+
         }
 
         private void BetAmount_Click(object sender, RoutedEventArgs e)
@@ -241,7 +254,7 @@ namespace Blackjack
 
             
             // Call natural blackjack if player gets 21 on deal.
-            if (blackjack.player.handValue == 21)
+            if (blackjack.player.handValue == 21 && blackjack.CompareTo(blackjack) == 1) // ensure the dealer does not also have 21
             {
                 NaturalBlackjack();
             }

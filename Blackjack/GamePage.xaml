@@ -112,6 +112,7 @@
                     </GridView.ItemTemplate>
                 </GridView>
                 <TextBox HorizontalAlignment="Center" Text="Player" TextAlignment="Center"/>
+                    <TextBlock HorizontalAlignment="Center" Text="{Binding Path=blackjack.player.handValue}" TextAlignment="Center" />
             </StackPanel>
 
             <!--Dealer Block-->

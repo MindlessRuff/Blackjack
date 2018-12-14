@@ -45,18 +45,18 @@ namespace Blackjack
         /// <summary>
         /// 
         /// </summary>
-        public void Hit()
+        public void Hit(Player currentPlayer)
         {          
-            player.AddCard(newDeck.Deal_Card());
+            currentPlayer.AddCard(newDeck.Deal_Card());
 
             // Check for bust.
-            if (player.handValue > 21)
+            if (currentPlayer.handValue > 21)
             {
                 // If player will bust, but there is an ace (11) in hand, subtract 10.
-                if (player.numElevens > 0)
+                if (currentPlayer.numElevens > 0)
                 {
-                    player.numElevens -= 1;
-                    player.handValue -= 10;
+                    currentPlayer.numElevens -= 1;
+                    currentPlayer.handValue -= 10;
                 }
                 else
                 {
@@ -67,7 +67,12 @@ namespace Blackjack
 
         public void Stand()
         {
-            // TODO: Wait for dealer to finish and start new round.
+            // Dealer hits on anything less than 17, including soft 17
+            while (dealer.handValue < 17)
+            {
+                Hit(dealer);
+            }
+
         }
 
         public void DoubleDown()
@@ -115,7 +120,15 @@ namespace Blackjack
 
         public int CompareTo(Blackjack other)
         {
-            throw new NotImplementedException();
+            if (other != null)
+            {
+                if (dealer.handValue >= player.handValue)
+                    return 0;
+                else
+                    return 1;
+            }
+
+            return -1;
         }
 
         public override int GetHashCode()
