@@ -36,20 +36,24 @@
                 <SplitView OpenPaneLength="100" RelativePanel.Below="Menu" Name="Settings"
                            DisplayMode="Inline" RequestedTheme="Dark" >
                     <SplitView.Pane>
-                        <ListBox SelectionMode="Single">
-                            <ListBoxItem>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE80f;"/>
-                                    <TextBlock FontSize="12">Button 1</TextBlock>
-                                </StackPanel>
-                            </ListBoxItem>
-                            <ListBoxItem>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE80f;"/>
-                                    <TextBlock FontSize="12">Button 2</TextBlock>
-                                </StackPanel>
-                            </ListBoxItem>
-                        </ListBox>
+                        <StackPanel Orientation="Vertical">
+                            <!--Outer stack to stack different options vertically-->
+                            <StackPanel Orientation="Vertical">
+                                <!--Inner stacks orientate each separate option horizontally-->
+                                <TextBlock VerticalAlignment="Center" Margin="0,0,20,0" FontWeight="Bold" Text="Option 1" />
+                                <RadioButton
+                                    Name ="Option1a" Content="Yes" GroupName="Group1"  Checked="Toggle_Option_1" IsChecked="True"/>
+                                <RadioButton
+                                     Name="Option1b" Content="No" Margin="0,0,0,10" GroupName="Group1" Checked="Toggle_Option_1"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock VerticalAlignment="Center" Margin="0,0,20,0" Text="Option 2"/>
+                                <RadioButton
+                                    Name="Option2a" Content="Yes" GroupName="Group2" Checked="Toggle_Option_2" IsChecked="True"/>
+                                <RadioButton
+                                    Name="Option2b" Content="No" GroupName="Group2" Checked="Toggle_Option_2" IsChecked="False"/>
+                            </StackPanel>
+                        </StackPanel>
                     </SplitView.Pane>
                 </SplitView>
             </RelativePanel>
