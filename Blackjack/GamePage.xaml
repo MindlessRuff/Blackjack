@@ -162,10 +162,16 @@
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="2">
                 <Button Name="HitButton" Content="Hit" Click="Hit" Margin="0,0,0,20"
                         FontSize="30" HorizontalAlignment="Stretch" 
-                        Background="#66FFFFFF" Width="150" IsEnabled="{Binding ButtonsEnabled}"
+                        Background="#66FFFFFF" Width="200" IsEnabled="{Binding ButtonsEnabled}"
                         BorderThickness="6" BorderBrush="Black"/>
-                <Button Name="StandButton" Content="Stand" Click="Stand" FontSize="30" Background="#66FFFFFF"
+                <Button Name="StandButton" Content="Stand" Click="Stand" Margin="0,0,0,20" FontSize="30" Background="#66FFFFFF" Width="200"
                         HorizontalAlignment="Stretch" BorderThickness="6" BorderBrush="Black" IsEnabled="{Binding ButtonsEnabled}"/>
+                <Button Name="DoubleDownButton" Content="DoubleDown" Click="DoubleDown" Margin="0,0,0,20" FontSize="30" Background="#66FFFFFF"
+                        Width="200" HorizontalAlignment="Stretch" BorderThickness="6" BorderBrush="Black" IsEnabled="{Binding ButtonsEnabled}"/>
+                <Button Name="SplitButton" Content="Split" Click="Split" Margin="0,0,0,20" FontSize="30" Background="#66FFFFFF"
+                        Width="200" HorizontalAlignment="Stretch" BorderThickness="6" BorderBrush="Black" IsEnabled="{Binding ButtonsEnabled}"/>
+                <Button Name="SurrenderButton" Content="Surrender" Click="Surrender" Margin="0,0,0,20" FontSize="30" Background="#66FFFFFF"
+                        Width="200" HorizontalAlignment="Stretch" BorderThickness="6" BorderBrush="Black" IsEnabled="{Binding ButtonsEnabled}"/>
             </StackPanel>
 
             <!--Stats-->
