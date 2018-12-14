@@ -20,7 +20,6 @@ namespace Blackjack
         bool hit { get; set; }
         bool stand { get; set; }
         bool doubleDown { get; set; }
-        public bool busted { get; set; }    // Variable will be set when playerHand > 21, only UI class will reset this variable.
 
         /// <summary>
         /// This constructor will shuffle the deck, deal cards to the dealer and player, and display the values in the 
@@ -33,10 +32,13 @@ namespace Blackjack
             newDeck.Shuffle_Deck();
             
             // Deal the cards to the player and the dealer
+            
             player.AddCard(newDeck.Deal_Card());
             dealer.AddCard(newDeck.Deal_Card());
             player.AddCard(newDeck.Deal_Card());
             dealer.AddCard(newDeck.Deal_Card());
+            if (player.handValue == 21) player.naturalBlackjack = true;
+            if (dealer.handValue == 21) dealer.naturalBlackjack = true;
 
             // Print the game state to the Debug Console
             System.Diagnostics.Debug.Write(this.ToString());
@@ -60,14 +62,35 @@ namespace Blackjack
                 }
                 else
                 {
-                    busted = true;
+                    player.busted = true;
                 }     
             }
         }
 
+        /// <summary>
+        /// Function is called when user stands, initiating the dealer logic.
+        /// Dealer will always hit if handValue is less than 17.
+        /// Dealer also hits on a "soft" 17.
+        /// </summary>
         public void Stand()
         {
-            // TODO: Wait for dealer to finish and start new round.
+            // If dealer has naturalBlackjack after user stands, dealer wins. Control is passed back to UI.
+            // The case in which both have naturalBlackjack and user pushes is calculated in TODO:
+            if (dealer.naturalBlackjack) return;
+
+            // Dealer hit block.
+            while (dealer.handValue < 17)
+            {
+                dealer.AddCard(newDeck.Deal_Card());
+                // Check for under 17 or soft > 17.
+                if (dealer.numElevens > 0 && dealer.handValue >= 17 && dealer.handValue != 21)
+                {
+                    dealer.numElevens -= 1;
+                    dealer.handValue -= 10;
+                }
+            }
+            // TODO: End of round calculations.
+            return;
         }
 
         public void DoubleDown()
@@ -95,9 +118,11 @@ namespace Blackjack
         public void NextRound()
         {
             if (newDeck.CardsInStack() < 10)
+            {
                 newDeck.Shuffle_Deck();
-
-            // Reset cards in hand and value of hands.
+            }
+                
+            // Reset all player and dealer variables.
             player.Reset();
             dealer.Reset();
 
@@ -107,10 +132,11 @@ namespace Blackjack
             dealer.AddCard(newDeck.Deal_Card());
             player.AddCard(newDeck.Deal_Card());
             dealer.AddCard(newDeck.Deal_Card());
+            if (player.handValue == 21) player.naturalBlackjack = true;
+            if (dealer.handValue == 21) dealer.naturalBlackjack = true;
 
             // Print the game state to the Debug Console
             System.Diagnostics.Debug.Write(this.ToString());
-            busted = false;  // Reset busted flag.
         }
 
         public int CompareTo(Blackjack other)

@@ -43,24 +43,11 @@ namespace Blackjack
         public GamePage()
         {
             this.InitializeComponent();
-            myHand.Clear();
-            dealerHand.Clear();
 
-            // Add initial cards into the playerHand and dealerHand in UI.
-            myHand.Add(blackjack.player.hand[0]);
-            DealerCardBack.Visibility = Visibility.Visible;      // Don't show dealer's first card initially. Uses picture of cardback instead.
-            myHand.Add(blackjack.player.hand[1]);
-            dealerHand.Add(blackjack.dealer.hand[0]);
-            // Bind the UI to myHand and dealerHand created in this file.
+            // Bind the UI hands to the player and dealer hands.
             PlayerHand.ItemsSource = myHand;
             DealerHand.ItemsSource = dealerHand;
-
-            // If first two cards add to 21, call blackjack to print msg and handle logic.
-            // Then pass logic to NextRoundUI method.
-            if (blackjack.player.handValue == 21)
-            {
-                NaturalBlackjack();
-            }
+            NextRoundUI();
         }
 
         /// <summary>
@@ -127,6 +114,9 @@ namespace Blackjack
         /// <param name="e"></param>
         private async void Hit(object sender, RoutedEventArgs e)
         {
+            // Turn buttons off immediately to prevent user from spamming hit button.
+            ButtonsEnabled = false;
+
             try
             {
                 blackjack.Hit();    // Hit in blackjack class
@@ -138,11 +128,12 @@ namespace Blackjack
             }
 
             myHand.Add(blackjack.player.hand[blackjack.player.hand.Count - 1]);   // Add last card if hit was successful.
-            
+
             // If bust, reinitialize UI hand to the now-reset Blackjack.cs hand.
-            if (blackjack.busted)
+            if (blackjack.player.busted)
             {
-                ButtonsEnabled = false;  // Disable user buttons.
+                await Task.Delay(TimeSpan.FromSeconds(0.5));
+
                 // Display busted message.
                 Logo.Visibility = Visibility.Collapsed;
                 BustMessage.Visibility = Visibility;
@@ -150,18 +141,85 @@ namespace Blackjack
                 DealerCardBack.Visibility = Visibility.Collapsed;
                 dealerHand.Add(blackjack.dealer.hand[1]);
 
-                await Task.Delay(TimeSpan.FromSeconds(5));  // 5 Sec Delay
+                Loading.IsActive = true;                        // Loading ring on
+                await Task.Delay(TimeSpan.FromSeconds(3));      // 3 Sec Delay
                 BustMessage.Visibility = Visibility.Collapsed;  // Logo back on
                 Logo.Visibility = Visibility;
+                Loading.IsActive = false;                       // Loading ring off
 
                 NextRoundUI();
-                ButtonsEnabled = true; // Re-Enable buttons after dealing cards.
             }
+            else ButtonsEnabled = true;
         }
 
-        private void Stand(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// This will call the blackjack stand function, which initiates the dealer
+        /// logic until end of round.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void Stand(object sender, RoutedEventArgs e)
         {
+            ButtonsEnabled = false;  // Disable user buttons.
             blackjack.Stand();
+            // Reveal dealer's 2nd card.
+            DealerCardBack.Visibility = Visibility.Collapsed;
+            dealerHand.Add(blackjack.dealer.hand[1]);
+
+            // Check for dealer natural blackjack.
+            if (blackjack.dealer.naturalBlackjack)
+            {
+                // Change message and display.
+                PlayerBlackjackMessage.Text = "Dealer Blackjack, You Lose.";
+                Logo.Visibility = Visibility.Collapsed;
+                PlayerBlackjackMessage.Visibility = Visibility.Visible;
+
+                // Delay and turn logo on before dealing new cards.
+                Loading.IsActive = true;                        // Loading ring on
+                await Task.Delay(TimeSpan.FromSeconds(3));      // 3 Sec Delay
+                Logo.Visibility = Visibility;
+                Loading.IsActive = false;                       // Loading ring off
+
+            }
+            // Dealer hits until busting or hard > 17, will only run if player hasn't busted.
+            else if (!blackjack.player.busted)
+            {
+                
+                /* Try-catch block will attempt until failure, adding a new card to the
+                 * UI hand while cards exist in the Player class hand
+                */
+                bool success = false;   // Tracks if card was successfully added to allow retrying of block.
+                do
+                {
+                    try
+                    {
+                        await Task.Delay(TimeSpan.FromSeconds(1));  // 1 Sec Delay between dealer cards.
+                        dealerHand.Add(blackjack.dealer.hand[dealerHand.Count]);
+                        success = true;
+                    }
+                    catch (ArgumentOutOfRangeException)     // No more cards to add.
+                    {
+                        // Change display message based on hand values and display.
+                        if (blackjack.player.handValue > blackjack.dealer.handValue) PlayerBlackjackMessage.Text = "You Win!";
+                        else if (blackjack.player.handValue < blackjack.dealer.handValue) PlayerBlackjackMessage.Text = "You Lose!";
+                        else PlayerBlackjackMessage.Text = "Push!";
+
+                        // TODO: Change display message/delay to its own function.
+                        Logo.Visibility = Visibility.Collapsed;
+                        PlayerBlackjackMessage.Visibility = Visibility.Visible;
+
+                        // Delay and turn logo on before dealing new cards.
+                        Loading.IsActive = true;                        // Loading ring on
+                        await Task.Delay(TimeSpan.FromSeconds(3));      // 3 Sec Delay
+
+                        PlayerBlackjackMessage.Visibility = Visibility.Collapsed;
+                        Logo.Visibility = Visibility;
+                        Loading.IsActive = false;                       // Loading ring off
+                        success = false;
+                    }
+                } while (success);
+            }
+            NextRoundUI();
         }
 
         private void BetAmount_Click(object sender, RoutedEventArgs e)
@@ -212,40 +270,52 @@ namespace Blackjack
         private async void NaturalBlackjack()
         {
             ButtonsEnabled = false;  // Disable user buttons.
-            // Display blackjack message.
+            
             Logo.Visibility = Visibility.Collapsed;
+            // Change the message text and display to user.
+            PlayerBlackjackMessage.Text = "Blackjack!";
             PlayerBlackjackMessage.Visibility = Visibility;
-            await Task.Delay(TimeSpan.FromSeconds(5));  // 5 Sec Delay
+
+            Loading.IsActive = true;                    // Loading ring on
+            await Task.Delay(TimeSpan.FromSeconds(3));  // 3 Sec Delay
+            Loading.IsActive = false;                   // Loading ring off
             PlayerBlackjackMessage.Visibility = Visibility.Collapsed;
             Logo.Visibility = Visibility;
+
             NextRoundUI();
-            ButtonsEnabled = true; // Re-Enable buttons after dealing cards.
         }
 
 
         /// <summary>
         /// Starts a new round in the UI.
         /// </summary>
-        private void NextRoundUI()
+        private async void NextRoundUI()
         {
+            ButtonsEnabled = false;
             blackjack.NextRound();
 
             // Reset the UI representation of the hands.
             myHand.Clear();
             dealerHand.Clear();
 
+            Loading.IsActive = true;
+            // Generate hands.
+            await Task.Delay(TimeSpan.FromSeconds(0.7));
             myHand.Add(blackjack.player.hand[0]);
+            await Task.Delay(TimeSpan.FromSeconds(0.7));        // 700 ms delay between cards.
             DealerCardBack.Visibility = Visibility.Visible;     // Don't show dealer's first card initially.
+            await Task.Delay(TimeSpan.FromSeconds(0.7));  
             myHand.Add(blackjack.player.hand[1]);
+            await Task.Delay(TimeSpan.FromSeconds(0.7));
             dealerHand.Add(blackjack.dealer.hand[0]);
+            Loading.IsActive = false;
 
-            
             // Call natural blackjack if player gets 21 on deal.
             if (blackjack.player.handValue == 21)
             {
                 NaturalBlackjack();
             }
-
+            ButtonsEnabled = true;
         }
 
         /// <summary>
