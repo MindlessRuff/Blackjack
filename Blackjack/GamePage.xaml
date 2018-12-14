@@ -102,32 +102,49 @@
                     </SplitView>
                 </RelativePanel>
 
-                <!--This block generates the player hand-->
+            <!--This block generates the player hand-->
             <StackPanel Grid.Row="2" Grid.Column="1" VerticalAlignment="Center">
                 <GridView HorizontalAlignment="Center" x:Name="PlayerHand">
                     <GridView.ItemTemplate>
                         <DataTemplate>
-                            <Image Source="{Binding}" Stretch="Fill" Width="100" />
+                            <Image Source="{Binding}" Stretch="Fill" Width="100" Height="150" />
                         </DataTemplate>
                     </GridView.ItemTemplate>
                 </GridView>
-                <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Text="Player" TextAlignment="Center"/>
+                <TextBox HorizontalAlignment="Center" Text="Player" TextAlignment="Center"/>
+            </StackPanel>
+
+            <!--Dealer Block-->
+            <StackPanel Grid.Row="0" Grid.Column="1" VerticalAlignment="Top" Margin="0,20,0,10">
+                <TextBox Text="Dealer" TextAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <GridView VerticalAlignment="Bottom" x:Name="DealerHand">
+                        <GridView.ItemTemplate>
+                            <DataTemplate>
+                                <Image Source="{Binding}" Stretch="Fill" Height="150" Width="100"/>
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
+                    </GridView>
+                    <Image Name="DealerCardBack" Source="Assets/red_back.png" 
+                           Width="100" Height="150" Stretch="Fill" VerticalAlignment="Top"
+                           Margin="4,0,0,0"/>
+                </StackPanel>
             </StackPanel>
 
             <!-- Busted Messsage, Initially not visible-->
             <TextBlock Name="BustMessage" Text="YOU BUSTED!" 
                        FontSize="50" Foreground="DarkRed" FontWeight="ExtraBlack"
-                       Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" 
+                       Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" 
                        VerticalAlignment="Bottom" Visibility="Collapsed" />
 
             <!-- Player Blackjack Messsage, Initially not visible-->
             <TextBlock Name="PlayerBlackjackMessage" Text="Blackjack!" 
                        FontSize="50" Foreground="Yellow" FontWeight="ExtraBlack"
-                       Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" 
+                       Grid.Row="`" Grid.Column="1" HorizontalAlignment="Center" 
                        VerticalAlignment="Bottom" Visibility="Collapsed" />
             
             <!-- Logos -->
-            <Image x:Name="Logo" Grid.Column="1" Grid.Row="0" 
+            <Image x:Name="Logo" Grid.Column="1" Grid.Row="1" Margin="0,40,0,0"
                    MaxHeight="100" HorizontalAlignment="Center" VerticalAlignment="Bottom" 
                    Source="Assets/Blackjacklogo.jpg"/>
             <Image Grid.Column="2" Grid.ColumnSpan="1" 
@@ -143,9 +160,6 @@
                 <Button Name="StandButton" Content="Stand" Click="Stand" FontSize="30" Background="#66FFFFFF"
                         HorizontalAlignment="Stretch" BorderThickness="6" BorderBrush="Black" IsEnabled="{Binding ButtonsEnabled}"/>
             </StackPanel>
-
-            <!--Dealer Block-->
-            <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Text="Dealer" VerticalAlignment="Top"/>
 
             <!--Stats-->
             <StackPanel Grid.Row="2" Grid.Column="0">

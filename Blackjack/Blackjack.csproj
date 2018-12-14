@@ -166,6 +166,7 @@
     <Content Include="Assets\Q_D.png" />
     <Content Include="Assets\Q_H.png" />
     <Content Include="Assets\Q_S.png" />
+    <Content Include="Assets\red_back.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
     <Content Include="Assets\Square150x150Logo.scale-200.png" />
     <Content Include="Assets\Square44x44Logo.scale-200.png" />

@@ -29,12 +29,40 @@ namespace Blackjack
         Blackjack blackjack = new Blackjack();
         SaveGame save = new SaveGame();
         ObservableCollection<String> myHand = new ObservableCollection<string>();
+        ObservableCollection<String> dealerHand = new ObservableCollection<string>();
 
-        // The bool and event will control all user buttons
+        // The following bool and event will control all user buttons
         // whenever the ButtonsEnabled bool is changed in a function.
         // SOURCE: https://stackoverflow.com/questions/23641688/changing-a-label-when-a-bool-variable-turns-true
         private bool _buttons_enabled = true;
         public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Page Constructor
+        /// </summary>
+        public GamePage()
+        {
+            this.InitializeComponent();
+            myHand.Clear();
+            dealerHand.Clear();
+
+            // Add initial cards into the playerHand and dealerHand in UI.
+            myHand.Add(blackjack.player.hand[0]);
+            DealerCardBack.Visibility = Visibility.Visible;      // Don't show dealer's first card initially. Uses picture of cardback instead.
+            myHand.Add(blackjack.player.hand[1]);
+            dealerHand.Add(blackjack.dealer.hand[0]);
+            // Bind the UI to myHand and dealerHand created in this file.
+            PlayerHand.ItemsSource = myHand;
+            DealerHand.ItemsSource = dealerHand;
+
+            // If first two cards add to 21, call blackjack to print msg and handle logic.
+            // Then pass logic to NextRoundUI method.
+            if (blackjack.player.handValue == 21)
+            {
+                NaturalBlackjack();
+            }
+        }
+
         /// <summary>
         /// Creates a bool that can be changed using an event handler.
         /// Bound to all user buttons that need to be toggled.
@@ -58,26 +86,6 @@ namespace Blackjack
             if (PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propName));
-            }
-        }
-
-        /// <summary>
-        /// Page Constructor
-        /// </summary>
-        public GamePage()
-        {
-            this.InitializeComponent();
-            myHand.Clear();
-            // Add initial cards into the playerHand in UI.
-            myHand.Add(blackjack.player.playerHand[0]);
-            myHand.Add(blackjack.player.playerHand[1]);
-            // Bind the UI to myHand
-            PlayerHand.ItemsSource = myHand;
-            // If first two cards add to 21, call blackjack to print msg and handle logic.
-            // Then pass logic to NextRoundUI method.
-            if (blackjack.player.handValue == 21)
-            {
-                NaturalBlackjack();
             }
         }
 
@@ -129,7 +137,7 @@ namespace Blackjack
                 System.Diagnostics.Debug.WriteLine(ex.Message);
             }
 
-            myHand.Add(blackjack.player.playerHand[blackjack.player.playerHand.Count - 1]);   // Add last card if hit was successful.
+            myHand.Add(blackjack.player.hand[blackjack.player.hand.Count - 1]);   // Add last card if hit was successful.
             System.Diagnostics.Debug.WriteLine(myHand[myHand.Count - 1]);
             // If bust, reinitialize UI hand to the now-reset Blackjack.cs hand.
             if (blackjack.busted)
@@ -138,10 +146,14 @@ namespace Blackjack
                 // Display busted message.
                 Logo.Visibility = Visibility.Collapsed;
                 BustMessage.Visibility = Visibility;
+                // Reveal dealer's 2nd card.
+                DealerCardBack.Visibility = Visibility.Collapsed;
+                dealerHand.Add(blackjack.dealer.hand[1]);
+
                 await Task.Delay(TimeSpan.FromSeconds(5));  // 5 Sec Delay
-                BustMessage.Visibility = Visibility.Collapsed;
+                BustMessage.Visibility = Visibility.Collapsed;  // Logo back on
                 Logo.Visibility = Visibility;
-                // TODO: WAIT FOR DEALER TO FINISH BEFORE STARTING NEXT ROUND.
+
                 NextRoundUI();
                 ButtonsEnabled = true; // Re-Enable buttons after dealing cards.
             }
@@ -150,14 +162,13 @@ namespace Blackjack
         private void Stand(object sender, RoutedEventArgs e)
         {
             blackjack.Stand();
-            save.SaveObject(blackjack);
-
         }
 
         private void BetAmount_Click(object sender, RoutedEventArgs e)
         {
 
         }
+
         /// <summary>
         /// Print rules upon button press.
         /// </summary>
@@ -176,6 +187,7 @@ namespace Blackjack
                 "If he doesn't, then the players get to decide how to play their hands.");
              await myMessage.ShowAsync();
         }
+
         /// <summary>
         /// Print creators upon button press.
         /// </summary>
@@ -191,6 +203,7 @@ namespace Blackjack
                 "Anush. ");
             await myMessage2.ShowAsync();
         }
+
         /// <summary>
         /// A natural blackjack occurs when the initial two cards dealt
         /// to the player are 21. This method prints a message, automatically stands,
@@ -205,7 +218,6 @@ namespace Blackjack
             await Task.Delay(TimeSpan.FromSeconds(5));  // 5 Sec Delay
             PlayerBlackjackMessage.Visibility = Visibility.Collapsed;
             Logo.Visibility = Visibility;
-            // TODO: WAIT FOR DEALER TO FINISH BEFORE STARTING NEXT ROUND.
             NextRoundUI();
             ButtonsEnabled = true; // Re-Enable buttons after dealing cards.
         }
@@ -217,9 +229,17 @@ namespace Blackjack
         private void NextRoundUI()
         {
             blackjack.NextRound();
+
+            // Reset the UI representation of the hands.
             myHand.Clear();
-            myHand.Add(blackjack.player.playerHand[0]);
-            myHand.Add(blackjack.player.playerHand[1]);
+            dealerHand.Clear();
+
+            myHand.Add(blackjack.player.hand[0]);
+            DealerCardBack.Visibility = Visibility.Visible;     // Don't show dealer's first card initially.
+            myHand.Add(blackjack.player.hand[1]);
+            dealerHand.Add(blackjack.dealer.hand[0]);
+
+            
             // Call natural blackjack if player gets 21 on deal.
             if (blackjack.player.handValue == 21)
             {
@@ -227,6 +247,7 @@ namespace Blackjack
             }
 
         }
+
         /// <summary>
         /// Exits game on player confirmation.
         /// </summary>

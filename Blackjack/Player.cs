@@ -9,8 +9,8 @@ namespace Blackjack
     class Player : IComparable<Player>
     {
         public int handValue { get; set; }
-        public List<string> playerHand = new List<string>();
-        public List<int> handVals = new List<int>();
+        public List<string> hand = new List<string>();  // Cards are stored as strings representing their filepaths for UI binding.
+        public int numElevens = 0;                      // numElevens tracks how many aces are assigned a value of 11 for hand value updating.
 
         //Explicit public constructor
         public Player()
@@ -20,7 +20,7 @@ namespace Blackjack
 
         public void AddCard(string card)
         {
-            playerHand.Add(card);
+            hand.Add(card);
             handValue += Card_Value(card);
         }
 
@@ -49,10 +49,25 @@ namespace Blackjack
             else if (rank == 'A')
             {
                 if (handValue > 10) return 1;
-                else return 11;
+                else
+                {
+                    numElevens += 1;        // Update number of elevens in hand to update logic in case of > 21.
+                    return 11;
+                }
             }
             // 10, J, Q, K will return 10.
             else return 10;
+        }
+
+        /// <summary>
+        /// Reset cards in hand, value of hand, and number of elevens.
+        /// Called for each new round.
+        /// </summary>
+        public void Reset()
+        {
+            handValue = 0;
+            hand.Clear();
+            numElevens = 0;
         }
 
         public int CompareTo(Player other)
@@ -63,7 +78,7 @@ namespace Blackjack
         public override string ToString()
         {
             string printedHand = "";
-            foreach (string s in playerHand)
+            foreach (string s in hand)
             {
                 printedHand += s + "\n";
             }

@@ -16,7 +16,7 @@ namespace Blackjack
         GambleChips chips = new GambleChips();
         public Strategy newHint = new Strategy();
         public Player player = new Player();
-        private Player dealer = new Player();
+        public Player dealer = new Player();
         bool hit { get; set; }
         bool stand { get; set; }
         bool doubleDown { get; set; }
@@ -41,27 +41,33 @@ namespace Blackjack
             // Print the game state to the Debug Console
             System.Diagnostics.Debug.Write(this.ToString());
         }    
+
         /// <summary>
         /// 
         /// </summary>
         public void Hit()
-        {
-            // TODO: add logic to check for bust            
+        {          
             player.AddCard(newDeck.Deal_Card());
 
-            // Print the Hands out
-            System.Diagnostics.Debug.Write(player.ToString());
-
+            // Check for bust.
             if (player.handValue > 21)
             {
-                busted = true;
-                
+                // If player will bust, but there is an ace (11) in hand, subtract 10.
+                if (player.numElevens > 0)
+                {
+                    player.numElevens -= 1;
+                    player.handValue -= 10;
+                }
+                else
+                {
+                    busted = true;
+                }     
             }
         }
 
         public void Stand()
         {
-            System.Diagnostics.Debug.Write(player.ToString());
+            // TODO: Wait for dealer to finish and start new round.
         }
 
         public void DoubleDown()
@@ -90,12 +96,10 @@ namespace Blackjack
         {
             if (newDeck.CardsInStack() < 10)
                 newDeck.Shuffle_Deck();
-            
+
             // Reset cards in hand and value of hands.
-            player.playerHand.Clear();
-            dealer.playerHand.Clear();
-            player.handValue = 0;
-            dealer.handValue = 0;
+            player.Reset();
+            dealer.Reset();
 
             // Deal the cards to the player and the dealer
 
@@ -131,7 +135,7 @@ namespace Blackjack
         public string Hints()
         {
             string hint = "";
-            hint = newHint.Hints(player.playerHand[0], player.playerHand[1], dealer.playerHand[1]);
+            hint = newHint.Hints(player.hand[0], player.hand[1], dealer.hand[1]);
             return hint;
         }
     }
