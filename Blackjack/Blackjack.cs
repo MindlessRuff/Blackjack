@@ -79,7 +79,7 @@ namespace Blackjack
             if (dealer.naturalBlackjack) return;
 
             // Dealer hit block.
-            while (dealer.handValue < 17 || dealer.numElevens > 0)
+            while ((dealer.handValue < 17 || dealer.numElevens > 0) && dealer.handValue != 21)
             {
                 dealer.AddCard(newDeck.Deal_Card());
                 // Check for under 17 or soft > 17.
