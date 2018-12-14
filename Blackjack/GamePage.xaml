@@ -25,18 +25,24 @@
                 <!--Middle column takes 3/5 of total width-->
                 <ColumnDefinition Width= "*" />
             </Grid.ColumnDefinitions>
-
-                <!--Side Menu Bar-->
-                <RelativePanel Grid.ColumnSpan="2">
+            
+            <!--Loading ring is enabled in backend during time delays-->
+            <ProgressRing Name="Loading" Grid.Row="2" Grid.Column= "1"  
+                          Height="60" Width="60" Foreground="White"
+                          HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            
+            <!--Side Menu Bar-->  
+            <RelativePanel Grid.ColumnSpan="2">
                     
                 <!--Settings Menu Button-->
                 <Button
-                Name="Menu" Content="&#xE700;" FontFamily="Segoe MDL2 Assets" FontSize="25"  
-                Click="Settings_Click" VerticalAlignment="Top" RequestedTheme="Default" FontWeight="Bold"
-                IsDoubleTapEnabled="False" Foreground="White"/>
+                    Name="Menu" Content="&#xE700;" FontFamily="Segoe MDL2 Assets" FontSize="25"  
+                    Click="Settings_Click" VerticalAlignment="Top" RequestedTheme="Default" FontWeight="Bold"
+                    IsDoubleTapEnabled="False" Foreground="White"/>
                     
                 <!--Settings Menu-->
-                    <SplitView OpenPaneLength="200" RelativePanel.Below="Menu" Name="Settings"
+                   
+                <SplitView OpenPaneLength="200" RelativePanel.Below="Menu" Name="Settings"
                            DisplayMode="Inline" RequestedTheme="Default" CompactPaneLength="50">
                     <SplitView.Pane>
                         <ListBox SelectionMode="Single" SelectionChanged="ListBox_SelectionChanged">
@@ -127,7 +133,7 @@
                     </GridView>
                     <Image Name="DealerCardBack" Source="Assets/red_back.png" 
                            Width="100" Height="150" Stretch="Fill" VerticalAlignment="Top"
-                           Margin="4,0,0,0"/>
+                           Margin="4,0,0,0" Visibility="Collapsed"/>
                 </StackPanel>
             </StackPanel>
 
@@ -137,17 +143,18 @@
                        Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" 
                        VerticalAlignment="Bottom" Visibility="Collapsed" />
 
-            <!-- Player Blackjack Messsage, Initially not visible-->
-            <TextBlock Name="PlayerBlackjackMessage" Text="Blackjack!" 
-                       FontSize="50" Foreground="Yellow" FontWeight="ExtraBlack"
+
+            <!-- Controls all Blackjack Messsage except busted, initially not visible. Text can be changed in the backend-->
+            <TextBlock Name="PlayerBlackjackMessage" Foreground="Yellow"
+                       FontSize="50" FontWeight="ExtraBlack"
                        Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" 
                        VerticalAlignment="Bottom" Visibility="Collapsed" />
             
             <!-- Logos -->
             <Image x:Name="Logo" Grid.Column="1" Grid.Row="1" Margin="0,40,0,0"
-                   MaxHeight="100" HorizontalAlignment="Center" VerticalAlignment="Bottom" 
+                   MaxHeight="110" HorizontalAlignment="Center" VerticalAlignment="Bottom" 
                    Source="Assets/Blackjacklogo.jpg"/>
-            <Image Grid.Column="2" Grid.ColumnSpan="1" 
+            <Image Name="CornerLogo" Grid.Column="2" Grid.ColumnSpan="1" MaxHeight="250"
                    HorizontalAlignment="Center" VerticalAlignment="Top"  
                    Source="Assets/blackjack.png"/>
 

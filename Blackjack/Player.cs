@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Blackjack;
 
 namespace Blackjack
 {
@@ -10,12 +11,17 @@ namespace Blackjack
     {
         public int handValue { get; set; }
         public List<string> hand = new List<string>();  // Cards are stored as strings representing their filepaths for UI binding.
-        public int numElevens = 0;                      // numElevens tracks how many aces are assigned a value of 11 for hand value updating.
-
+        public int numElevens { get; set; }             // numElevens tracks how many aces are assigned a value of 11 for hand value updating.
+        public bool busted { get; set; }                // Variable will be set when hand > 21, only UI class will reset this variable.
+        public bool naturalBlackjack { get; set; }      // Tracks 21 on deal, which is higher than other 21's. Set in blackjack class.
+      
         //Explicit public constructor
         public Player()
         {
             handValue = 0;
+            numElevens = 0;
+            naturalBlackjack = false;
+            busted = false;
         }
 
         public void AddCard(string card)
@@ -60,14 +66,16 @@ namespace Blackjack
         }
 
         /// <summary>
-        /// Reset cards in hand, value of hand, and number of elevens.
+        /// Reset all player variables (Cards, handValue, etc)
         /// Called for each new round.
         /// </summary>
         public void Reset()
         {
-            handValue = 0;
             hand.Clear();
+            handValue = 0;
             numElevens = 0;
+            busted = false;
+            naturalBlackjack = false;
         }
 
         public int CompareTo(Player other)
