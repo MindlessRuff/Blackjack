@@ -30,6 +30,7 @@ namespace Blackjack
         SaveGame save = new SaveGame();
         ObservableCollection<String> myHand = new ObservableCollection<string>();
         ObservableCollection<String> dealerHand = new ObservableCollection<string>();
+        ObservableCollection<String> splitHand = new ObservableCollection<string>();
         
         // The following bool and event will control all user buttons
         // whenever the ButtonsEnabled bool is changed in a function.
@@ -39,6 +40,7 @@ namespace Blackjack
 
         private int playerHandValue = 0;      // This int works in the same way ButtonsEnabled does, used in HandValue on event.
         private int dealerHandValue = 0;
+        private int splitHandValue = 0;
 
         /// <summary>
         /// Page Constructor
@@ -50,6 +52,7 @@ namespace Blackjack
             // Bind the UI hands to the player and dealer hands.
             PlayerHand.ItemsSource = myHand;
             DealerHand.ItemsSource = dealerHand;
+            //SplitHand.ItemsSource = splitHand; // Make a space in the UI for the split hand to be displayed
 
             NextRoundUI();
         }
@@ -79,6 +82,20 @@ namespace Blackjack
             {
                 dealerHandValue = value;
                 OnPropertyChanged("DealerHandValue");
+            }
+        }
+
+        /// <summary>
+        /// This will only be utilized when the player decides to split to keep track
+        /// of the second hand value
+        /// </summary>
+        public int SplitHandValue
+        {
+            get { return splitHandValue; }
+            set
+            {
+                playerHandValue = value;
+                OnPropertyChanged("SplitHandValue");
             }
         }
 
@@ -389,24 +406,33 @@ namespace Blackjack
             Application.Current.Exit();
         }
 
-        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
 
-        private void DoubleDown(object sender, RoutedEventArgs e)
+        private async void DoubleDown(object sender, RoutedEventArgs e)
         {
-          
-        }
-
-        private void Split(object sender, RoutedEventArgs e)
-        {
+            ButtonsEnabled = false; 
+            // TODO: Add logic to double bet in blackjack class
+            // blackjack.DoubleDown();
+            await Task.Delay(TimeSpan.FromSeconds(0.7));
             
+            Hit(this, e);
+            await Task.Delay(TimeSpan.FromSeconds(0.7));
+
+            if (!blackjack.player.busted)
+                Stand(this, e);
         }
 
-        private void Surrender(object sender, RoutedEventArgs e)
+        private async void Split(object sender, RoutedEventArgs e)
         {
-            
+            ButtonsEnabled = false; 
+        }
+
+        private async void Surrender(object sender, RoutedEventArgs e)
+        {
+            ButtonsEnabled = false; 
         }
     }
 }

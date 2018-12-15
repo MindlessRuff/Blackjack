@@ -184,10 +184,15 @@
 
             <!--Stats-->
             <StackPanel Grid.Row="2" Grid.RowSpan="2" VerticalAlignment="Bottom" Margin="0,0,0,50">
+                <Button Name="Hint" Content="Hint" Margin="0,0,0,20"
+                        FontSize="20" HorizontalAlignment="Stretch" 
+                        BorderBrush="Black" BorderThickness="6"
+                        Background="#66FFFFFF" Height="75" Width="165">
+                </Button>
                 <Button Name="BetAmount" Content="Bet Amount" Margin="0,0,0,20"
                         FontSize="20" HorizontalAlignment="Stretch" 
                         BorderBrush="Black" BorderThickness="6"
-                        Background="#66FFFFFF" Height="75" Width="150">
+                        Background="#66FFFFFF" Height="75" Width="165">
                 </Button>
                 <Button Name="PlayerChips" Content="Available Chips" FontSize="20" 
                         Background="#66FFFFFF" Width="165" Height="75"
