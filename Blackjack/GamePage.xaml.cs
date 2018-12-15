@@ -333,5 +333,20 @@ namespace Blackjack
         {
 
         }
+
+        private async void DoubleDown(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private async void Split(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private async void Surrender(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
