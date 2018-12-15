@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Blackjack;
-
+using System.ComponentModel;
 namespace Blackjack
 {
     class Player : IComparable<Player>
@@ -14,7 +14,9 @@ namespace Blackjack
         public int numElevens { get; set; }             // numElevens tracks how many aces are assigned a value of 11 for hand value updating.
         public bool busted { get; set; }                // Variable will be set when hand > 21, only UI class will reset this variable.
         public bool naturalBlackjack { get; set; }      // Tracks 21 on deal, which is higher than other 21's. Set in blackjack class.
-      
+        public int numOnes { get; set; }                // Tracks number of soft aces, used in UI stand function to correct dealer UI hand value representation.
+
+
         //Explicit public constructor
         public Player()
         {
@@ -27,7 +29,12 @@ namespace Blackjack
         public void AddCard(string card)
         {
             hand.Add(card);
-            handValue += Card_Value(card);
+            int temp = Card_Value(card);
+            if (temp == 11)
+            {
+                numElevens += 1;                 // Update number of elevens in hand to update logic in case of > 21.
+            }
+            handValue += temp;
         }
 
         public string Total_Value()
@@ -57,7 +64,6 @@ namespace Blackjack
                 if (handValue > 10) return 1;
                 else
                 {
-                    numElevens += 1;        // Update number of elevens in hand to update logic in case of > 21.
                     return 11;
                 }
             }

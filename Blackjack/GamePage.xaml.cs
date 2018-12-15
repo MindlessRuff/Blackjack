@@ -25,17 +25,20 @@ namespace Blackjack
     /// </summary>
     public sealed partial class GamePage : Page, INotifyPropertyChanged
     {
-        // These need to be outside of the constructor so they can be acessed be the other methods
+        // These need to be outside of the constructor so they can be accessed be the other methods
         Blackjack blackjack = new Blackjack();
         SaveGame save = new SaveGame();
         ObservableCollection<String> myHand = new ObservableCollection<string>();
         ObservableCollection<String> dealerHand = new ObservableCollection<string>();
-
+        
         // The following bool and event will control all user buttons
         // whenever the ButtonsEnabled bool is changed in a function.
         // SOURCE: https://stackoverflow.com/questions/23641688/changing-a-label-when-a-bool-variable-turns-true
-        private bool _buttons_enabled = true;
+        private bool buttonsEnabled = true;
         public event PropertyChangedEventHandler PropertyChanged;
+
+        private int playerHandValue = 0;      // This int works in the same way ButtonsEnabled does, used in HandValue on event.
+        private int dealerHandValue = 0;
 
         /// <summary>
         /// Page Constructor
@@ -47,7 +50,36 @@ namespace Blackjack
             // Bind the UI hands to the player and dealer hands.
             PlayerHand.ItemsSource = myHand;
             DealerHand.ItemsSource = dealerHand;
+
             NextRoundUI();
+        }
+
+        /// <summary>
+        /// This property will update and control the textblock
+        /// with the player's hand value. Necessary for UI to update.
+        /// </summary>
+        public int PlayerHandValue
+        {
+            get { return playerHandValue; }
+            set
+            {
+                playerHandValue = value;
+                OnPropertyChanged("PlayerHandValue");
+            }
+        }
+
+        /// <summary>
+        /// This property will update and control the textblock
+        /// with the dealer's hand value. Necessary for UI to update.
+        /// </summary>
+        public int DealerHandValue
+        {
+            get { return dealerHandValue; }
+            set
+            {
+                dealerHandValue = value;
+                OnPropertyChanged("DealerHandValue");
+            }
         }
 
         /// <summary>
@@ -56,10 +88,10 @@ namespace Blackjack
         /// </summary>
         public bool ButtonsEnabled
         {
-            get { return _buttons_enabled; }
+            get { return buttonsEnabled; }
             set
             {
-                _buttons_enabled = value;
+                buttonsEnabled = value;
                 OnPropertyChanged("ButtonsEnabled");
             }
         }
@@ -128,23 +160,24 @@ namespace Blackjack
             }
 
             myHand.Add(blackjack.player.hand[blackjack.player.hand.Count - 1]);   // Add last card if hit was successful.
-
+            PlayerHandValue = blackjack.player.handValue;
             // If bust, reinitialize UI hand to the now-reset Blackjack.cs hand.
             if (blackjack.player.busted)
             {
                 await Task.Delay(TimeSpan.FromSeconds(0.5));
 
                 // Display busted message.
-                Logo.Visibility = Visibility.Collapsed;
                 BustMessage.Visibility = Visibility;
+
                 // Reveal dealer's 2nd card.
                 DealerCardBack.Visibility = Visibility.Collapsed;
                 dealerHand.Add(blackjack.dealer.hand[1]);
+                DealerHandValue = blackjack.dealer.handValue;
 
                 Loading.IsActive = true;                        // Loading ring on
                 await Task.Delay(TimeSpan.FromSeconds(3));      // 3 Sec Delay
-                BustMessage.Visibility = Visibility.Collapsed;  // Logo back on
-                Logo.Visibility = Visibility;
+                BustMessage.Visibility = Visibility.Collapsed;
+
                 Loading.IsActive = false;                       // Loading ring off
 
                 NextRoundUI();
@@ -161,44 +194,55 @@ namespace Blackjack
         private async void Stand(object sender, RoutedEventArgs e)
         {
             ButtonsEnabled = false;  // Disable user buttons.
-            blackjack.Stand();
+
             // Reveal dealer's 2nd card.
             DealerCardBack.Visibility = Visibility.Collapsed;
             dealerHand.Add(blackjack.dealer.hand[1]);
+            DealerHandValue = blackjack.dealer.handValue;
+
+            blackjack.Stand();
 
             // Check for dealer natural blackjack.
             if (blackjack.dealer.naturalBlackjack)
             {
                 // Change message and display.
-                PlayerBlackjackMessage.Text = "Dealer Blackjack, You Lose.";
-                Logo.Visibility = Visibility.Collapsed;
+                PlayerBlackjackMessage.Text = "Dealer Blackjack";
                 PlayerBlackjackMessage.Visibility = Visibility.Visible;
 
-                // Delay and turn logo on before dealing new cards.
+                // Delay before dealing new cards.
                 Loading.IsActive = true;                        // Loading ring on
                 await Task.Delay(TimeSpan.FromSeconds(3));      // 3 Sec Delay
                 PlayerBlackjackMessage.Visibility = Visibility.Collapsed;
-                Logo.Visibility = Visibility;
+
                 Loading.IsActive = false;                       // Loading ring off
 
             }
+
             // Dealer hits until busting or hard > 17, will only run if player hasn't busted.
             else if (!blackjack.player.busted)
             {
                 
-                /* Try-catch block will attempt until failure, adding a new card to the
-                 * UI hand while cards exist in the Player class hand
-                */
+                // Try-catch block will attempt until failure, adding a new card to the
+                // UI hand while cards exist in the Player class hand
                 bool success = false;   // Tracks if card was successfully added to allow retrying of block.
                 do
                 {
                     try
                     {
-                        await Task.Delay(TimeSpan.FromSeconds(1));  // 1 Sec Delay between dealer cards.
+                        await Task.Delay(TimeSpan.FromSeconds(1));                                                  // 1 Sec Delay between dealer cards.
                         dealerHand.Add(blackjack.dealer.hand[dealerHand.Count]);
+                        DealerHandValue += blackjack.dealer.Card_Value(blackjack.dealer.hand[dealerHand.Count-1]);   // Add value to UI dealer hand value.
+
+                        // UI hand value representation has to be corrected for acess
+                        if (blackjack.dealer.numOnes > 0)
+                        {
+                            DealerHandValue -= 10;
+                            blackjack.dealer.numOnes -= 1;
+                        }
+
                         success = true;
                     }
-                    catch (ArgumentOutOfRangeException)     // No more cards to add.
+                    catch (ArgumentOutOfRangeException)     // Exception is thrown when there are no more cards to add to dealer UI hand from blackjack dealer hand.
                     {
                         // Change display message based on hand values and display.
                         if (blackjack.player.handValue > blackjack.dealer.handValue || blackjack.dealer.handValue > 21) PlayerBlackjackMessage.Text = "You Win!";
@@ -206,15 +250,13 @@ namespace Blackjack
                         else PlayerBlackjackMessage.Text = "Push!";
 
                         // TODO: Change display message/delay to its own function.
-                        Logo.Visibility = Visibility.Collapsed;
                         PlayerBlackjackMessage.Visibility = Visibility.Visible;
 
-                        // Delay and turn logo on before dealing new cards.
+                        // Delay before dealing new cards.
                         Loading.IsActive = true;                        // Loading ring on
                         await Task.Delay(TimeSpan.FromSeconds(3));      // 3 Sec Delay
 
                         PlayerBlackjackMessage.Visibility = Visibility.Collapsed;
-                        Logo.Visibility = Visibility;
                         Loading.IsActive = false;                       // Loading ring off
                         success = false;
                     }
@@ -272,16 +314,27 @@ namespace Blackjack
         {
             ButtonsEnabled = false;  // Disable user buttons.
             
-            Logo.Visibility = Visibility.Collapsed;
+
             // Change the message text and display to user.
-            PlayerBlackjackMessage.Text = "Blackjack!";
+            if (blackjack.dealer.naturalBlackjack)
+            {
+                PlayerBlackjackMessage.Text = "Push!";
+            }
+            else
+            {
+                PlayerBlackjackMessage.Text = "Blackjack!";
+            }
             PlayerBlackjackMessage.Visibility = Visibility;
+
+            // Reveal dealer's hand
+            DealerCardBack.Visibility = Visibility.Collapsed;
+            dealerHand.Add(blackjack.dealer.hand[1]);
+            DealerHandValue = blackjack.dealer.handValue;
 
             Loading.IsActive = true;                    // Loading ring on
             await Task.Delay(TimeSpan.FromSeconds(3));  // 3 Sec Delay
             Loading.IsActive = false;                   // Loading ring off
             PlayerBlackjackMessage.Visibility = Visibility.Collapsed;
-            Logo.Visibility = Visibility;
 
             NextRoundUI();
         }
@@ -293,23 +346,30 @@ namespace Blackjack
         private async void NextRoundUI()
         {
             ButtonsEnabled = false;
+            PlayerHandValue = 0;
+            DealerHandValue = 0;
             blackjack.NextRound();
 
             // Reset the UI representation of the hands.
             myHand.Clear();
             dealerHand.Clear();
 
-            Loading.IsActive = true;
             // Generate hands.
             await Task.Delay(TimeSpan.FromSeconds(0.7));
             myHand.Add(blackjack.player.hand[0]);
-            await Task.Delay(TimeSpan.FromSeconds(0.7));        // 700 ms delay between cards.
-            DealerCardBack.Visibility = Visibility.Visible;     // Don't show dealer's first card initially.
+            PlayerHandValue = blackjack.player.Card_Value(blackjack.player.hand[0]);            // Update player UI hand value.
+
+            await Task.Delay(TimeSpan.FromSeconds(0.7));                                        // 700 ms delay between cards.
+            DealerCardBack.Visibility = Visibility.Visible;                                     // Don't show dealer's first card initially.
             await Task.Delay(TimeSpan.FromSeconds(0.7));  
+
             myHand.Add(blackjack.player.hand[1]);
+            PlayerHandValue = blackjack.player.handValue;                                       // Update player UI hand value with 2nd card.
             await Task.Delay(TimeSpan.FromSeconds(0.7));
+
             dealerHand.Add(blackjack.dealer.hand[0]);
-            Loading.IsActive = false;
+            DealerHandValue = blackjack.dealer.Card_Value(blackjack.dealer.hand[0]);            // Update dealer UI hand value with 1st card only.
+
 
             // Call natural blackjack if player gets 21 on deal.
             if (blackjack.player.handValue == 21)
@@ -334,19 +394,19 @@ namespace Blackjack
 
         }
 
-        private async void DoubleDown(object sender, RoutedEventArgs e)
+        private void DoubleDown(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+          
         }
 
-        private async void Split(object sender, RoutedEventArgs e)
+        private void Split(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            
         }
 
-        private async void Surrender(object sender, RoutedEventArgs e)
+        private void Surrender(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }
