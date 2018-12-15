@@ -94,7 +94,7 @@ namespace Blackjack
             get { return splitHandValue; }
             set
             {
-                playerHandValue = value;
+                splitHandValue = value;
                 OnPropertyChanged("SplitHandValue");
             }
         }
