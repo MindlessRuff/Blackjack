@@ -14,55 +14,48 @@
     <ScrollViewer VerticalScrollBarVisibility="Visible">
         <Grid x:Name="GridBackground" Background="DarkGreen">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="3*" />
-                <!--Middle column takes 3/5 of total width-->
+                <!--Middle column takes 1/2 of total width-->
                 <ColumnDefinition Width= "*" />
             </Grid.ColumnDefinitions>
-            
-            <!--Loading ring is enabled in backend during time delays-->
-            <ProgressRing Name="Loading" Grid.Row="2" Grid.Column= "1"  
-                          Height="60" Width="60" Foreground="White"
-                          HorizontalAlignment="Center" VerticalAlignment="Top"/>
-            
-            <!--Side Menu Bar-->  
+
+
+            <!--Side Menu Bar-->
             <RelativePanel Grid.ColumnSpan="2">
-                    
                 <!--Settings Menu Button-->
                 <Button
                     Name="Menu" Content="&#xE700;" FontFamily="Segoe MDL2 Assets" FontSize="25"  
                     Click="Settings_Click" VerticalAlignment="Top" RequestedTheme="Default" FontWeight="Bold"
                     IsDoubleTapEnabled="False" Foreground="White"/>
-                    
                 <!--Settings Menu-->
-                   
                 <SplitView OpenPaneLength="200" RelativePanel.Below="Menu" Name="Settings"
                            DisplayMode="Inline" RequestedTheme="Default" CompactPaneLength="50">
                     <SplitView.Pane>
                         <ListBox SelectionMode="Single" SelectionChanged="ListBox_SelectionChanged">
                             <!--Game Rules-->
-                                <ListBoxItem Background="Pink">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE7fc;"/>
+                            <ListBoxItem Background="Pink">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE7fc;"/>
                                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" 
                                                Margin="20,0,0,0" FontSize="20">Game Rules</TextBlock>
-                                        
-                                    </StackPanel>
-                                </ListBoxItem>
+
+                                </StackPanel>
+                            </ListBoxItem>
                             <!--Player Stats-->
-                                <ListBoxItem Background="Purple">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE76e;"/>
+                            <ListBoxItem Background="Purple">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE76e;"/>
                                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" 
                                                Margin="20,0,0,0" FontSize="20">Player Stats</TextBlock>
-                                    </StackPanel>
-                                </ListBoxItem>
+                                </StackPanel>
+                            </ListBoxItem>
                             <!--Get More Chips-->
                             <ListBoxItem Background="Blue">
                                 <StackPanel Orientation="Horizontal">
@@ -104,12 +97,18 @@
                                 </StackPanel>
                             </ListBoxItem>
                         </ListBox>
-                        </SplitView.Pane>
-                    </SplitView>
-                </RelativePanel>
+                    </SplitView.Pane>
+                </SplitView>
+            </RelativePanel>
 
-            <!--This block generates the player hand-->
-            <StackPanel Grid.Row="2" Grid.Column="1" VerticalAlignment="Center">
+            <!--Generate Player Hand-->
+            <StackPanel Name="PlayerStack" HorizontalAlignment="Center" VerticalAlignment="Bottom" 
+                        Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="1" Margin="0,0,0,12">
+                <!--Loading ring is enabled in backend during time delays-->
+                <ProgressRing Name="Loading" 
+                          Height="50" Width="50" Foreground="White"
+                          HorizontalAlignment="Center" Margin="10,5,10,20"/>
+                <!--Hand-->
                 <GridView HorizontalAlignment="Center" x:Name="PlayerHand">
                     <GridView.ItemTemplate>
                         <DataTemplate>
@@ -117,11 +116,20 @@
                         </DataTemplate>
                     </GridView.ItemTemplate>
                 </GridView>
-                <TextBox HorizontalAlignment="Center" Text="Player" TextAlignment="Center"/>
+                <!--Player Hand Value-->
+                <TextBox HorizontalAlignment="Center" Text="Player" TextAlignment="Center" Margin="0,0,0,10"/>
+                <Border Padding="10" BorderThickness="5" BorderBrush="White"  CornerRadius="50" Width="80" Height="80">
+                    <TextBlock Name ="PlayerValue" TextAlignment="Center" Text="{x:Bind PlayerHandValue, Mode=OneWay}" 
+                               Foreground="Yellow" FontSize="30" FontWeight="ExtraBlack" />
+                </Border>
             </StackPanel>
 
             <!--Dealer Block-->
-            <StackPanel Grid.Row="0" Grid.Column="1" VerticalAlignment="Top" Margin="0,20,0,10">
+            <StackPanel Grid.Row="0" Grid.Column="1" VerticalAlignment="Top" Margin="0,28,0,0">
+                <Border Padding="10" BorderThickness="5" BorderBrush="White"  CornerRadius="50" Width="80" Height="80" Margin="0,0,0,10">
+                    <TextBlock Name ="DealerValue" TextAlignment="Center" Text="{x:Bind DealerHandValue, Mode=OneWay}" 
+                               Foreground="Yellow" FontSize="30" FontWeight="ExtraBlack" />
+                </Border>
                 <TextBox Text="Dealer" TextAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,10"/>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <GridView VerticalAlignment="Bottom" x:Name="DealerHand">
@@ -145,54 +153,48 @@
 
 
             <!-- Controls all Blackjack Messsage except busted, initially not visible. Text can be changed in the backend-->
-            <TextBlock Name="PlayerBlackjackMessage" Foreground="Yellow"
+            <TextBlock Name="PlayerBlackjackMessage" Foreground="Yellow" Grid.ColumnSpan="1"
                        FontSize="50" FontWeight="ExtraBlack"
                        Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" 
                        VerticalAlignment="Bottom" Visibility="Collapsed" />
-            
-            <!-- Logos -->
-            <Image x:Name="Logo" Grid.Column="1" Grid.Row="1" Margin="0,40,0,0"
-                   MaxHeight="110" HorizontalAlignment="Center" VerticalAlignment="Bottom" 
-                   Source="Assets/Blackjacklogo.jpg"/>
-            <Image Name="CornerLogo" Grid.Column="2" Grid.ColumnSpan="1" MaxHeight="250"
+
+
+            <!--Player Control (Hit/Stand, etc) anchored under logo. These should be bound to a bool in GamePage.xaml.cs-->
+            <RelativePanel HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Grid.Column="2" Grid.RowSpan="3">
+                <!--Logo-->
+                <Image Name="CornerLogo" Stretch="None" Margin="0,0,0,100"
                    HorizontalAlignment="Center" VerticalAlignment="Top"  
                    Source="Assets/blackjack.png"/>
-
-            <!--Player Control Stackpanel (Hit/Stand) These should be bound to a bool in GamePage.xaml.cs-->
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="2">
-                <Button Name="HitButton" Content="Hit" Click="Hit" Margin="0,0,0,20"
+                <!--Player Controls-->
+                <StackPanel RelativePanel.Below="CornerLogo" Orientation="Vertical" >
+                    <Button Name="HitButton" Content="Hit" Click="Hit" Margin="0,0,0,12"
                         FontSize="30" HorizontalAlignment="Stretch" 
                         Background="#66FFFFFF" Width="200" IsEnabled="{Binding ButtonsEnabled}"
                         BorderThickness="6" BorderBrush="Black"/>
-                <Button Name="StandButton" Content="Stand" Click="Stand" Margin="0,0,0,20" FontSize="30" Background="#66FFFFFF" Width="200"
+                    <Button Name="StandButton" Content="Stand" Click="Stand" Margin="0,0,0,12" FontSize="30" Background="#66FFFFFF" Width="200"
                         HorizontalAlignment="Stretch" BorderThickness="6" BorderBrush="Black" IsEnabled="{Binding ButtonsEnabled}"/>
-                <Button Name="DoubleDownButton" Content="DoubleDown" Click="DoubleDown" Margin="0,0,0,20" FontSize="30" Background="#66FFFFFF"
+                    <Button Name="DoubleDownButton" Content="DoubleDown" Click="DoubleDown" Margin="0,0,0,12" FontSize="30" Background="#66FFFFFF"
                         Width="200" HorizontalAlignment="Stretch" BorderThickness="6" BorderBrush="Black" IsEnabled="{Binding ButtonsEnabled}"/>
-                <Button Name="SplitButton" Content="Split" Click="Split" Margin="0,0,0,20" FontSize="30" Background="#66FFFFFF"
+                    <Button Name="SplitButton" Content="Split" Click="Split" Margin="0,0,0,12" FontSize="30" Background="#66FFFFFF"
                         Width="200" HorizontalAlignment="Stretch" BorderThickness="6" BorderBrush="Black" IsEnabled="{Binding ButtonsEnabled}"/>
-                <Button Name="SurrenderButton" Content="Surrender" Click="Surrender" Margin="0,0,0,20" FontSize="30" Background="#66FFFFFF"
+                    <Button Name="SurrenderButton" Content="Surrender" Click="Surrender" FontSize="30" Background="#66FFFFFF"
                         Width="200" HorizontalAlignment="Stretch" BorderThickness="6" BorderBrush="Black" IsEnabled="{Binding ButtonsEnabled}"/>
-            </StackPanel>
+                </StackPanel>
+            </RelativePanel>
 
             <!--Stats-->
-            <StackPanel Grid.Row="2" Grid.Column="0">
-                <Button Name="BetAmount" Content="Bet Amount" Margin="0,20,0,20"
+            <StackPanel Grid.Row="2" Grid.RowSpan="2" VerticalAlignment="Bottom" Margin="0,0,0,50">
+                <Button Name="BetAmount" Content="Bet Amount" Margin="0,0,0,20"
                         FontSize="20" HorizontalAlignment="Stretch" 
-                        Background="#66FFFFFF" Height="75" Width="150"
-                        BorderThickness="6" BorderBrush="Black" RenderTransformOrigin="0.5,0.5" Click="BetAmount_Click" UseLayoutRounding="False" VerticalAlignment="Center" d:LayoutRounding="Auto">
-                    <Button.RenderTransform>
-                        <CompositeTransform Rotation="0.393"/>
-                    </Button.RenderTransform>
+                        BorderBrush="Black" BorderThickness="6"
+                        Background="#66FFFFFF" Height="75" Width="150">
                 </Button>
                 <Button Name="PlayerChips" Content="Available Chips" FontSize="20" 
-                        Background="#66FFFFFF" Width="165" Height="75" Margin="0,0,0,0"
-                        HorizontalAlignment="Stretch" BorderThickness="6" BorderBrush="Black" RenderTransformOrigin="0.5,0.5">
-                    <Button.RenderTransform>
-                        <CompositeTransform Rotation="0.251"/>
-                    </Button.RenderTransform>
+                        Background="#66FFFFFF" Width="165" Height="75"
+                        HorizontalAlignment="Stretch" BorderThickness="6" BorderBrush="Black">
                 </Button>
             </StackPanel>
-
+            
         </Grid>
     </ScrollViewer>
 </Page>

@@ -75,7 +75,6 @@ namespace Blackjack
         public void Stand()
         {
             // If dealer has naturalBlackjack after user stands, dealer wins. Control is passed back to UI.
-            // The case in which both have naturalBlackjack and user pushes is calculated in TODO:
             if (dealer.naturalBlackjack) return;
 
             // Dealer hit block.
@@ -86,8 +85,14 @@ namespace Blackjack
                 if (dealer.numElevens > 0 && dealer.handValue >= 17 && dealer.handValue != 21)
                 {
                     dealer.numElevens -= 1;
+                    dealer.numOnes += 1;
                     dealer.handValue -= 10;
                 }
+            }
+            // Dealer busts
+            if (dealer.handValue > 21)
+            {
+                dealer.busted = true;
             }
             return;
         }
