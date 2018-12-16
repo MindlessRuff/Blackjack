@@ -32,10 +32,11 @@ namespace Blackjack
         ObservableCollection<String> dealerHand = new ObservableCollection<string>();
         ObservableCollection<String> splitHand = new ObservableCollection<string>();
         
-        // The following bool and event will control all user buttons
-        // whenever the ButtonsEnabled bool is changed in a function.
+        // The following bools and event will control all user buttons
+        // whenever the ButtonsEnabled or Split bools are changed in a function.
         // SOURCE: https://stackoverflow.com/questions/23641688/changing-a-label-when-a-bool-variable-turns-true
         private bool buttonsEnabled = true;
+        private bool splitButtonEnabled = false;
         public event PropertyChangedEventHandler PropertyChanged;
 
         private int playerHandValue = 0;      // This int works in the same way ButtonsEnabled does, used in HandValue on event.
@@ -94,7 +95,7 @@ namespace Blackjack
             get { return splitHandValue; }
             set
             {
-                playerHandValue = value;
+                splitHandValue = value;
                 OnPropertyChanged("SplitHandValue");
             }
         }
@@ -114,6 +115,20 @@ namespace Blackjack
         }
 
         /// <summary>
+        /// Creates a bool that can be changed using an event handler.
+        /// Bound to the split button that will only be toggled with two equal-faced cards on deal.
+        /// </summary>
+        public bool SplitButtonEnabled
+        {
+            get { return splitButtonEnabled; }
+            set
+            {
+                splitButtonEnabled = value;
+                OnPropertyChanged("SplitButtonEnabled");
+            }
+        }
+
+        /// <summary>
         /// Event handler for the user button toggle.
         /// </summary>
         /// <param name="propName"></param>
@@ -126,36 +141,6 @@ namespace Blackjack
         }
 
         /// <summary>
-        /// Returns to title screen from game page.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Return_Title(object sender, RoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(MainPage));
-        }
-
-        /// <summary>
-        /// Closes flyout from return to title screen if user cancels.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Close_Flyout(object sender, RoutedEventArgs e)
-        {
-            //QuitFlyout.Hide();
-        }
-
-        /// <summary>
-        /// Pressing settings button will bring up the options menu.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Settings_Click(object sender, RoutedEventArgs e)
-        {
-            Settings.IsPaneOpen = !Settings.IsPaneOpen;
-        }
-
-        /// <summary>
         /// Called when the Hit button in the gamePage is pressed by the user.
         /// Adds a card and checks for bust. Also starts a new round when necessary.
         /// </summary>
@@ -165,7 +150,7 @@ namespace Blackjack
         {
             // Turn buttons off immediately to prevent user from spamming hit button.
             ButtonsEnabled = false;
-
+            SplitButtonEnabled = false;
             try
             {
                 blackjack.Hit();    // Hit in blackjack class
@@ -210,8 +195,8 @@ namespace Blackjack
         /// <param name="e"></param>
         private async void Stand(object sender, RoutedEventArgs e)
         {
-            ButtonsEnabled = false;  // Disable user buttons.
-
+            ButtonsEnabled = false;      // Disable user buttons.
+            SplitButtonEnabled = false;
             // Reveal dealer's 2nd card.
             DealerCardBack.Visibility = Visibility.Collapsed;
             dealerHand.Add(blackjack.dealer.hand[1]);
@@ -282,6 +267,30 @@ namespace Blackjack
             NextRoundUI();
         }
 
+        private async void DoubleDown(object sender, RoutedEventArgs e)
+        {
+            ButtonsEnabled = false;
+            // TODO: Add logic to double bet in blackjack class
+            // blackjack.DoubleDown();
+            await Task.Delay(TimeSpan.FromSeconds(0.7));
+
+            Hit(this, e);
+            await Task.Delay(TimeSpan.FromSeconds(0.7));
+
+            if (!blackjack.player.busted)
+                Stand(this, e);
+        }
+
+        private async void Split(object sender, RoutedEventArgs e)
+        {
+            SplitButtonEnabled = false;
+        }
+
+        private async void Surrender(object sender, RoutedEventArgs e)
+        {
+            ButtonsEnabled = false;
+        }
+
         private void BetAmount_Click(object sender, RoutedEventArgs e)
         {
 
@@ -295,14 +304,12 @@ namespace Blackjack
         private async void Button1_Click(object sender, RoutedEventArgs e)
         {
             MessageDialog myMessage = new MessageDialog("BlackJack Rules: The dealer deals the cards and runs all the action at the blackjack table.\n" +
-                "The game starts after the player places their bet.Blackjack games use chips instead of cash. You'll buy your chips from the side menu bar.\n" +
+                "The game starts after the player places their bet. Blackjack games use chips instead of cash. You'll buy your chips from the side menu bar.\n" +
                 "You should buy your chips between hands, don't try to interrupt a hand that's being played to get chips.\n" +
-                "You place your bet by putting your chips in the designated spot in front of your seat.\n" +
-                "It's a circle drawn onto the table. Once you and the other players have placed their bets, the dealer starts the game.\n" +
-                "The game begins when the dealer deals 2 cards.The dealer deals himself a 2 card hand, but he deals himself one card face up and the other card face down.\n" +
+                "Once you and any other players have placed your bets, the dealer starts the game.\n" +
+                "The game begins when the dealer deals 2 cards. The dealer deals himself a 2 card hand, but he deals himself one card face up and the other card face down.\n" +
                 "This is important, because that face up card gives the player a lot of information about how she should play her hand. Since you're starting with a 2 card hand, " +
-                "the highest possible total you could have is 21 - that's an ace (which counts as 11) and a ten.\nOnce all the cards are dealt, the dealer peeks to see if he has blackjack. " +
-                "If he doesn't, then the players get to decide how to play their hands.");
+                "the highest possible total you could have is 21 - that's an ace (which counts as 11) and a ten.");
              await myMessage.ShowAsync();
         }
 
@@ -387,13 +394,49 @@ namespace Blackjack
             dealerHand.Add(blackjack.dealer.hand[0]);
             DealerHandValue = blackjack.dealer.Card_Value(blackjack.dealer.hand[0]);            // Update dealer UI hand value with 1st card only.
 
-
             // Call natural blackjack if player gets 21 on deal.
             if (blackjack.player.handValue == 21)
             {
                 NaturalBlackjack();
             }
+
+            // Check for Split by comparing the card ranks.
+            if (myHand[0][7] == myHand[1][7])
+            {
+                SplitButtonEnabled = true;
+            }
+
             ButtonsEnabled = true;
+        }
+
+        /// <summary>
+        /// Pressing settings button will bring up the options menu.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Settings_Click(object sender, RoutedEventArgs e)
+        {
+            Settings.IsPaneOpen = !Settings.IsPaneOpen;
+        }
+
+        /// <summary>
+        /// Returns to title screen from game page.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Return_Title(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(MainPage));
+        }
+
+        /// <summary>
+        /// Closes flyout from return to title screen if user cancels.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Close_Flyout(object sender, RoutedEventArgs e)
+        {
+            //QuitFlyout.Hide();
         }
 
         /// <summary>
@@ -409,47 +452,6 @@ namespace Blackjack
         private async void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
-        }
-
-        private async void DoubleDown(object sender, RoutedEventArgs e)
-        {
-            ButtonsEnabled = false; 
-            // TODO: Add logic to double bet in blackjack class
-            // blackjack.DoubleDown();
-            await Task.Delay(TimeSpan.FromSeconds(0.7));
-            
-            Hit(this, e);
-            await Task.Delay(TimeSpan.FromSeconds(0.7));
-
-            if (!blackjack.player.busted)
-                Stand(this, e);
-        }
-
-        private async void Split(object sender, RoutedEventArgs e)
-        {
-            ButtonsEnabled = false; 
-        }
-
-        private async void Surrender(object sender, RoutedEventArgs e)
-        {
-            ButtonsEnabled = false; 
-            // TODO: Add logic to return half of chips bet to player
-            blackjack.Surrender();
-            await Task.Delay(TimeSpan.FromSeconds(0.7));
-
-            PlayerBlackjackMessage.Text = "You Surrendered!";
-
-            // TODO: Change display message/delay to its own function.
-            PlayerBlackjackMessage.Visibility = Visibility.Visible;
-
-            // Delay before dealing new cards.
-            Loading.IsActive = true;                        // Loading ring on
-            await Task.Delay(TimeSpan.FromSeconds(3));      // 3 Sec Delay
-
-            PlayerBlackjackMessage.Visibility = Visibility.Collapsed;
-            Loading.IsActive = false;                       // Loading ring off
-            
-            NextRoundUI();
         }
     }
 }
