@@ -433,6 +433,23 @@ namespace Blackjack
         private async void Surrender(object sender, RoutedEventArgs e)
         {
             ButtonsEnabled = false; 
+            // TODO: Add logic to return half of chips bet to player
+            blackjack.Surrender();
+            await Task.Delay(TimeSpan.FromSeconds(0.7));
+
+            PlayerBlackjackMessage.Text = "You Surrendered!";
+
+            // TODO: Change display message/delay to its own function.
+            PlayerBlackjackMessage.Visibility = Visibility.Visible;
+
+            // Delay before dealing new cards.
+            Loading.IsActive = true;                        // Loading ring on
+            await Task.Delay(TimeSpan.FromSeconds(3));      // 3 Sec Delay
+
+            PlayerBlackjackMessage.Visibility = Visibility.Collapsed;
+            Loading.IsActive = false;                       // Loading ring off
+            
+            NextRoundUI();
         }
     }
 }
