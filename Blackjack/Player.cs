@@ -80,6 +80,7 @@ namespace Blackjack
             hand.Clear();
             handValue = 0;
             numElevens = 0;
+            numOnes = 0;
             busted = false;
             naturalBlackjack = false;
         }

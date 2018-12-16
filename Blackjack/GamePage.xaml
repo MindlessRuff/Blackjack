@@ -176,7 +176,7 @@
                     <Button Name="DoubleDownButton" Content="DoubleDown" Click="DoubleDown" Margin="0,0,0,12" FontSize="30" Background="#66FFFFFF"
                         Width="200" HorizontalAlignment="Stretch" BorderThickness="6" BorderBrush="Black" IsEnabled="{Binding ButtonsEnabled}"/>
                     <Button Name="SplitButton" Content="Split" Click="Split" Margin="0,0,0,12" FontSize="30" Background="#66FFFFFF"
-                        Width="200" HorizontalAlignment="Stretch" BorderThickness="6" BorderBrush="Black" IsEnabled="{Binding ButtonsEnabled}"/>
+                        Width="200" HorizontalAlignment="Stretch" BorderThickness="6" BorderBrush="Black" IsEnabled="{Binding SplitButtonEnabled}"/>
                     <Button Name="SurrenderButton" Content="Surrender" Click="Surrender" FontSize="30" Background="#66FFFFFF"
                         Width="200" HorizontalAlignment="Stretch" BorderThickness="6" BorderBrush="Black" IsEnabled="{Binding ButtonsEnabled}"/>
                 </StackPanel>
