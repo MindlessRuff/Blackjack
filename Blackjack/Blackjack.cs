@@ -104,8 +104,11 @@ namespace Blackjack
             Stand();
         }
 
-        public int Split()
+        public void Split()
         {
+
+            bool newBust = false;
+
             player.splitHand.Add(player.hand[0]);
             player.hand[1] = null;
 
@@ -125,8 +128,14 @@ namespace Blackjack
                     player.busted = true;
                 }
             }
-
-
+            if (newBust && player.busted)
+            {
+                return;
+            }
+            else
+            {
+                player.busted = false;
+            }
         }
 
         public void Surrender()
