@@ -15,7 +15,7 @@ namespace Blackjack
          private Stack<string> deck = new Stack<string>();
          /* This is an array to store all 52 cards, it will not be drawn from or added to upon intialization.
           * It is static to avoid making multiple copies with multiple decks.
-          * Will be used to create the deck stack(s) and when shuffling. */
+          * Will be used to create the deck stacks when shuffling. */
          private static string[] unshuffledDeck = new string[52];
          public Deck()
          {
