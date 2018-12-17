@@ -75,6 +75,32 @@ namespace Blackjack
         public int surrenderChips()
         {
             // TODO: Algorithm and code the losses 
+            /*if (userBet == OneDollarChip)
+            {
+                DoubleOneDollarBet = userBet * 2;
+                return DoubleOneDollarBet;
+            }
+            else if (userBet == FiveDollarChip)
+            {
+                DoubleFiftyDollarBet = userBet * 2;
+                return DoubleFiftyDollarBet;
+            }
+            else if (userBet == TwentyFiveDollarChip )
+            {
+                DoubleTwentyFiveDollarBet = userBet * 2;
+                return DoubleFiftyDollarBet;
+            }
+            else if (userBet == FiftyDollarChip)
+            {
+                DoubleFiftyDollarBet = userBet * 2;
+                return DoubleFiftyDollarBet;
+            }
+            else
+            {
+                return 0;
+            }
+            */
+
             surrendingHand = userBet / 2;
             return surrendingHand;
         }
