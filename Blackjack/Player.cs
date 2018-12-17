@@ -98,15 +98,7 @@ namespace Blackjack
             }
             printedHand += Total_Value();
 
-            string printSecondHand = "";
-            foreach (string s in hand)
-            {
-                printSecondHand += s + "\n";
-            }
-            printedHand += Total_Value();
-            printSecondHand += secondTotal_Value();
-
-            return printedHand + printSecondHand;
+            return printedHand;
         }
 
        

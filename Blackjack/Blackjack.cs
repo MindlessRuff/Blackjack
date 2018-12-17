@@ -14,35 +14,26 @@ namespace Blackjack
     {
         Deck newDeck = new Deck();
         GambleChips chips = new GambleChips();
-        public Strategy newHint = new Strategy();
+
         public Player player = new Player();
-        public Player split = new Player();
+        public Player splitPlayer = new Player();
         public Player dealer = new Player();
-        bool hit { get; set; }
-        bool stand { get; set; }
         bool doubleDown { get; set; }
+        public bool split { get; set; }
+        public bool stand { get; set; }     // Used when the left side of a split hand stands.
 
         /// <summary>
-        /// This constructor will shuffle the deck, deal cards to the dealer and player, and display the values in the 
-        /// debug console for testing
+        /// This constructor will shuffle the deck, deal cards to the dealer and player.
         /// </summary>
         public Blackjack()
         {
             // create new deck object first            
             // Shuffle the deck and generate the stack
             newDeck.Shuffle_Deck();
-            
-            // Deal the cards to the player and the dealer
-            
-            player.AddCard(newDeck.Deal_Card());
-            dealer.AddCard(newDeck.Deal_Card());
-            player.AddCard(newDeck.Deal_Card());
-            dealer.AddCard(newDeck.Deal_Card());
-            if (player.handValue == 21) player.naturalBlackjack = true;
-            if (dealer.handValue == 21) dealer.naturalBlackjack = true;
 
-            // Print the game state to the Debug Console
-            System.Diagnostics.Debug.Write(this.ToString());
+            // Deal the cards to the player and the dealer
+
+            NextRound();
         }    
 
         /// <summary>
@@ -52,7 +43,6 @@ namespace Blackjack
         {          
             hitPlayer.AddCard(newDeck.Deal_Card());
            
-
             // Check for bust.
             if (hitPlayer.handValue > 21)
             {
@@ -109,38 +99,63 @@ namespace Blackjack
 
         public void Split()
         {
-            bool hit = true;
-            do
+            split = true;
+            player.numElevens = 0;
+            // Divide the cards between player and splitPlayer hands. -> Set player handvalue equal to first card only.
+            splitPlayer.AddCard(player.hand[1]);
+            player.hand.RemoveAt(1);
+            player.handValue = player.Card_Value(player.hand[0]);
+            // Fix ace logic
+            if (player.hand[0][7] == 'A')
             {
-                Hit(player);
-
-            } while (hit == true);
-            
-            player.AddCard(newDeck.Deal_Card());  // Add card to first split hand.
-
-            // Check for bust.
-            if (player.handValue > 21)
-            {
-                // If player will bust, but there is an ace (11) in hand, subtract 10.
-                if (player.numElevens > 0)
-                {
-                    player.numElevens -= 1;
-                    player.handValue -= 10;
-                }
-                else
-                {
-                    player.busted = true;
-                }
+                player.handValue = 11;
+                player.numElevens += 1;
+                splitPlayer.handValue = 11;
+                splitPlayer.numElevens += 1;
             }
-           
-        }
+            player.AddCard(newDeck.Deal_Card());        // Add card to first hand.
+            splitPlayer.AddCard(newDeck.Deal_Card());   // Add card to split hand, will not show in UI hand until first hand stands or busts.
 
-       
+            System.Diagnostics.Debug.WriteLine(this.ToString());
+        }    
 
         public void Surrender()
         {
             //Here the player losses half their bet 
             NextRound();
+        }
+
+        // Called at the end of dealer's turn to calculate the winner and output message to UI.
+        public string CalculateWinner()
+        {
+            // Hand was split
+            if (split)
+            {
+                if ((dealer.busted && !player.busted && !splitPlayer.busted) || ((player.handValue > dealer.handValue && !player.busted) &&
+                    (splitPlayer.handValue > dealer.handValue && !splitPlayer.busted))) return "Both Hands Win!";
+                else if (!dealer.busted && (player.busted && (splitPlayer.busted || splitPlayer.handValue < dealer.handValue)) ||
+                    (player.handValue < dealer.handValue && splitPlayer.busted)) return "Both Hands Lose!";
+
+                // Cases with 1.5x payout due to one push and one win.
+                else if ((player.handValue > dealer.handValue && !dealer.busted && splitPlayer.handValue == dealer.handValue) ||
+                    (splitPlayer.busted && dealer.busted && !player.busted)) return "Win + Push, 1.5x Payout";
+                else if ((splitPlayer.handValue > dealer.handValue && !dealer.busted && player.handValue == dealer.handValue) ||
+                    (player.busted && dealer.busted && !splitPlayer.busted)) return "Push + Win, 1.5x Payout";
+
+                // Cases with 0.5x payout due to one push and one loss.
+                else if (!dealer.busted && splitPlayer.handValue == dealer.handValue && 
+                    (player.handValue < dealer.handValue || player.busted)) return "Lose + Push, 0.5x Payout";
+                else if (!dealer.busted && player.handValue == dealer.handValue &&
+                    (splitPlayer.handValue < dealer.handValue || splitPlayer.busted)) return "Push + Lose, 0.5x Payout";
+
+                else return "Push"; // The case in which one hand wins and the other loses, or both hands tie the dealer.
+            }
+            else
+            {
+                if (player.handValue > dealer.handValue || dealer.handValue > 21) return "You Win!";
+                else if (player.handValue < dealer.handValue && dealer.handValue <= 21) return "You Lose!";
+                else return "Push!";
+            }
         }
 
         /// <summary>
@@ -157,7 +172,9 @@ namespace Blackjack
             // Reset all player and dealer variables.
             player.Reset();
             dealer.Reset();
-
+            splitPlayer.Reset();
+            split = false;
+            stand = false;
             // Deal the cards to the player and the dealer
 
             player.AddCard(newDeck.Deal_Card());
@@ -166,9 +183,6 @@ namespace Blackjack
             dealer.AddCard(newDeck.Deal_Card());
             if (player.handValue == 21) player.naturalBlackjack = true;
             if (dealer.handValue == 21) dealer.naturalBlackjack = true;
-
-            // Print the game state to the Debug Console
-            System.Diagnostics.Debug.Write(this.ToString());
         }
 
         public int CompareTo(Blackjack other)
@@ -186,15 +200,11 @@ namespace Blackjack
             string gameState = "Player Hand: \n" +
                 $"{player.ToString()}\n" +
                 $"Dealer Hand: \n" +
-                $"{dealer.ToString()}\n";
+                $"{dealer.ToString()}\n" +
+                $"Split Hand: \n" +
+                $"{splitPlayer.ToString()}\n";
             return gameState;            
         }
 
-        public string Hints()
-        {
-            string hint = "";
-            hint = newHint.Hints(player.hand[0], player.hand[1], dealer.hand[1]);
-            return hint;
-        }
     }
 }
