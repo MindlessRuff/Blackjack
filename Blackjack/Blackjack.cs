@@ -16,6 +16,7 @@ namespace Blackjack
         GambleChips chips = new GambleChips();
         public Strategy newHint = new Strategy();
         public Player player = new Player();
+        public Player split = new Player();
         public Player dealer = new Player();
         bool hit { get; set; }
         bool stand { get; set; }
@@ -47,22 +48,23 @@ namespace Blackjack
         /// <summary>
         /// 
         /// </summary>
-        public void Hit()
+        public void Hit(Player hitPlayer)
         {          
-            player.AddCard(newDeck.Deal_Card());
+            hitPlayer.AddCard(newDeck.Deal_Card());
+           
 
             // Check for bust.
-            if (player.handValue > 21)
+            if (hitPlayer.handValue > 21)
             {
                 // If player will bust, but there is an ace (11) in hand, subtract 10.
-                if (player.numElevens > 0)
+                if (hitPlayer.numElevens > 0)
                 {
-                    player.numElevens -= 1;
-                    player.handValue -= 10;
+                    hitPlayer.numElevens -= 1;
+                    hitPlayer.handValue -= 10;
                 }
                 else
                 {
-                    player.busted = true;
+                    hitPlayer.busted = true;
                 }     
             }
         }
@@ -107,14 +109,14 @@ namespace Blackjack
 
         public void Split()
         {
+            bool hit = true;
+            do
+            {
+                Hit(player);
 
-            bool newBust = false;
-
-            player.splitHand.Add(player.hand[0]);
-            player.hand[1] = null;
-
-
-            player.AddCard(newDeck.Deal_Card());        // Add card to first split hand.
+            } while (hit == true);
+            
+            player.AddCard(newDeck.Deal_Card());  // Add card to first split hand.
 
             // Check for bust.
             if (player.handValue > 21)
@@ -130,26 +132,10 @@ namespace Blackjack
                     player.busted = true;
                 }
             }
-            if (newBust && player.busted)
-            {
-                return;
-            }
-            else
-            {
-                player.busted = false;
-            }
+           
         }
 
-        public void splitHit()
-        {
-            
-            player.splitHand.Add(player.hand[0]); // Add card to first split hand.
-            player.AddCard(newDeck.Deal_Card());        
-
-            player.splitHand.Add(player.hand[1]); // Add card to the 2nd split hand.
-            player.AddCard(newDeck.Deal_Card());
-        
-        }
+       
 
         public void Surrender()
         {
