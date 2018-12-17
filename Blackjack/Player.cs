@@ -34,7 +34,7 @@ namespace Blackjack
             int temp = Card_Value(card);
             if (temp == 11)
             {
-                numElevens += 1;                 // Update number of elevens in hand to update logic in case of > 21.
+                numElevens += 1;  // Update number of elevens in hand to update logic in case of > 21.
             }
             handValue += temp;
         }

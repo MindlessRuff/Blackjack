@@ -101,6 +101,7 @@ namespace Blackjack
         {
             //Implment the chips being doubled 
             player.AddCard(newDeck.Deal_Card());
+            chips.DoubleChips();
             Stand();
         }
 
@@ -112,7 +113,8 @@ namespace Blackjack
             player.splitHand.Add(player.hand[0]);
             player.hand[1] = null;
 
-            player.AddCard(newDeck.Deal_Card());
+
+            player.AddCard(newDeck.Deal_Card());        // Add card to first split hand.
 
             // Check for bust.
             if (player.handValue > 21)
@@ -136,6 +138,17 @@ namespace Blackjack
             {
                 player.busted = false;
             }
+        }
+
+        public void splitHit()
+        {
+            
+            player.splitHand.Add(player.hand[0]); // Add card to first split hand.
+            player.AddCard(newDeck.Deal_Card());        
+
+            player.splitHand.Add(player.hand[1]); // Add card to the 2nd split hand.
+            player.AddCard(newDeck.Deal_Card());
+        
         }
 
         public void Surrender()
