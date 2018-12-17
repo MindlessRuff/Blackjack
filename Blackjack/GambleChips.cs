@@ -16,6 +16,17 @@ namespace Blackjack
 
         private int winningHand;
 
+        private int DoubleOneDollarBet;
+        private int DoubleFiveDollarBet;
+        private int DoubleTwentyFiveDollarBet;
+        private int DoubleFiftyDollarBet;
+        private int DoubleHundredDollarBet;
+
+        
+
+
+
+
         public int CompareTo(GambleChips other)
         {
             throw new NotImplementedException();
@@ -25,8 +36,34 @@ namespace Blackjack
         {
             // TODO: Algorithm and code to add up total chips won
 
-            winningHand = userBet * 2;
-            return winningHand;
+            /*if (userBet == OneDollarChip)
+            {
+                DoubleOneDollarBet = userBet * 2;
+                return DoubleOneDollarBet;
+            }
+            else if (userBet == FiveDollarChip)
+            {
+                DoubleFiftyDollarBet = userBet * 2;
+                return DoubleFiftyDollarBet;
+            }
+            else if (userBet == TwentyFiveDollarChip )
+            {
+                DoubleTwentyFiveDollarBet = userBet * 2;
+                return DoubleFiftyDollarBet;
+            }
+            else if (userBet == FiftyDollarChip)
+            {
+                DoubleFiftyDollarBet = userBet * 2;
+                return DoubleFiftyDollarBet;
+            }
+            else
+            {
+                return 0;
+            }
+            */
+
+            return 0;
+            
         }
 
         public int LossChips()
@@ -38,6 +75,32 @@ namespace Blackjack
         public int surrenderChips()
         {
             // TODO: Algorithm and code the losses 
+            /*if (userBet == OneDollarChip)
+            {
+                DoubleOneDollarBet = userBet * 2;
+                return DoubleOneDollarBet;
+            }
+            else if (userBet == FiveDollarChip)
+            {
+                DoubleFiftyDollarBet = userBet * 2;
+                return DoubleFiftyDollarBet;
+            }
+            else if (userBet == TwentyFiveDollarChip )
+            {
+                DoubleTwentyFiveDollarBet = userBet * 2;
+                return DoubleFiftyDollarBet;
+            }
+            else if (userBet == FiftyDollarChip)
+            {
+                DoubleFiftyDollarBet = userBet * 2;
+                return DoubleFiftyDollarBet;
+            }
+            else
+            {
+                return 0;
+            }
+            */
+
             surrendingHand = userBet / 2;
             return surrendingHand;
         }
