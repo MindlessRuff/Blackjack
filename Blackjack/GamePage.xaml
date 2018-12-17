@@ -207,11 +207,11 @@
                 </StackPanel>
             </RelativePanel>
 
-            <!--Stats-->
+            <!--Chips/Hint Stack-->
             <StackPanel Grid.Row="2" Grid.RowSpan="2" VerticalAlignment="Bottom" Margin="0,0,0,50">
                 <Button Name="Hint" Content="Hint" Margin="0,0,0,20" Click="Hint_Click"
                         FontSize="25" HorizontalAlignment="Stretch"
-                        BorderBrush="Black" BorderThickness="6"
+                        BorderBrush="Black" BorderThickness="6" IsEnabled="{Binding ButtonsEnabled}"
                         Background="#66FFFFFF" Height="60" Width="125">
                 </Button>
                 <Button Name="Bet" Content="Bet" Margin="0,0,0,20"
