@@ -106,7 +106,27 @@ namespace Blackjack
 
         public int Split()
         {
-            throw new NotImplementedException();
+            player.splitHand.Add(player.hand[0]);
+            player.hand[1] = null;
+
+            player.AddCard(newDeck.Deal_Card());
+
+            // Check for bust.
+            if (player.handValue > 21)
+            {
+                // If player will bust, but there is an ace (11) in hand, subtract 10.
+                if (player.numElevens > 0)
+                {
+                    player.numElevens -= 1;
+                    player.handValue -= 10;
+                }
+                else
+                {
+                    player.busted = true;
+                }
+            }
+
+
         }
 
         public void Surrender()

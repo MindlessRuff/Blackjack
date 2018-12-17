@@ -10,7 +10,9 @@ namespace Blackjack
     class Player : IComparable<Player>
     {
         public int handValue { get; set; }
-        public List<string> hand = new List<string>();  // Cards are stored as strings representing their filepaths for UI binding.
+        public int secondHandValue { get; set; }
+        public List<string> hand = new List<string>(); // Cards are stored as strings representing their filepaths for UI binding.
+        public List<string> splitHand = new List<string>(); // Second hand for cards once Split Method hits
         public int numElevens { get; set; }             // numElevens tracks how many aces are assigned a value of 11 for hand value updating.
         public bool busted { get; set; }                // Variable will be set when hand > 21, only UI class will reset this variable.
         public bool naturalBlackjack { get; set; }      // Tracks 21 on deal, which is higher than other 21's. Set in blackjack class.
@@ -21,11 +23,11 @@ namespace Blackjack
         public Player()
         {
             handValue = 0;
+            secondHandValue = 0;
             numElevens = 0;
             naturalBlackjack = false;
             busted = false;
         }
-
         public void AddCard(string card)
         {
             hand.Add(card);
@@ -79,6 +81,8 @@ namespace Blackjack
         {
             hand.Clear();
             handValue = 0;
+            splitHand.Clear();
+            secondHandValue = 0;
             numElevens = 0;
             busted = false;
             naturalBlackjack = false;
@@ -97,8 +101,25 @@ namespace Blackjack
                 printedHand += s + "\n";
             }
             printedHand += Total_Value();
-            return printedHand;
+
+            string printSecondHand = "";
+            foreach (string s in hand)
+            {
+                printSecondHand += s + "\n";
+            }
+            printedHand += Total_Value();
+            printSecondHand += secondTotal_Value();
+
+            return printedHand + printSecondHand;
         }
+
+        public string secondTotal_Value()
+        {
+            string secondTotalValue = "";
+            secondTotalValue = $"2nd Hand total value of cards  {secondHandValue} \n";
+            return secondTotalValue;
+        }
+
 
         public override int GetHashCode()
         {

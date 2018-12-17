@@ -24,6 +24,7 @@ namespace Blackjack
         public int DoubleChips()
         {
             // TODO: Algorithm and code to add up total chips won
+
             winningHand = userBet * 2;
             return winningHand;
         }
