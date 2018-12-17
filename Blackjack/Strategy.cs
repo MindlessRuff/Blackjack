@@ -176,8 +176,100 @@ namespace Blackjack
                 hint = "Hint: Doubledown";
             }
 
-            //Strats for all 
+            //Strats for all stands
 
+            //For a hand of 17
+            //First card 10 second card 7
+            if ((playerCards[0][7] == 'T' || playerCards[0][7] == 'J' || playerCards[0][7] == 'Q' || playerCards[0][7] == 'K') && playerCards[1][7] == '7' )
+            {
+                hint = "Hint: Stand";
+            }
+
+            //First card 7 second card 10
+            if (playerCards[0][7] == '7' && (playerCards[1][7] == 'T' || playerCards[1][7] == 'J' || playerCards[1][7] == 'Q' || playerCards[1][7] == 'K'))
+            {
+                hint = "Hint: Stand";
+            }
+
+            //First card 10 second card 6
+            if ((playerCards[0][7] == 'T' || playerCards[0][7] == 'J' || playerCards[0][7] == 'Q' || playerCards[0][7] == 'K') && playerCards[1][7] == '6' && 
+                (dealerCard[7] == '2' || dealerCard[7] == '3' || dealerCard[7] == '4' || dealerCard[7] == '5' || dealerCard[7] == '6'))
+            {
+                hint = "Hint: Stand";
+            }
+
+            //First card 6 second card 10
+            if (playerCards[0][7] == '6' && (playerCards[1][7] == 'T' || playerCards[1][7] == 'J' || playerCards[1][7] == 'Q' || playerCards[1][7] == 'K' &&
+                (dealerCard[7] == '2' || dealerCard[7] == '3' || dealerCard[7] == '4' || dealerCard[7] == '5' || dealerCard[7] == '6')))
+                
+            {
+                hint = "Hint: Stand";
+            }
+
+            //First card 10 second card 5
+            if ((playerCards[0][7] == 'T' || playerCards[0][7] == 'J' || playerCards[0][7] == 'Q' || playerCards[0][7] == 'K') && playerCards[1][7] == '5' &&
+                (dealerCard[7] == '2' || dealerCard[7] == '3' || dealerCard[7] == '4' || dealerCard[7] == '5' || dealerCard[7] == '6'))
+            {
+                hint = "Hint: Stand";
+            }
+
+            //First card 5 second card 10
+            if (playerCards[0][7] == '5' && (playerCards[1][7] == 'T' || playerCards[1][7] == 'J' || playerCards[1][7] == 'Q' || playerCards[1][7] == 'K' &&
+                (dealerCard[7] == '2' || dealerCard[7] == '3' || dealerCard[7] == '4' || dealerCard[7] == '5' || dealerCard[7] == '6')))
+
+            {
+                hint = "Hint: Stand";
+            }
+
+            //First card 10 second card 4
+            if ((playerCards[0][7] == 'T' || playerCards[0][7] == 'J' || playerCards[0][7] == 'Q' || playerCards[0][7] == 'K') && playerCards[1][7] == '4' &&
+                (dealerCard[7] == '2' || dealerCard[7] == '3' || dealerCard[7] == '4' || dealerCard[7] == '5' || dealerCard[7] == '6'))
+            {
+                hint = "Hint: Stand";
+            }
+
+            //First card 4 second card 10
+            if (playerCards[0][7] == '4' && (playerCards[1][7] == 'T' || playerCards[1][7] == 'J' || playerCards[1][7] == 'Q' || playerCards[1][7] == 'K' &&
+                (dealerCard[7] == '2' || dealerCard[7] == '3' || dealerCard[7] == '4' || dealerCard[7] == '5' || dealerCard[7] == '6')))
+
+            {
+                hint = "Hint: Stand";
+            }
+
+            //First card 10 second card 3
+            if ((playerCards[0][7] == 'T' || playerCards[0][7] == 'J' || playerCards[0][7] == 'Q' || playerCards[0][7] == 'K') && playerCards[1][7] == '3' &&
+                (dealerCard[7] == '2' || dealerCard[7] == '3' || dealerCard[7] == '4' || dealerCard[7] == '5' || dealerCard[7] == '6'))
+            {
+                hint = "Hint: Stand";
+            }
+
+            //First card 3 second card 10
+            if (playerCards[0][7] == '3' && (playerCards[1][7] == 'T' || playerCards[1][7] == 'J' || playerCards[1][7] == 'Q' || playerCards[1][7] == 'K' &&
+                (dealerCard[7] == '2' || dealerCard[7] == '3' || dealerCard[7] == '4' || dealerCard[7] == '5' || dealerCard[7] == '6')))
+
+            {
+                hint = "Hint: Stand";
+            }
+
+            //First card 10 second card 2
+            if ((playerCards[0][7] == 'T' || playerCards[0][7] == 'J' || playerCards[0][7] == 'Q' || playerCards[0][7] == 'K') && playerCards[1][7] == '2' &&
+                (dealerCard[7] == '4' || dealerCard[7] == '5' || dealerCard[7] == '6'))
+            {
+                hint = "Hint: Stand";
+            }
+
+            //First card 2 second card 10
+            if (playerCards[0][7] == '2' && (playerCards[1][7] == 'T' || playerCards[1][7] == 'J' || playerCards[1][7] == 'Q' || playerCards[1][7] == 'K' &&
+                (dealerCard[7] == '4' || dealerCard[7] == '5' || dealerCard[7] == '6')))
+
+            {
+                hint = "Hint: Stand";
+            }
+
+            else
+            {
+                hint = "Hint: Hit";
+            }
 
             playerCards.Clear();
             return hint;
