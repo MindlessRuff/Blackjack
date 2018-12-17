@@ -252,6 +252,7 @@ namespace Blackjack
             }
 
             //First card 10 second card 2
+            //Dealer Showing 4, 5, or 6
             if ((playerCards[0][7] == 'T' || playerCards[0][7] == 'J' || playerCards[0][7] == 'Q' || playerCards[0][7] == 'K') && playerCards[1][7] == '2' &&
                 (dealerCard[7] == '4' || dealerCard[7] == '5' || dealerCard[7] == '6'))
             {
@@ -266,10 +267,109 @@ namespace Blackjack
                 hint = "Hint: Stand";
             }
 
-            else
+            //Cases for all the hits
+
+            //For a hand total of 4,5,6,7, or 8
+            //First card is a 2 and second card is a 2
+            if (playerCards[0][7] == '2' && playerCards[1][7] == '2')
             {
                 hint = "Hint: Hit";
             }
+
+            //First card is a 2 and second card is a 3
+            if (playerCards[0][7] == '2' && playerCards[1][7] == '3')
+            {
+                hint = "Hint: Hit";
+            }
+
+            //First card is a 3 and second card is a 2
+            if (playerCards[0][7] == '3' && playerCards[1][7] == '2')
+            {
+                hint = "Hint: Hit";
+            }
+
+            //First card is a 3 and second card is a 3
+            if (playerCards[0][7] == '3' && playerCards[1][7] == '3')
+            {
+                hint = "Hint: Hit";
+            }
+
+            //First card is a 4 and second card is a 2
+            if (playerCards[0][7] == '4' && playerCards[1][7] == '2')
+            {
+                hint = "Hint: Hit";
+            }
+
+            //First card is a 2 and second card is a 4
+            if (playerCards[0][7] == '2' && playerCards[1][7] == '4')
+            {
+                hint = "Hint: Hit";
+            }
+
+            //Sum = 7
+            //First card is a 4 and second card is a 3
+            if (playerCards[0][7] == '4' && playerCards[1][7] == '3')
+            {
+                hint = "Hint: Hit";
+            }
+
+            //Sum = 7
+            //First card is a 3 and second card is a 4
+            if (playerCards[0][7] == '3' && playerCards[1][7] == '4')
+            {
+                hint = "Hint: Hit";
+            }
+
+            //Sum = 7
+            //First card is a 5 and second card is a 2
+            if (playerCards[0][7] == '5' && playerCards[1][7] == '2')
+            {
+                hint = "Hint: Hit";
+            }
+
+            //Sum = 7
+            //First card is a 2 and second card is a 5
+            if (playerCards[0][7] == '2' && playerCards[1][7] == '5')
+            {
+                hint = "Hint: Hit";
+            }
+
+            //Sum = 8
+            //First card is a 4 and second card is a 4
+            if (playerCards[0][7] == '4' && playerCards[1][7] == '4')
+            {
+                hint = "Hint: Hit";
+            }
+
+            //Sum = 8
+            //First card is a 6 and second card is a 2
+            if (playerCards[0][7] == '6' && playerCards[1][7] == '2')
+            {
+                hint = "Hint: Hit";
+            }
+
+            //Sum = 8
+            //First card is a 2 and second card is a 6
+            if (playerCards[0][7] == '2' && playerCards[1][7] == '6')
+            {
+                hint = "Hint: Hit";
+            }
+
+            //Sum = 8
+            //First card is a 5 and second card is a 3
+            if (playerCards[0][7] == '5' && playerCards[1][7] == '3')
+            {
+                hint = "Hint: Hit";
+            }
+
+            //Sum = 8
+            //First card is a 3 and second card is a 5
+            if (playerCards[0][7] == '3' && playerCards[1][7] == '5')
+            {
+                hint = "Hint: Hit";
+            }
+
+
 
             playerCards.Clear();
             return hint;
