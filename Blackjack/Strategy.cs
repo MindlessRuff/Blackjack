@@ -76,9 +76,108 @@ namespace Blackjack
 
             //First card is a 6 second card is a 5
             if ((playerCards[0][7] == '6' && playerCards[1][7] == '5'))
-            { 
+            {
                 hint = "Hint: Doubledown";
             }
+
+
+            //Cases for all 10's 
+
+            //First card is a 5 and second card is a 5
+            if ((playerCards[0][7] == '5' && playerCards[1][7] == '5' && (dealerCard[7] == '2' || dealerCard[7] == '3' || dealerCard[7] == '4' 
+                || dealerCard[7] == '5' || dealerCard[7] == '6' || dealerCard[7] == '7' || dealerCard[7] == '8' || dealerCard[7] == '9')))
+            {
+                hint = "Hint: Doubledown";
+            }
+
+            //First card is a 6 and second card is a 4
+            if ((playerCards[0][7] == '6' && playerCards[1][7] == '4' && (dealerCard[7] == '2' || dealerCard[7] == '3' || dealerCard[7] == '4'
+                || dealerCard[7] == '5' || dealerCard[7] == '6' || dealerCard[7] == '7' || dealerCard[7] == '8' || dealerCard[7] == '9')))
+            {
+                hint = "Hint: Doubledown";
+            }
+
+            //First card is a 4 and second card is a 6
+            if ((playerCards[0][7] == '4' && playerCards[1][7] == '6' && (dealerCard[7] == '2' || dealerCard[7] == '3' || dealerCard[7] == '4'
+                || dealerCard[7] == '5' || dealerCard[7] == '6' || dealerCard[7] == '7' || dealerCard[7] == '8' || dealerCard[7] == '9')))
+            {
+                hint = "Hint: Doubledown";
+            }
+
+            //First card is a 7 and second card is a 3
+            if ((playerCards[0][7] == '7' && playerCards[1][7] == '3' && (dealerCard[7] == '2' || dealerCard[7] == '3' || dealerCard[7] == '4'
+                || dealerCard[7] == '5' || dealerCard[7] == '6' || dealerCard[7] == '7' || dealerCard[7] == '8' || dealerCard[7] == '9')))
+            {
+                hint = "Hint: Doubledown";
+            }
+
+            //First card is a 3 and second card is a 7
+            if ((playerCards[0][7] == '3' && playerCards[1][7] == '7' && (dealerCard[7] == '2' || dealerCard[7] == '3' || dealerCard[7] == '4'
+                || dealerCard[7] == '5' || dealerCard[7] == '6' || dealerCard[7] == '7' || dealerCard[7] == '8' || dealerCard[7] == '9')))
+            {
+                hint = "Hint: Doubledown";
+            }
+
+            //First card is a 8 and second card is a 2
+            if ((playerCards[0][7] == '8' && playerCards[1][7] == '2' && (dealerCard[7] == '2' || dealerCard[7] == '3' || dealerCard[7] == '4'
+                || dealerCard[7] == '5' || dealerCard[7] == '6' || dealerCard[7] == '7' || dealerCard[7] == '8' || dealerCard[7] == '9')))
+            {
+                hint = "Hint: Doubledown";
+            }
+
+            //First card is a 2 and second card is a 8
+            if ((playerCards[0][7] == '2' && playerCards[1][7] == '8' && (dealerCard[7] == '2' || dealerCard[7] == '3' || dealerCard[7] == '4'
+                || dealerCard[7] == '5' || dealerCard[7] == '6' || dealerCard[7] == '7' || dealerCard[7] == '8' || dealerCard[7] == '9')))
+            {
+                hint = "Hint: Doubledown";
+            }
+
+            //Cases for all the 9 double downs
+
+            //First card is a 4 and second card is a 5
+            if ((playerCards[0][7] == '4' && playerCards[1][7] == '5' && (dealerCard[7] == '3' || dealerCard[7] == '4' || dealerCard[7] == '5'
+                || dealerCard[7] == '6')))
+            {
+                hint = "Hint: Doubledown";
+            }
+
+            //First card is a 5 and second card is a 4
+            if ((playerCards[0][7] == '5' && playerCards[1][7] == '4' && (dealerCard[7] == '3' || dealerCard[7] == '4' || dealerCard[7] == '5'
+                || dealerCard[7] == '6')))
+            {
+                hint = "Hint: Doubledown";
+            }
+
+            //First card is a 6 and second card is a 3
+            if ((playerCards[0][7] == '6' && playerCards[1][7] == '3' && (dealerCard[7] == '3' || dealerCard[7] == '4' || dealerCard[7] == '5'
+                || dealerCard[7] == '6')))
+            {
+                hint = "Hint: Doubledown";
+            }
+
+            //First card is a 3 and second card is a 6
+            if ((playerCards[0][7] == '3' && playerCards[1][7] == '6' && (dealerCard[7] == '3' || dealerCard[7] == '4' || dealerCard[7] == '5'
+                || dealerCard[7] == '6')))
+            {
+                hint = "Hint: Doubledown";
+            }
+
+            //First card is a 7 and second card is a 2
+            if ((playerCards[0][7] == '7' && playerCards[1][7] == '2' && (dealerCard[7] == '3' || dealerCard[7] == '4' || dealerCard[7] == '5'
+                || dealerCard[7] == '6')))
+            {
+                hint = "Hint: Doubledown";
+            }
+
+            //First card is a 2 and second card is a 7
+            if ((playerCards[0][7] == '2' && playerCards[1][7] == '7' && (dealerCard[7] == '3' || dealerCard[7] == '4' || dealerCard[7] == '5'
+                || dealerCard[7] == '6')))
+            {
+                hint = "Hint: Doubledown";
+            }
+
+            //Strats for all 
+
 
             playerCards.Clear();
             return hint;
