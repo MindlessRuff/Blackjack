@@ -27,7 +27,7 @@ namespace Blackjack
             playerCards.Add(playerC1);
             dealerCard = dealerC1;
 
-            string hint = "";
+            string hint = "No Suggested Strategy";
 
             //List of double down strategies 
             //First to handle all the cases for 11
@@ -829,10 +829,7 @@ namespace Blackjack
             }
 
 
-            else
-            {
-                hint = "No Suggested Strategy";
-            }
+            
 
             playerCards.Clear();
             return hint;
