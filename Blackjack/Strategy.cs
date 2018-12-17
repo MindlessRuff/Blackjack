@@ -177,27 +177,38 @@ namespace Blackjack
 
             //Strats for all stands
 
-            //For a hand of 17
-            //First card 10 second card 7
+            //Sum of 17: First card 10 second card 7
             if ((playerCards[0][7] == 'T' || playerCards[0][7] == 'J' || playerCards[0][7] == 'Q' || playerCards[0][7] == 'K') && playerCards[1][7] == '7' )
             {
                 hint = "Book Says to Stand";
             }
 
-            //First card 7 second card 10
+            //Sum of 17: First card 7 second card 10
             if (playerCards[0][7] == '7' && (playerCards[1][7] == 'T' || playerCards[1][7] == 'J' || playerCards[1][7] == 'Q' || playerCards[1][7] == 'K'))
             {
                 hint = "Book Says to Stand";
             }
 
-            //First card 10 second card 6
+            //Sum of 17: First Card 9 second card 8
+            if ((playerCards[0][7] == '9' && playerCards[1][7] == '8'))
+            {
+                hint = "Book Says to Stand";
+            }
+
+            //Sum of 17: First card 8 second card 9
+            if ((playerCards[0][7] == '8' && playerCards[1][7] == '9'))
+            {
+                hint = "Book Says to Stand";
+            }
+
+            //Sum of 16: First card 10 second card 6
             if ((playerCards[0][7] == 'T' || playerCards[0][7] == 'J' || playerCards[0][7] == 'Q' || playerCards[0][7] == 'K') && playerCards[1][7] == '6' && 
                 (dealerCard[7] == '2' || dealerCard[7] == '3' || dealerCard[7] == '4' || dealerCard[7] == '5' || dealerCard[7] == '6'))
             {
                 hint = "Book Says to Stand";
             }
 
-            //First card 6 second card 10
+            //Sum of 16: First card 6 second card 10
             if (playerCards[0][7] == '6' && (playerCards[1][7] == 'T' || playerCards[1][7] == 'J' || playerCards[1][7] == 'Q' || playerCards[1][7] == 'K' &&
                 (dealerCard[7] == '2' || dealerCard[7] == '3' || dealerCard[7] == '4' || dealerCard[7] == '5' || dealerCard[7] == '6')))
                 
@@ -205,14 +216,35 @@ namespace Blackjack
                 hint = "Book Says to Stand";
             }
 
-            //First card 10 second card 5
+            //Sum of 16: First Card 9 second card 7
+            if ((playerCards[0][7] == '9' && playerCards[1][7] == '7' &&
+                (dealerCard[7] == '2' || dealerCard[7] == '3' || dealerCard[7] == '4' || dealerCard[7] == '5' || dealerCard[7] == '6')))
+            {
+                hint = "Book Says to Stand";
+            }
+
+            //Sum of 16: First card 7 second card 9
+            if ((playerCards[0][7] == '7' && playerCards[1][7] == '9' &&
+                (dealerCard[7] == '2' || dealerCard[7] == '3' || dealerCard[7] == '4' || dealerCard[7] == '5' || dealerCard[7] == '6')))
+            {
+                hint = "Book Says to Stand";
+            }
+
+            //Sum of 16: First Card 8 second card 8
+            if ((playerCards[0][7] == '8' && playerCards[1][7] == '8' &&
+                (dealerCard[7] == '2' || dealerCard[7] == '3' || dealerCard[7] == '4' || dealerCard[7] == '5' || dealerCard[7] == '6')))
+            {
+                hint = "Book Says to Stand";
+            }
+
+            //Sum of 15: First card 10 second card 5
             if ((playerCards[0][7] == 'T' || playerCards[0][7] == 'J' || playerCards[0][7] == 'Q' || playerCards[0][7] == 'K') && playerCards[1][7] == '5' &&
                 (dealerCard[7] == '2' || dealerCard[7] == '3' || dealerCard[7] == '4' || dealerCard[7] == '5' || dealerCard[7] == '6'))
             {
                 hint = "Book Says to Stand";
             }
 
-            //First card 5 second card 10
+            //Sum of 15: First card 5 second card 10
             if (playerCards[0][7] == '5' && (playerCards[1][7] == 'T' || playerCards[1][7] == 'J' || playerCards[1][7] == 'Q' || playerCards[1][7] == 'K' &&
                 (dealerCard[7] == '2' || dealerCard[7] == '3' || dealerCard[7] == '4' || dealerCard[7] == '5' || dealerCard[7] == '6')))
 
@@ -220,14 +252,42 @@ namespace Blackjack
                 hint = "Book Says to Stand";
             }
 
-            //First card 10 second card 4
+            //Sum of 15: First Card 9 second card 6
+            if ((playerCards[0][7] == '9' && playerCards[1][7] == '6' &&
+                (dealerCard[7] == '2' || dealerCard[7] == '3' || dealerCard[7] == '4' || dealerCard[7] == '5' || dealerCard[7] == '6')))
+            {
+                hint = "Book Says to Stand";
+            }
+
+            //Sum of 15: First card 6 second card 9
+            if ((playerCards[0][7] == '6' && playerCards[1][7] == '9' &&
+                (dealerCard[7] == '2' || dealerCard[7] == '3' || dealerCard[7] == '4' || dealerCard[7] == '5' || dealerCard[7] == '6')))
+            {
+                hint = "Book Says to Stand";
+            }
+
+            //Sum of 15: First Card 7 second card 8
+            if ((playerCards[0][7] == '7' && playerCards[1][7] == '8' &&
+                (dealerCard[7] == '2' || dealerCard[7] == '3' || dealerCard[7] == '4' || dealerCard[7] == '5' || dealerCard[7] == '6')))
+            {
+                hint = "Book Says to Stand";
+            }
+
+            //Sum of 15: First card 8 second card 7
+            if ((playerCards[0][7] == '8' && playerCards[1][7] == '7' &&
+                (dealerCard[7] == '2' || dealerCard[7] == '3' || dealerCard[7] == '4' || dealerCard[7] == '5' || dealerCard[7] == '6')))
+            {
+                hint = "Book Says to Stand";
+            }
+
+            //Sum of 14: First card 10 second card 4
             if ((playerCards[0][7] == 'T' || playerCards[0][7] == 'J' || playerCards[0][7] == 'Q' || playerCards[0][7] == 'K') && playerCards[1][7] == '4' &&
                 (dealerCard[7] == '2' || dealerCard[7] == '3' || dealerCard[7] == '4' || dealerCard[7] == '5' || dealerCard[7] == '6'))
             {
                 hint = "Book Says to Stand";
             }
 
-            //First card 4 second card 10
+            //Sum of 14: First card 4 second card 10
             if (playerCards[0][7] == '4' && (playerCards[1][7] == 'T' || playerCards[1][7] == 'J' || playerCards[1][7] == 'Q' || playerCards[1][7] == 'K' &&
                 (dealerCard[7] == '2' || dealerCard[7] == '3' || dealerCard[7] == '4' || dealerCard[7] == '5' || dealerCard[7] == '6')))
 
@@ -235,14 +295,42 @@ namespace Blackjack
                 hint = "Book Says to Stand";
             }
 
-            //First card 10 second card 3
+            //Sum of 14: First Card 9 second card 5
+            if ((playerCards[0][7] == '9' && playerCards[1][7] == '5' &&
+                (dealerCard[7] == '2' || dealerCard[7] == '3' || dealerCard[7] == '4' || dealerCard[7] == '5' || dealerCard[7] == '6')))
+            {
+                hint = "Book Says to Stand";
+            }
+
+            //Sum of 14: First card 5 second card 9
+            if ((playerCards[0][7] == '5' && playerCards[1][7] == '9' &&
+                (dealerCard[7] == '2' || dealerCard[7] == '3' || dealerCard[7] == '4' || dealerCard[7] == '5' || dealerCard[7] == '6')))
+            {
+                hint = "Book Says to Stand";
+            }
+
+            //Sum of 14: First Card 8 second card 6
+            if ((playerCards[0][7] == '8' && playerCards[1][7] == '6' &&
+                (dealerCard[7] == '2' || dealerCard[7] == '3' || dealerCard[7] == '4' || dealerCard[7] == '5' || dealerCard[7] == '6')))
+            {
+                hint = "Book Says to Stand";
+            }
+
+            //Sum of 14: First card 6 second card 8
+            if ((playerCards[0][7] == '6' && playerCards[1][7] == '8' &&
+                (dealerCard[7] == '2' || dealerCard[7] == '3' || dealerCard[7] == '4' || dealerCard[7] == '5' || dealerCard[7] == '6')))
+            {
+                hint = "Book Says to Stand";
+            }
+
+            //Sum of 13: First card 10 second card 3
             if ((playerCards[0][7] == 'T' || playerCards[0][7] == 'J' || playerCards[0][7] == 'Q' || playerCards[0][7] == 'K') && playerCards[1][7] == '3' &&
                 (dealerCard[7] == '2' || dealerCard[7] == '3' || dealerCard[7] == '4' || dealerCard[7] == '5' || dealerCard[7] == '6'))
             {
                 hint = "Book Says to Stand";
             }
 
-            //First card 3 second card 10
+            //Sum of 13: First card 3 second card 10
             if (playerCards[0][7] == '3' && (playerCards[1][7] == 'T' || playerCards[1][7] == 'J' || playerCards[1][7] == 'Q' || playerCards[1][7] == 'K' &&
                 (dealerCard[7] == '2' || dealerCard[7] == '3' || dealerCard[7] == '4' || dealerCard[7] == '5' || dealerCard[7] == '6')))
 
@@ -250,21 +338,77 @@ namespace Blackjack
                 hint = "Book Says to Stand";
             }
 
-            //First card 10 second card 2
-            //Dealer Showing 4, 5, or 6
+            //Sum of 13: First Card 9 second card 4
+            if ((playerCards[0][7] == '9' && playerCards[1][7] == '4' &&
+                (dealerCard[7] == '2' || dealerCard[7] == '3' || dealerCard[7] == '4' || dealerCard[7] == '5' || dealerCard[7] == '6')))
+            {
+                hint = "Book Says to Stand";
+            }
+
+            //Sum of 13: First card 4 second card 9
+            if ((playerCards[0][7] == '4' && playerCards[1][7] == '9' &&
+                (dealerCard[7] == '2' || dealerCard[7] == '3' || dealerCard[7] == '4' || dealerCard[7] == '5' || dealerCard[7] == '6')))
+            {
+                hint = "Book Says to Stand";
+            }
+
+            //Sum of 13: First Card 8 second card 5
+            if ((playerCards[0][7] == '8' && playerCards[1][7] == '5' &&
+                (dealerCard[7] == '2' || dealerCard[7] == '3' || dealerCard[7] == '4' || dealerCard[7] == '5' || dealerCard[7] == '6')))
+            {
+                hint = "Book Says to Stand";
+            }
+
+            //Sum of 13: First card 5 second card 8
+            if ((playerCards[0][7] == '5' && playerCards[1][7] == '9' &&
+                (dealerCard[7] == '2' || dealerCard[7] == '3' || dealerCard[7] == '4' || dealerCard[7] == '5' || dealerCard[7] == '6')))
+            {
+                hint = "Book Says to Stand";
+            }
+
+            //Sum of 12: First Card 10 second card 2
             if ((playerCards[0][7] == 'T' || playerCards[0][7] == 'J' || playerCards[0][7] == 'Q' || playerCards[0][7] == 'K') && playerCards[1][7] == '2' &&
                 (dealerCard[7] == '4' || dealerCard[7] == '5' || dealerCard[7] == '6'))
             {
                 hint = "Book Says to Stand";
             }
 
-            //First card 2 second card 10
+            //Sum of 12: First card 2 second card 10
             if (playerCards[0][7] == '2' && (playerCards[1][7] == 'T' || playerCards[1][7] == 'J' || playerCards[1][7] == 'Q' || playerCards[1][7] == 'K' &&
                 (dealerCard[7] == '4' || dealerCard[7] == '5' || dealerCard[7] == '6')))
 
             {
                 hint = "Book Says to Stand";
             }
+
+            //Sum of 12: First Card 9 second card 3
+            if ((playerCards[0][7] == '9' && playerCards[1][7] == '3' &&
+                (dealerCard[7] == '4' || dealerCard[7] == '5' || dealerCard[7] == '6')))
+            {
+                hint = "Book Says to Stand";
+            }
+
+            //Sum of 12: First card 3 second card 9
+            if ((playerCards[0][7] == '3' && playerCards[1][7] == '9' &&
+                (dealerCard[7] == '4' || dealerCard[7] == '5' || dealerCard[7] == '6')))
+            {
+                hint = "Book Says to Stand";
+            }
+
+            //Sum of 12: First Card 8 second card 4
+            if ((playerCards[0][7] == '8' && playerCards[1][7] == '4' &&
+                (dealerCard[7] == '4' || dealerCard[7] == '5' || dealerCard[7] == '6')))
+            {
+                hint = "Book Says to Stand";
+            }
+
+            //Sum of 12: First card 4 second card 8
+            if ((playerCards[0][7] == '4' && playerCards[1][7] == '8' &&
+                (dealerCard[7] == '4' || dealerCard[7] == '5' || dealerCard[7] == '6')))
+            {
+                hint = "Book Says to Stand";
+            }
+
 
             //Cases for all the hits
 
