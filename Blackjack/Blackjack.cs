@@ -122,6 +122,7 @@ namespace Blackjack
         public void Surrender()
         {
             //Here the player losses half their bet 
+            chips.surrenderChips();
             NextRound();
         }
 
@@ -183,6 +184,8 @@ namespace Blackjack
             dealer.AddCard(newDeck.Deal_Card());
             if (player.handValue == 21) player.naturalBlackjack = true;
             if (dealer.handValue == 21) dealer.naturalBlackjack = true;
+
+            chips.DoubleChips();
         }
 
         public int CompareTo(Blackjack other)
