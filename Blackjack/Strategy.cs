@@ -31,49 +31,49 @@ namespace Blackjack
 
             //List of double down strategies 
             //First to handle all the cases for 11
-            //First card is a 9 second card is a 2
+            //Sum of 11: First card 9 second card 2
             if ((playerCards[0][7] == '9' && playerCards[1][7] == '2'))
             {
                 hint = "Book Says to Doubledown";
             }
 
-            //First card is a 2 second card is a 9
+            //Sum of 11: First card 2 second card 9
             if ((playerCards[0][7] == '2' && playerCards[1][7] == '9'))
             {
                 hint = "Book Says to Doubledown";
             }
 
-            //first card is a 8 second card is a 3
+            //Sum of 11: First card 8 second card 3
             if ((playerCards[0][7] == '8' && playerCards[1][7] == '3'))
             {
                 hint = "Book Says to Doubledown";
             }
 
-            //First card is a 3 second card is a 8
+            //Sum of 11: First card 3 second card 8
             if ((playerCards[0][7] == '3' && playerCards[1][7] == '8'))
             {
                 hint = "Book Says to Doubledown";
             }
 
-            //first card is a 7 second card is a 4
+            //Sum of 11: First card is a 7 second card 4
             if ((playerCards[0][7] == '7' && playerCards[1][7] == '4'))
             {
                 hint = "Book Says to Doubledown";
             }
 
-            //First card is a 4 second card is a 7
+            //Sum of 11: First card 4 second card 7
             if ((playerCards[0][7] == '4' && playerCards[1][7] == '7'))
             {
                 hint = "Book Says to Doubledown";
             }
 
-            //first card is a 5 second card is a 6
+            //Sum of 11: First card 5 second card 6
             if ((playerCards[0][7] == '5' && playerCards[1][7] == '6'))
             {
                 hint = "Book Says to Doubledown";
             }
 
-            //First card is a 6 second card is a 5
+            //Sum of 11: First card 6 second card 5
             if ((playerCards[0][7] == '6' && playerCards[1][7] == '5'))
             {
                 hint = "Book Says to Doubledown";
@@ -82,49 +82,49 @@ namespace Blackjack
 
             //Cases for all 10's 
 
-            //First card is a 5 and second card is a 5
+            //Sum of 10: First card 5 and second card 5
             if ((playerCards[0][7] == '5' && playerCards[1][7] == '5' && (dealerCard[7] == '2' || dealerCard[7] == '3' || dealerCard[7] == '4' 
                 || dealerCard[7] == '5' || dealerCard[7] == '6' || dealerCard[7] == '7' || dealerCard[7] == '8' || dealerCard[7] == '9')))
             {
                 hint = "Book Says to Doubledown";
             }
 
-            //First card is a 6 and second card is a 4
+            //Sum of 10: First card 6 and second card 4
             if ((playerCards[0][7] == '6' && playerCards[1][7] == '4' && (dealerCard[7] == '2' || dealerCard[7] == '3' || dealerCard[7] == '4'
                 || dealerCard[7] == '5' || dealerCard[7] == '6' || dealerCard[7] == '7' || dealerCard[7] == '8' || dealerCard[7] == '9')))
             {
                 hint = "Book Says to Doubledown";
             }
 
-            //First card is a 4 and second card is a 6
+            //Sum of 10: First card 4 and second card 6
             if ((playerCards[0][7] == '4' && playerCards[1][7] == '6' && (dealerCard[7] == '2' || dealerCard[7] == '3' || dealerCard[7] == '4'
                 || dealerCard[7] == '5' || dealerCard[7] == '6' || dealerCard[7] == '7' || dealerCard[7] == '8' || dealerCard[7] == '9')))
             {
                 hint = "Book Says to Doubledown";
             }
 
-            //First card is a 7 and second card is a 3
+            //Sum of 10: First card 7 and second card 3
             if ((playerCards[0][7] == '7' && playerCards[1][7] == '3' && (dealerCard[7] == '2' || dealerCard[7] == '3' || dealerCard[7] == '4'
                 || dealerCard[7] == '5' || dealerCard[7] == '6' || dealerCard[7] == '7' || dealerCard[7] == '8' || dealerCard[7] == '9')))
             {
                 hint = "Book Says to Doubledown";
             }
 
-            //First card is a 3 and second card is a 7
+            //Sum of 10: First card 3 and second card 7
             if ((playerCards[0][7] == '3' && playerCards[1][7] == '7' && (dealerCard[7] == '2' || dealerCard[7] == '3' || dealerCard[7] == '4'
                 || dealerCard[7] == '5' || dealerCard[7] == '6' || dealerCard[7] == '7' || dealerCard[7] == '8' || dealerCard[7] == '9')))
             {
                 hint = "Book Says to Doubledown";
             }
 
-            //First card is a 8 and second card is a 2
+            //Sum of 10: First card 8 and second card 2
             if ((playerCards[0][7] == '8' && playerCards[1][7] == '2' && (dealerCard[7] == '2' || dealerCard[7] == '3' || dealerCard[7] == '4'
                 || dealerCard[7] == '5' || dealerCard[7] == '6' || dealerCard[7] == '7' || dealerCard[7] == '8' || dealerCard[7] == '9')))
             {
                 hint = "Book Says to Doubledown";
             }
 
-            //First card is a 2 and second card is a 8
+            //Sum of 10: First card 2 and second card 8
             if ((playerCards[0][7] == '2' && playerCards[1][7] == '8' && (dealerCard[7] == '2' || dealerCard[7] == '3' || dealerCard[7] == '4'
                 || dealerCard[7] == '5' || dealerCard[7] == '6' || dealerCard[7] == '7' || dealerCard[7] == '8' || dealerCard[7] == '9')))
             {
@@ -133,42 +133,42 @@ namespace Blackjack
 
             //Cases for all the 9 double downs
 
-            //First card is a 4 and second card is a 5
+            //Sum of 9: First card 4 and second card 5
             if ((playerCards[0][7] == '4' && playerCards[1][7] == '5' && (dealerCard[7] == '3' || dealerCard[7] == '4' || dealerCard[7] == '5'
                 || dealerCard[7] == '6')))
             {
                 hint = "Book Says to Doubledown";
             }
 
-            //First card is a 5 and second card is a 4
+            //Sum of 9: First card 5 and second card 4
             if ((playerCards[0][7] == '5' && playerCards[1][7] == '4' && (dealerCard[7] == '3' || dealerCard[7] == '4' || dealerCard[7] == '5'
                 || dealerCard[7] == '6')))
             {
                 hint = "Book Says to Doubledown";
             }
 
-            //First card is a 6 and second card is a 3
+            //Sum of 9: First card 6 and second card 3
             if ((playerCards[0][7] == '6' && playerCards[1][7] == '3' && (dealerCard[7] == '3' || dealerCard[7] == '4' || dealerCard[7] == '5'
                 || dealerCard[7] == '6')))
             {
                 hint = "Book Says to Doubledown";
             }
 
-            //First card is a 3 and second card is a 6
+            //Sum of 9: First card 3 and second card 6
             if ((playerCards[0][7] == '3' && playerCards[1][7] == '6' && (dealerCard[7] == '3' || dealerCard[7] == '4' || dealerCard[7] == '5'
                 || dealerCard[7] == '6')))
             {
                 hint = "Book Says to Doubledown";
             }
 
-            //First card is a 7 and second card is a 2
+            //Sum of 9: First card 7 and second card 2
             if ((playerCards[0][7] == '7' && playerCards[1][7] == '2' && (dealerCard[7] == '3' || dealerCard[7] == '4' || dealerCard[7] == '5'
                 || dealerCard[7] == '6')))
             {
                 hint = "Book Says to Doubledown";
             }
 
-            //First card is a 2 and second card is a 7
+            //Sum of 9: First card 2 and second card 7
             if ((playerCards[0][7] == '2' && playerCards[1][7] == '7' && (dealerCard[7] == '3' || dealerCard[7] == '4' || dealerCard[7] == '5'
                 || dealerCard[7] == '6')))
             {
@@ -413,100 +413,91 @@ namespace Blackjack
             //Cases for all the hits
 
             //For a hand total of 4,5,6,7, or 8
-            //First card is a 2 and second card is a 2
+            //Sum of 4: First card 2 and second card 2
             if (playerCards[0][7] == '2' && playerCards[1][7] == '2')
             {
                 hint = "Book Says to Hit";
             }
 
-            //First card is a 2 and second card is a 3
+            //Sum of 5: First card 2 and second card 3
             if (playerCards[0][7] == '2' && playerCards[1][7] == '3')
             {
                 hint = "Book Says to Hit";
             }
 
-            //First card is a 3 and second card is a 2
+            //Sum of 5: First card 3 and second card 2
             if (playerCards[0][7] == '3' && playerCards[1][7] == '2')
             {
                 hint = "Book Says to Hit";
             }
 
-            //First card is a 3 and second card is a 3
+            //Sum of 6: First card 3 and second card 3
             if (playerCards[0][7] == '3' && playerCards[1][7] == '3')
             {
                 hint = "Book Says to Hit";
             }
 
-            //First card is a 4 and second card is a 2
+            //Sum of 6: First card 4 and second card 2
             if (playerCards[0][7] == '4' && playerCards[1][7] == '2')
             {
                 hint = "Book Says to Hit";
             }
 
-            //First card is a 2 and second card is a 4
+            //Sum of 6: First card 2 and second card 4
             if (playerCards[0][7] == '2' && playerCards[1][7] == '4')
             {
                 hint = "Book Says to Hit";
             }
 
-            //Sum = 7
-            //First card is a 4 and second card is a 3
+            //Sum of 7: First card 4 and second card 3
             if (playerCards[0][7] == '4' && playerCards[1][7] == '3')
             {
                 hint = "Book Says to Hit";
             }
 
-            //Sum = 7
-            //First card is a 3 and second card is a 4
+            //Sum of 7: First card 3 and second card 4
             if (playerCards[0][7] == '3' && playerCards[1][7] == '4')
             {
                 hint = "Book Says to Hit";
             }
 
-            //Sum = 7
-            //First card is a 5 and second card is a 2
+            //Sum of 7: First card 5 and second card 2
             if (playerCards[0][7] == '5' && playerCards[1][7] == '2')
             {
                 hint = "Book Says to Hit";
             }
 
-            //Sum = 7
-            //First card is a 2 and second card is a 5
+            //Sum of 7: First card 2 and second card 5
             if (playerCards[0][7] == '2' && playerCards[1][7] == '5')
             {
                 hint = "Book Says to Hit";
             }
 
-            //Sum = 8
-            //First card is a 4 and second card is a 4
+            //Sum of 8: First card 4 and second card 4
             if (playerCards[0][7] == '4' && playerCards[1][7] == '4')
             {
                 hint = "Book Says to Hit";
             }
 
-            //Sum = 8
-            //First card is a 6 and second card is a 2
+            //Sum of 8: First card 6 and second card 2
             if (playerCards[0][7] == '6' && playerCards[1][7] == '2')
             {
                 hint = "Book Says to Hit";
             }
 
-            //Sum = 8
-            //First card is a 2 and second card is a 6
+            //Sum of 8: First card 2 and second card 6
             if (playerCards[0][7] == '2' && playerCards[1][7] == '6')
             {
                 hint = "Book Says to Hit";
             }
 
-            //Sum = 8
-            //First card is a 5 and second card is a 3
+            //Sum of 8: First card 5 and second card 3
             if (playerCards[0][7] == '5' && playerCards[1][7] == '3')
             {
                 hint = "Book Says to Hit";
             }
 
-            //Sum = 8
-            //First card is a 3 and second card is a 5
+            //Sum of 8: First card 3 and second card 5
             if (playerCards[0][7] == '3' && playerCards[1][7] == '5')
             {
                 hint = "Book Says to Hit";
