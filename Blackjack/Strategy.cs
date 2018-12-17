@@ -32,64 +32,51 @@ namespace Blackjack
 
             //List of double down strategies 
             //First to handle all the cases for 11
-            if (playerCards[0] == "Assets/A_C.png" && playerCards[1] == "Assets/T_C.png" && dealerCard == "Assets/5_C.png")
-            {
-                hint = "Hint: Doubledown";
-            }
-
             //First card is a 9 second card is a 2
-            if ((playerCards[0] == "Assets/9_C.png" || playerCards[0] == "Assets/9_D.png" || playerCards[0] == "Assets/9_S.png" || playerCards[0] == "Assets/9_H.png" ) &&
-                (playerCards[1] == "Assets/2_C.png" || playerCards[1] == "Assets/2_D.png" || playerCards[1] == "Assets/2_S.png" || playerCards[1] == "Assets/2_H.png" ))
+            if ((playerCards[0][7] == '9' && playerCards[1][7] == '2'))
             {
                 hint = "Hint: Doubledown";
             }
 
             //First card is a 2 second card is a 9
-            if ((playerCards[0] == "Assets/9_C.png" || playerCards[0] == "Assets/9_D.png" || playerCards[0] == "Assets/9_S.png" || playerCards[0] == "Assets/9_H.png" ) &&
-                (playerCards[1] == "Assets/2_C.png" || playerCards[1] == "Assets/2_D.png" || playerCards[1] == "Assets/2_S.png" || playerCards[1] == "Assets/2_H.png" ))
+            if ((playerCards[0][7] == '2' && playerCards[1][7] == '9'))
             {
                 hint = "Hint: Doubledown";
             }
 
             //first card is a 8 second card is a 3
-            if ((playerCards[0] == "Assets/8_C.png" || playerCards[0] == "Assets/8_D.png" || playerCards[0] == "Assets/8_S.png" || playerCards[0] == "Assets/8_H.png" ) &&
-                (playerCards[1] == "Assets/3_C.png" || playerCards[1] == "Assets/3_D.png" || playerCards[1] == "Assets/3_S.png" || playerCards[1] == "Assets/3_H.png" ))
+            if ((playerCards[0][7] == '8' && playerCards[1][7] == '3'))
             {
                 hint = "Hint: Doubledown";
             }
 
             //First card is a 3 second card is a 8
-            if ((playerCards[0] == "Assets/3_C.png" || playerCards[0] == "Assets/3_D.png" || playerCards[0] == "Assets/3_S.png" || playerCards[0] == "Assets/3_H.png" ) &&
-                (playerCards[1] == "Assets/8_C.png" || playerCards[1] == "Assets/8_D.png" || playerCards[1] == "Assets/8_S.png" || playerCards[1] == "Assets/8_H.png" ))
+            if ((playerCards[0][7] == '3' && playerCards[1][7] == '8'))
             {
                 hint = "Hint: Doubledown";
             }
 
             //first card is a 7 second card is a 4
-            if ((playerCards[0] == "Assets/7_C.png" || playerCards[0] == "Assets/7_D.png" || playerCards[0] == "Assets/7_S.png" || playerCards[0] == "Assets/7_H.png" ) &&
-                (playerCards[1] == "Assets/4_C.png" || playerCards[1] == "Assets/4_D.png" || playerCards[1] == "Assets/4_S.png" || playerCards[1] == "Assets/4_H.png" ))
+            if ((playerCards[0][7] == '7' && playerCards[1][7] == '4'))
             {
                 hint = "Hint: Doubledown";
             }
 
             //First card is a 4 second card is a 7
-            if ((playerCards[0] == "Assets/4_C.png" || playerCards[0] == "Assets/4_D.png" || playerCards[0] == "Assets/4_S.png" || playerCards[0] == "Assets/4_H.png" ) &&
-                (playerCards[1] == "Assets/7_C.png" || playerCards[1] == "Assets/7_D.png" || playerCards[1] == "Assets/7_S.png" || playerCards[1] == "Assets/7_H.png" ))
+            if ((playerCards[0][7] == '4' && playerCards[1][7] == '7'))
             {
                 hint = "Hint: Doubledown";
             }
 
             //first card is a 5 second card is a 6
-            if ((playerCards[0] == "Assets/5_C.png" || playerCards[0] == "Assets/5_D.png" || playerCards[0] == "Assets/5_S.png" || playerCards[0] == "Assets/5_H.png" ) &&
-                (playerCards[1] == "Assets/6_C.png" || playerCards[1] == "Assets/6_D.png" || playerCards[1] == "Assets/6_S.png" || playerCards[1] == "Assets/6_H.png" ))
+            if ((playerCards[0][7] == '5' && playerCards[1][7] == '8'))
             {
                 hint = "Hint: Doubledown";
             }
 
             //First card is a 6 second card is a 5
-            if ((playerCards[0] == "Assets/6_C.png" || playerCards[0] == "Assets/6_D.png" || playerCards[0] == "Assets/6_S.png" || playerCards[0] == "Assets/6_H.png" ) &&
-                (playerCards[1] == "Assets/5_C.png" || playerCards[1] == "Assets/5_D.png" || playerCards[1] == "Assets/5_S.png" || playerCards[1] == "Assets/5_H.png" ))
-            {
+            if ((playerCards[0][7] == '6' && playerCards[1][7] == '5'))
+            { 
                 hint = "Hint: Doubledown";
             }
 
