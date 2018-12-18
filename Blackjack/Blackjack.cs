@@ -182,8 +182,11 @@ namespace Blackjack
             splitPlayer.Reset();
             split = false;
             stand = false;
-            // Deal the cards to the player and the dealer
+            
+            //TODO: set the value of the playerBet through UI and then call the chip deduction method to deduce
+            //      the player's chips so that it stays up to date after bets/ winnings
 
+            // Deal the cards to the player and the dealer
             player.AddCard("Assets/2_C.png");
             dealer.AddCard(newDeck.Deal_Card());
             player.AddCard("Assets/2_C.png");
