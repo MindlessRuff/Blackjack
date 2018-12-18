@@ -22,14 +22,30 @@ namespace Blackjack
         private int DoubleFiftyDollarBet;
         private int DoubleHundredDollarBet;
 
-        
+        public int playerChips { get; set; }
 
 
-
+        public GambleChips()
+        {
+            playerChips = 500; //Start player with $500
+        }
         
         public int CompareTo(GambleChips other)
         {
             throw new NotImplementedException();
+        }
+
+        public void DeductChips(int bet)
+        {
+            playerChips = playerChips - bet;
+        }
+        public void DoubleChips(int bet)
+        {
+            playerChips = playerChips + (2 * bet); 
+        }
+        public void Surrendered(int bet)
+        {
+            playerChips = playerChips + (bet / 2);
         }
         /*
         public GambleChips()
