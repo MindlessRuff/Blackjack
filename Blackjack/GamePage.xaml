@@ -40,7 +40,7 @@
                     <SplitView.Pane>
                         <ListBox SelectionMode="Single" SelectionChanged="ListBox_SelectionChanged">
                             <!--Game Rules-->
-                            <ListBoxItem x:Name="RulesListBox" Background="#333" >
+                            <ListBoxItem x:Name="RulesListBox" Background="#333">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock x:Name="GameRules" FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE7fc;"/>
                                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" 
@@ -90,15 +90,6 @@
                                     <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE97a;"/>
                                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" 
                                                Margin="10,0,0,0" FontSize="20">Return To Title
-                                    </TextBlock>
-                                </StackPanel>
-                            </ListBoxItem>
-                            <!--Exit Game-->
-                            <ListBoxItem x:Name="ExitGame" Background="#333">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE7e8;"/>
-                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                               Margin="20,0,0,0" FontSize="20">Exit Game
                                     </TextBlock>
                                 </StackPanel>
                             </ListBoxItem>

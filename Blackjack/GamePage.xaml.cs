@@ -509,85 +509,6 @@ namespace Blackjack
             ButtonsEnabled = true;
         }
 
-        /// <summary>
-        /// Pressing settings button will bring up the options menu.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Settings_Click(object sender, RoutedEventArgs e)
-        {
-            Settings.IsPaneOpen = !Settings.IsPaneOpen;
-        }
-
-        /// <summary>
-        /// Returns to title screen from game page.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Return_Title(object sender, RoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(MainPage));
-        }
-
-        /// <summary>
-        /// Closes flyout from return to title screen if user cancels.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Close_Flyout(object sender, RoutedEventArgs e)
-        {
-            //QuitFlyout.Hide();
-        }
-
-        /// <summary>
-        /// Exits game on player confirmation.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Quit_Game(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Exit();
-        }
-
-        private async void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (RulesListBox.IsSelected)
-            {
-                MessageDialog myMessage = new MessageDialog("BlackJack Rules: The dealer deals the cards and runs all the action at the blackjack table.\n" +
-                    "The game starts after the player places their bet. Blackjack games use chips instead of cash. You'll buy your chips from the side menu bar.\n" +
-                    "You should buy your chips between hands, don't try to interrupt a hand that's being played to get chips.\n" +
-                    "Once you and any other players have placed your bets, the dealer starts the game.\n" +
-                    "The game begins when the dealer deals 2 cards. The dealer deals himself a 2 card hand, but he deals himself one card face up and the other card face down.\n" +
-                    "This is important, because that face up card gives the player a lot of information about how she should play her hand. Since you're starting with a 2 card hand, " +
-                    "the highest possible total you could have is 21 - that's an ace (which counts as 11) and a ten.");
-                await myMessage.ShowAsync();
-            }
-            else if (CreatorsBox.IsSelected)
-            {
-                MessageDialog myMessage2 = new MessageDialog(
-                    "Brandon, " +
-                    "Carlo, " +
-                    "Ferdinand, " +
-                    "Matt, " +
-                    "Huy, " +
-                    "Anush. ");
-                await myMessage2.ShowAsync();
-            }
-            else if (GithubLink.IsSelected)
-            {
-                
-            }
-            else if (ReturnPage.IsSelected)
-            {
-                Frame.Navigate(typeof(MainPage));
-            }
-            else if (ExitGame.IsSelected)
-            {
-                Application.Current.Exit();
-            }
-        }
-
-        /// <summary>
         /// Displays a hint to the user, based on which hand is in play.
         /// </summary>
         /// <param name="sender"></param>
@@ -639,6 +560,55 @@ namespace Blackjack
             PlayerBlackjackMessage.Visibility = Visibility.Collapsed;
             BetButton.Visibility = Visibility.Collapsed;
             NextRoundUI();
+        }
+
+        /// <summary>
+        /// Pressing settings button will bring up the options menu.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Settings_Click(object sender, RoutedEventArgs e)
+        {
+            Settings.IsPaneOpen = !Settings.IsPaneOpen;
+        }
+
+        /// <summary>
+        /// Controls all the menu options on click.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (RulesListBox.IsSelected)
+            {
+                MessageDialog myMessage = new MessageDialog("BlackJack Rules: The dealer deals the cards and runs all the action at the blackjack table.\n" +
+                    "The game starts after the player places their bet. Blackjack games use chips instead of cash. You'll buy your chips from the side menu bar.\n" +
+                    "You should buy your chips between hands, don't try to interrupt a hand that's being played to get chips.\n" +
+                    "Once you and any other players have placed your bets, the dealer starts the game.\n" +
+                    "The game begins when the dealer deals 2 cards. The dealer deals himself a 2 card hand, but he deals himself one card face up and the other card face down.\n" +
+                    "This is important, because that face up card gives the player a lot of information about how she should play her hand. Since you're starting with a 2 card hand, " +
+                    "the highest possible total you could have is 21 - that's an ace (which counts as 11) and a ten.");
+                await myMessage.ShowAsync();
+            }
+            else if (CreatorsBox.IsSelected)
+            {
+                MessageDialog myMessage2 = new MessageDialog(
+                    "Brandon, " +
+                    "Carlo, " +
+                    "Ferdinand, " +
+                    "Matt, " +
+                    "Huy, " +
+                    "Anush. ");
+                await myMessage2.ShowAsync();
+            }
+            else if (GithubLink.IsSelected)
+            {
+
+            }
+            else if (ReturnPage.IsSelected)
+            {
+                Frame.Navigate(typeof(MainPage));
+            }
         }
     }
 }
