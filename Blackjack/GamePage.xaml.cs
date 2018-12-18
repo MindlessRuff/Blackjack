@@ -519,11 +519,11 @@ namespace Blackjack
             // If hand is split, and split hand is in play, display a hint for the split hand.
             if (blackjack.split && (blackjack.player.busted || blackjack.stand))
             {
-                myMessage2 = new MessageDialog($"{Strategy.Hints(blackjack.splitPlayer.hand[0], blackjack.splitPlayer.hand[1], blackjack.dealer.hand[1])}");
+                myMessage2 = new MessageDialog($"{Strategy.Hints(blackjack.splitPlayer.hand[0], blackjack.splitPlayer.hand[1], blackjack.dealer.hand[0])}");
             }
             else
             {
-                myMessage2 = new MessageDialog($"{Strategy.Hints(blackjack.player.hand[0], blackjack.player.hand[1], blackjack.dealer.hand[1])}");
+                myMessage2 = new MessageDialog($"{Strategy.Hints(blackjack.player.hand[0], blackjack.player.hand[1], blackjack.dealer.hand[0])}");
             }
             await myMessage2.ShowAsync();
         }
