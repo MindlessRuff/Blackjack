@@ -19,7 +19,6 @@ namespace Blackjack
         public Player splitPlayer = new Player();
         public Player dealer = new Player();
         bool doubleDown { get; set; }
-        bool wonDoubleDown { get; set; }
         public bool split { get; set; }
         public bool stand { get; set; }     // Used when the left side of a split hand stands.
         // Bind "playerBet" to UI chip to allow the user to set the number of chips he/she would like to bet.
@@ -89,24 +88,19 @@ namespace Blackjack
             if (dealer.handValue > 21)
             {
                 dealer.busted = true;
-                if (wonDoubleDown)
-                {
-                    //chips.WinDoubleDown(playerBet);
-                    wonDoubleDown = false;
-                }
-                else
-                {
-                   // chips.DoubleChips(playerBet);
-                }
+                chips.DoubleChips(playerBet);
             }
             return;
         }
 
         public void DoubleDown()
         {
-            //TODO:Implment the chips being doubled 
+            //TODO:Implment the chips being doubled
+            //Deduct the previously betted value (doubling the bet)
+            chips.DeductChips(playerBet);
+            //Double the amount of bet
+            playerBet = playerBet * 2;
             player.AddCard(newDeck.Deal_Card());
-            // chips.DoubleChips();
             Stand();
         }
 
@@ -134,6 +128,7 @@ namespace Blackjack
         public void Surrender()
         {
             //Here the player losses half their bet 
+            chips.Surrendered(playerBet);
             NextRound();
         }
 
@@ -188,11 +183,14 @@ namespace Blackjack
             splitPlayer.Reset();
             split = false;
             stand = false;
-            // Deal the cards to the player and the dealer
+            
+            //TODO: set the value of the playerBet through UI and then call the chip deduction method to deduce
+            //      the player's chips so that it stays up to date after bets/ winnings
 
-            player.AddCard(newDeck.Deal_Card());
+            // Deal the cards to the player and the dealer
+            player.AddCard("Assets/2_C.png");
             dealer.AddCard(newDeck.Deal_Card());
-            player.AddCard(newDeck.Deal_Card());
+            player.AddCard("Assets/2_C.png");
             dealer.AddCard(newDeck.Deal_Card());
             if (player.handValue == 21) player.naturalBlackjack = true;
             if (dealer.handValue == 21) dealer.naturalBlackjack = true;
