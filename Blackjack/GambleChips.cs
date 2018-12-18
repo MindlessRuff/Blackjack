@@ -32,47 +32,36 @@ namespace Blackjack
             throw new NotImplementedException();
         }
 
-        public int DoubleChips()
+        public GambleChips()
         {
+            playerChips = 500; //$500
+        }
+
+        public void DoubleChips(int doubleBet)
+        {
+            playerChips += (doubleBet * 2);
             // TODO: Algorithm and code to add up total chips won
 
-            /*if (userBet == OneDollarChip)
-            {
-                DoubleOneDollarBet = userBet * 2;
-                return DoubleOneDollarBet;
-            }
-            else if (userBet == FiveDollarChip)
-            {
-                DoubleFiftyDollarBet = userBet * 2;
-                return DoubleFiftyDollarBet;
-            }
-            else if (userBet == TwentyFiveDollarChip )
-            {
-                DoubleTwentyFiveDollarBet = userBet * 2;
-                return DoubleFiftyDollarBet;
-            }
-            else if (userBet == FiftyDollarChip)
-            {
-                DoubleFiftyDollarBet = userBet * 2;
-                return DoubleFiftyDollarBet;
-            }
-            else
-            {
-                return 0;
-            }
-            */
+            userBet = bettingChip;
+            doubleBet = userBet * 2;
 
             return 0;
             
         }
 
-        public int LossChips()
+        public void WinDoubleDown (int doubleDownChips)
         {
-            // TODO: Algorithm and code the losses of chips
-            return 0;
+            playerChips += (doubleDownChips * 2);
         }
 
-        public int surrenderChips()
+        public int LoseChips()
+        {
+            // TODO: Algorithm and code the losses of chips
+            lossBet = userBet / 2;
+            return lossBet;
+        }
+
+        public void surrenderChips(int divideChips)
         {
             // TODO: Algorithm and code the losses 
             /*if (userBet == OneDollarChip)

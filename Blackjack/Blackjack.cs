@@ -19,8 +19,12 @@ namespace Blackjack
         public Player splitPlayer = new Player();
         public Player dealer = new Player();
         bool doubleDown { get; set; }
+        bool wonDoubleDown { get; set; }
         public bool split { get; set; }
         public bool stand { get; set; }     // Used when the left side of a split hand stands.
+        // Bind "playerBet" to UI chip to allow the user to set the number of chips he/she would like to bet.
+        public int playerBet { get; set; }  // playerBet will be passed as a parameter to the methods inside of the GambleChips class.
+
 
         /// <summary>
         /// This constructor will shuffle the deck, deal cards to the dealer and player.
@@ -85,6 +89,15 @@ namespace Blackjack
             if (dealer.handValue > 21)
             {
                 dealer.busted = true;
+                if (wonDoubleDown)
+                {
+                    chips.WinDoubleDown(playerBet);
+                    wonDoubleDown = false;
+                }
+                else
+                {
+                    chips.DoubleChips(playerBet);
+                }
             }
             return;
         }
