@@ -37,7 +37,8 @@ namespace Blackjack
         // SOURCE: https://stackoverflow.com/questions/23641688/changing-a-label-when-a-bool-variable-turns-true
         private bool buttonsEnabled = false;
         private bool splitButtonEnabled = false;
-        public event PropertyChangedEventHandler PropertyChanged;
+        private bool hintButtonEnabled = false;
+        public event PropertyChangedEventHandler PropertyChanged;   // Event handler to handle all events
 
         private int playerHandValue = 0;      // This int works in the same way ButtonsEnabled does, used in HandValue on event.
         private int dealerHandValue = 0;
@@ -101,7 +102,7 @@ namespace Blackjack
 
         /// <summary>
         /// Creates a bool that can be changed using an event handler.
-        /// Bound to all user buttons that need to be toggled.
+        /// Bound to all user buttons, other than hint and split, that need to be toggled.
         /// </summary>
         public bool ButtonsEnabled
         {
@@ -128,6 +129,19 @@ namespace Blackjack
         }
 
         /// <summary>
+        /// Toggles hint button as necessary when event is raised
+        /// </summary>
+        public bool HintButtonEnabled
+        {
+            get { return hintButtonEnabled; }
+            set
+            {
+                hintButtonEnabled = value;
+                OnPropertyChanged("HintButtonEnabled");
+            }
+        }
+
+        /// <summary>
         /// Event handler for the user button toggle.
         /// </summary>
         /// <param name="propName"></param>
@@ -150,10 +164,10 @@ namespace Blackjack
             // Turn buttons off immediately to prevent user from spamming hit button.
             ButtonsEnabled = false;
             SplitButtonEnabled = false;
-
+            HintButtonEnabled = false;
             try
             {  
-                // Hit the split hand.
+                // If split and left hand is no longer in play, hit the split hand.
                 if (blackjack.split && (blackjack.player.busted || blackjack.stand))
                 {
                     blackjack.Hit(blackjack.splitPlayer);
@@ -177,6 +191,7 @@ namespace Blackjack
                     {
                         splitHand.Add(blackjack.splitPlayer.hand[1]);       // "Deal" 2nd split card.
                         SplitHandValue = blackjack.splitPlayer.handValue;
+                        HintButtonEnabled = true;
                         HitButton.Content = "Hit-Right";
                         StandButton.Content = "Stand-Right";
                     }
@@ -227,6 +242,7 @@ namespace Blackjack
                 blackjack.stand = true;
                 splitHand.Add(blackjack.splitPlayer.hand[1]);       // "Deal" 2nd split card.
                 SplitHandValue = blackjack.splitPlayer.handValue;
+                HintButtonEnabled = true;                           // Enable the hit button for the split hand after left hand stands
                 HitButton.Content = "Hit-Right";
                 StandButton.Content = "Stand-Right";              
                 return;
@@ -234,6 +250,7 @@ namespace Blackjack
 
             ButtonsEnabled = false;      // Disable user buttons.
             SplitButtonEnabled = false;
+            HintButtonEnabled = false;
             // Reveal dealer's 2nd card.
             DealerCardBack.Visibility = Visibility.Collapsed;
             dealerHand.Add(blackjack.dealer.hand[1]);
@@ -258,7 +275,7 @@ namespace Blackjack
             }
 
             // Dealer hits until busting or hard > 17, will only run if player hasn't busted.
-            else if (!blackjack.player.busted || blackjack.split && !blackjack.splitPlayer.busted)
+            else if (!blackjack.player.busted || (blackjack.split && !blackjack.splitPlayer.busted))
             {
                 
                 // Try-catch block will attempt until failure, adding a new card to the
@@ -268,12 +285,17 @@ namespace Blackjack
                 {
                     try
                     {
-                        await Task.Delay(TimeSpan.FromSeconds(1));                                                  // 1 Sec Delay between dealer cards.
+                        await Task.Delay(TimeSpan.FromSeconds(1));                                  // 1 Sec Delay between dealer cards.
                         dealerHand.Add(blackjack.dealer.hand[dealerHand.Count]);
-                        DealerHandValue += blackjack.dealer.Card_Value(blackjack.dealer.hand[dealerHand.Count-1]);   // Add value to UI dealer hand value.
-
-                        // UI hand value representation has to be corrected for acess
-                        if (blackjack.dealer.numOnes > 0)
+                        int temp = blackjack.dealer.Card_Value(blackjack.dealer.hand[dealerHand.Count-1]);     // Get value of last card added.
+                        // If it returned as a one, need to remove one from numOnes or the UI hand value will be 10 lower than it should be.
+                        if (temp == 1)                  
+                        {
+                            blackjack.dealer.numOnes -= 1;
+                        }
+                        DealerHandValue += temp;        // Add the value to UI hand.
+                        // Correct UI hand value for aces if necessary.
+                        if (blackjack.dealer.numOnes > 0 && dealerHandValue > 10)
                         {
                             DealerHandValue -= 10;
                             blackjack.dealer.numOnes -= 1;
@@ -303,6 +325,8 @@ namespace Blackjack
         private async void DoubleDown(object sender, RoutedEventArgs e)
         {
             ButtonsEnabled = false;
+            HintButtonEnabled = false;
+            
             // TODO: Add logic to double bet in blackjack class
             // blackjack.DoubleDown();
             await Task.Delay(TimeSpan.FromSeconds(0.7));
@@ -339,6 +363,20 @@ namespace Blackjack
         private async void Surrender(object sender, RoutedEventArgs e)
         {
             ButtonsEnabled = false;
+
+            // TODO: add logic for returning half of chips bet to the player
+            PlayerBlackjackMessage.Text = "You Surrendered!";
+            PlayerBlackjackMessage.Visibility = Visibility.Visible;
+
+            // Delay before dealing new cards.
+            Loading.IsActive = true;                        // Loading ring on
+            await Task.Delay(TimeSpan.FromSeconds(3));      // 3 Sec Delay
+
+            PlayerBlackjackMessage.Visibility = Visibility.Collapsed;
+            Loading.IsActive = false;                       // Loading ring off
+
+            DealerCardBack.Visibility = Visibility.Collapsed;
+            NextRoundUI();
         }
 
         private void BetAmount_Click(object sender, RoutedEventArgs e)
@@ -420,6 +458,8 @@ namespace Blackjack
         private async void NextRoundUI()
         {
             ButtonsEnabled = false;
+            HintButtonEnabled = false;
+            SplitButtonEnabled = false;
             HitButton.Content = "Hit";
             StandButton.Content = "Stand";
 
@@ -461,7 +501,7 @@ namespace Blackjack
             {
                 SplitButtonEnabled = true;
             }
-
+            HintButtonEnabled = true;
             ButtonsEnabled = true;
         }
 
@@ -510,9 +550,23 @@ namespace Blackjack
 
         }
 
+        /// <summary>
+        /// Displays a hint to the user, based on which hand is in play.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void Hint_Click(object sender, RoutedEventArgs e)
         {
-            MessageDialog myMessage2 = new MessageDialog($"{Strategy.Hints(blackjack.player.hand[0], blackjack.player.hand[1], blackjack.dealer.hand[1])}");
+            MessageDialog myMessage2;
+            // If hand is split, and split hand is in play, display a hint for the split hand.
+            if (blackjack.split && (blackjack.player.busted || blackjack.stand))
+            {
+                myMessage2 = new MessageDialog($"{Strategy.Hints(blackjack.splitPlayer.hand[0], blackjack.splitPlayer.hand[1], blackjack.dealer.hand[1])}");
+            }
+            else
+            {
+                myMessage2 = new MessageDialog($"{Strategy.Hints(blackjack.player.hand[0], blackjack.player.hand[1], blackjack.dealer.hand[1])}");
+            }
             await myMessage2.ShowAsync();
         }
     }

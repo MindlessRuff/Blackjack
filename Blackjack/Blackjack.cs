@@ -21,6 +21,9 @@ namespace Blackjack
         bool doubleDown { get; set; }
         public bool split { get; set; }
         public bool stand { get; set; }     // Used when the left side of a split hand stands.
+        // Bind "playerBet" to UI chip to allow the user to set the number of chips he/she would like to bet.
+        public int playerBet { get; set; }  // playerBet will be passed as a parameter to the methods inside of the GambleChips class.
+
 
         /// <summary>
         /// This constructor will shuffle the deck, deal cards to the dealer and player.
@@ -85,15 +88,19 @@ namespace Blackjack
             if (dealer.handValue > 21)
             {
                 dealer.busted = true;
+                chips.DoubleChips(playerBet);
             }
             return;
         }
 
         public void DoubleDown()
         {
-            //Implment the chips being doubled 
+            //TODO:Implment the chips being doubled
+            //Deduct the previously betted value (doubling the bet)
+            chips.DeductChips(playerBet);
+            //Double the amount of bet
+            playerBet = playerBet * 2;
             player.AddCard(newDeck.Deal_Card());
-            chips.DoubleChips();
             Stand();
         }
 
@@ -116,12 +123,12 @@ namespace Blackjack
             player.AddCard(newDeck.Deal_Card());        // Add card to first hand.
             splitPlayer.AddCard(newDeck.Deal_Card());   // Add card to split hand, will not show in UI hand until first hand stands or busts.
 
-            System.Diagnostics.Debug.WriteLine(this.ToString());
         }    
 
         public void Surrender()
         {
             //Here the player losses half their bet 
+            chips.Surrendered(playerBet);
             NextRound();
         }
 
@@ -134,7 +141,8 @@ namespace Blackjack
                 if ((dealer.busted && !player.busted && !splitPlayer.busted) || ((player.handValue > dealer.handValue && !player.busted) &&
                     (splitPlayer.handValue > dealer.handValue && !splitPlayer.busted))) return "Both Hands Win!";
                 else if (!dealer.busted && (player.busted && (splitPlayer.busted || splitPlayer.handValue < dealer.handValue)) ||
-                    (player.handValue < dealer.handValue && splitPlayer.busted)) return "Both Hands Lose!";
+                    (player.handValue < dealer.handValue && splitPlayer.busted) ||
+                    (player.handValue < dealer.handValue && splitPlayer.handValue < dealer.handValue)) return "Both Hands Lose!";
 
                 // Cases with 1.5x payout due to one push and one win.
                 else if ((player.handValue > dealer.handValue && !dealer.busted && splitPlayer.handValue == dealer.handValue) ||
@@ -175,8 +183,11 @@ namespace Blackjack
             splitPlayer.Reset();
             split = false;
             stand = false;
-            // Deal the cards to the player and the dealer
+            
+            //TODO: set the value of the playerBet through UI and then call the chip deduction method to deduce
+            //      the player's chips so that it stays up to date after bets/ winnings
 
+            // Deal the cards to the player and the dealer
             player.AddCard(newDeck.Deal_Card());
             dealer.AddCard(newDeck.Deal_Card());
             player.AddCard(newDeck.Deal_Card());

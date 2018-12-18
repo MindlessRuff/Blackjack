@@ -4,52 +4,44 @@ namespace Blackjack
 {
     internal class GambleChips : IComparable<GambleChips>
     {
-        private const int OneDollarChip = 1;
-        private const int FiveDollarChip = 5;
-        private const int TwentyFiveDollarChip = 25;
-        private const int FiftyDollarChip = 50;
-        private const int HundredDollarChip = 100;
-        private int doubledownHand;
-        private int losingHand;
-        private int surrendingHand;
-        private int userBet;
+        public int playerChips { get; set; }
 
-        private int winningHand;
+
+        public GambleChips()
+        {
+            playerChips = 500; //Start player with $500
+        }
 
         public int CompareTo(GambleChips other)
         {
             throw new NotImplementedException();
         }
 
-        public int DoubleChips()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bet"></param>
+        public void DeductChips(int bet)
         {
-            // TODO: Algorithm and code to add up total chips won
-
-            winningHand = userBet * 2;
-            return winningHand;
+            playerChips = playerChips - bet;
         }
 
-        public int LossChips()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bet"></param>
+        public void DoubleChips(int bet)
         {
-            // TODO: Algorithm and code the losses of chips
-            return 0;
+            playerChips = playerChips + (2 * bet); 
         }
 
-        public int surrenderChips()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bet"></param>
+        public void Surrendered(int bet)
         {
-            // TODO: Algorithm and code the losses 
-            surrendingHand = userBet / 2;
-            return surrendingHand;
-        }
-
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
-
-        public override string ToString()
-        {
-            return base.ToString();
+            playerChips = playerChips + (bet / 2);
         }
     }
 }
