@@ -104,9 +104,9 @@ namespace Blackjack
 
         public void DoubleDown()
         {
-            wonDoubleDown = true;
             //Implment the chips being doubled 
             player.AddCard(newDeck.Deal_Card());
+            //chips.DoubleChips();
             Stand();
         }
 
@@ -132,11 +132,20 @@ namespace Blackjack
             System.Diagnostics.Debug.WriteLine(this.ToString());
         }    
 
-        public void Surrender()
-        {
-            //Here the player losses half their bet 
-            NextRound();
-        }
+        //public void Surrender()
+        //{
+        //    //Here the player losses half their bet 
+        //    if (player.handValue > 0 || player.handValue < 21)
+        //    {
+               
+        //        chips.surrenderChips();
+        //        NextRound();
+        //    }
+        //    else
+        //    {
+        //        return;
+        //    }
+        //}
 
         // Called at the end of dealer's turn to calculate the winner and output message to UI.
         public string CalculateWinner()
@@ -196,6 +205,8 @@ namespace Blackjack
             dealer.AddCard(newDeck.Deal_Card());
             if (player.handValue == 21) player.naturalBlackjack = true;
             if (dealer.handValue == 21) dealer.naturalBlackjack = true;
+
+            //chips.DoubleChips();
         }
 
         public int CompareTo(Blackjack other)
