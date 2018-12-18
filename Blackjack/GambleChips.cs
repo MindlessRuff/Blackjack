@@ -22,12 +22,10 @@ namespace Blackjack
         {
             // TODO: Algorithm and code to add up total chips won
 
-            if (userBet == bettingChip)
-            {
-                doubleBet = userBet * 2;
-               
-            }
+            userBet = bettingChip;
+            doubleBet = userBet * 2;
 
+            System.Diagnostics.Debug.WriteLine(this.ToString());
             return doubleBet;
             
         }

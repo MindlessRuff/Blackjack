@@ -91,10 +91,18 @@ namespace Blackjack
 
         public void DoubleDown()
         {
-            //Implment the chips being doubled 
-            player.AddCard(newDeck.Deal_Card());
-            chips.DoubleChips();
-            Stand();
+            //Implement the chips being doubled 
+
+            if (player.handValue > 0 || player.handValue < 21)
+            {
+                player.AddCard(newDeck.Deal_Card());
+                chips.DoubleChips();
+                Stand();
+            }
+            else
+            {
+                return;
+            }
         }
 
         public void Split()
@@ -122,8 +130,16 @@ namespace Blackjack
         public void Surrender()
         {
             //Here the player losses half their bet 
-            chips.surrenderChips();
-            NextRound();
+            if (player.handValue > 0 || player.handValue < 21)
+            {
+               
+                chips.surrenderChips();
+                NextRound();
+            }
+            else
+            {
+                return;
+            }
         }
 
         // Called at the end of dealer's turn to calculate the winner and output message to UI.
