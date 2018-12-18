@@ -40,60 +40,66 @@
                     <SplitView.Pane>
                         <ListBox SelectionMode="Single" SelectionChanged="ListBox_SelectionChanged">
                             <!--Game Rules-->
-                            <ListBoxItem  Background="Pink">
+                            <ListBoxItem x:Name="RulesListBox" Background="#333" >
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE7fc;"/>
+                                    <TextBlock x:Name="GameRules" FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE7fc;"/>
                                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                               Margin="20,0,0,0" FontSize="20">Game Rules</TextBlock>
-
+                                               Margin="20,0,0,0" FontSize="20">Game Rules
+                                    </TextBlock>
                                 </StackPanel>
                             </ListBoxItem>
                             <!--Player Stats-->
-                            <ListBoxItem  Background="Purple">
+                            <ListBoxItem x:Name="PlayerStats" Background="#333">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE76e;"/>
                                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                               Margin="20,0,0,0" FontSize="20">Player Stats</TextBlock>
+                                               Margin="20,0,0,0" FontSize="20">Player Stats
+                                    </TextBlock>
                                 </StackPanel>
                             </ListBoxItem>
                             <!--Get More Chips-->
-                            <ListBoxItem Background="Blue">
+                            <ListBoxItem x:Name="MoreChips" Background="#333">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE7bf;"/>
                                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                               Margin="20,0,0,0" FontSize="20">More Chips</TextBlock>
+                                               Margin="20,0,0,0" FontSize="20">More Chips
+                                    </TextBlock>
                                 </StackPanel>
                             </ListBoxItem>
                             <!--Creators-->
-                            <ListBoxItem Background="Green">
+                            <ListBoxItem x:Name="CreatorsBox" Background="#333">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE70f;"/>
                                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                               Margin="20,0,0,0" FontSize="20">Creators</TextBlock>
+                                               Margin="20,0,0,0" FontSize="20">Creators
+                                    </TextBlock>
                                 </StackPanel>
                             </ListBoxItem>
                             <!--Github Link-->
-                            <ListBoxItem Background="Yellow">
+                            <ListBoxItem x:Name="GithubLink" Background="#333">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE72d;"/>
                                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                               Margin="20,0,0,0" FontSize="20">Github Link</TextBlock>
+                                               Margin="20,0,0,0" FontSize="20">Github Link
+                                    </TextBlock>
                                 </StackPanel>
                             </ListBoxItem>
                             <!--Return to Title Page-->
-                            <ListBoxItem Background="Orange">
+                            <ListBoxItem x:Name="ReturnPage" Background="#333">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE97a;"/>
                                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                               Margin="10,0,0,0" FontSize="20">Return To Title</TextBlock>
+                                               Margin="10,0,0,0" FontSize="20">Return To Title
+                                    </TextBlock>
                                 </StackPanel>
                             </ListBoxItem>
                             <!--Exit Game-->
-                            <ListBoxItem Background="Red">
+                            <ListBoxItem x:Name="ExitGame" Background="#333">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE7e8;"/>
                                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                               Margin="20,0,0,0" FontSize="20">Exit Game</TextBlock>
+                                               Margin="20,0,0,0" FontSize="20">Exit Game
+                                    </TextBlock>
                                 </StackPanel>
                             </ListBoxItem>
                         </ListBox>
@@ -183,7 +189,7 @@
                     Background="#66FFFFFF" Height="70" Width="200"/>
             
             <!-- Busted Messsage, Initially not visible-->
-            <TextBlock Name="BustMessage" Text="YOU BUSTED!" 
+            <TextBlock Name="BustMessage" Text="BUST!" 
                        FontSize="50" Foreground="DarkRed" FontWeight="ExtraBlack"
                        Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" 
                        VerticalAlignment="Bottom" Visibility="Collapsed" />

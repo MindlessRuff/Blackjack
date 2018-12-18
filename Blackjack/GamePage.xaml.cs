@@ -551,7 +551,40 @@ namespace Blackjack
 
         private async void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            if (RulesListBox.IsSelected)
+            {
+                MessageDialog myMessage = new MessageDialog("BlackJack Rules: The dealer deals the cards and runs all the action at the blackjack table.\n" +
+                    "The game starts after the player places their bet. Blackjack games use chips instead of cash. You'll buy your chips from the side menu bar.\n" +
+                    "You should buy your chips between hands, don't try to interrupt a hand that's being played to get chips.\n" +
+                    "Once you and any other players have placed your bets, the dealer starts the game.\n" +
+                    "The game begins when the dealer deals 2 cards. The dealer deals himself a 2 card hand, but he deals himself one card face up and the other card face down.\n" +
+                    "This is important, because that face up card gives the player a lot of information about how she should play her hand. Since you're starting with a 2 card hand, " +
+                    "the highest possible total you could have is 21 - that's an ace (which counts as 11) and a ten.");
+                await myMessage.ShowAsync();
+            }
+            else if (CreatorsBox.IsSelected)
+            {
+                MessageDialog myMessage2 = new MessageDialog(
+                    "Brandon, " +
+                    "Carlo, " +
+                    "Ferdinand, " +
+                    "Matt, " +
+                    "Huy, " +
+                    "Anush. ");
+                await myMessage2.ShowAsync();
+            }
+            else if (GithubLink.IsSelected)
+            {
+                
+            }
+            else if (ReturnPage.IsSelected)
+            {
+                Frame.Navigate(typeof(MainPage));
+            }
+            else if (ExitGame.IsSelected)
+            {
+                Application.Current.Exit();
+            }
         }
 
         /// <summary>
