@@ -28,29 +28,13 @@ namespace Blackjack
         }
 
         /// <summary>
-        /// This method will exit the game when the user clicks exit game button
-        /// on the main menu.
+        /// Starts the game.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Quit_Game(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Exit();
-        }
-
-        /// <summary>
-        /// TODO: Set to start mode 1
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Start_Mode1(object sender, RoutedEventArgs e)
+        private void Start_Game(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(GamePage));
-        }
-
-        private void Start_Mode2(object sender, RoutedEventArgs e)
-        {
-            // TODO: MODE 2 (another mode??????)
         }
 
         /// <summary>
@@ -63,7 +47,13 @@ namespace Blackjack
             QuitFlyout.Hide();
         }
 
-        private void QuitButton_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// This method will exit the game when the user clicks exit game button
+        /// on the main menu.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Quit_Game(object sender, RoutedEventArgs e)
         {
             Application.Current.Exit();
         }

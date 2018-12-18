@@ -43,6 +43,8 @@ namespace Blackjack
         private int playerHandValue = 0;      // This int works in the same way ButtonsEnabled does, used in HandValue on event.
         private int dealerHandValue = 0;
         private int splitHandValue = 0;
+        private int UIchips = 500;
+        private int currentBet = 0;
 
         /// <summary>
         /// Page Constructor
@@ -54,8 +56,7 @@ namespace Blackjack
             // Bind the UI hands to the player and dealer hands.
             PlayerHand.ItemsSource = myHand;
             DealerHand.ItemsSource = dealerHand;
-
-            NextRoundUI();
+            WaitForBet();
         }
 
         /// <summary>
@@ -97,6 +98,32 @@ namespace Blackjack
             {
                 splitHandValue = value;
                 OnPropertyChanged("SplitHandValue");
+            }
+        }
+
+        /// <summary>
+        /// Controls the display of chips in the UI.
+        /// </summary>
+        public int UIChips
+        {
+            get { return UIchips; }
+            set
+            {
+                UIchips = value;
+                OnPropertyChanged("UIChips");
+            }
+        }
+
+        /// <summary>
+        /// Controls the display of the user's current bet in UI.
+        /// </summary>
+        public int CurrentBet
+        {
+            get { return currentBet; }
+            set
+            {
+                currentBet = value;
+                OnPropertyChanged("CurrentBet");
             }
         }
 
@@ -153,6 +180,33 @@ namespace Blackjack
             }
         }
 
+        private void WaitForBet()
+        {
+            CurrentBet = 0;
+            UIChips = blackjack.availableChips; // Update chip values with winnings
+            // Display a message prompting user to bet and display the bet button.
+            PlayerBlackjackMessage.Text = "Place Your Bet";
+            PlayerBlackjackMessage.Visibility = Visibility.Visible;
+            BetButton.Visibility = Visibility.Visible;
+            // Fix other buttons.
+            ButtonsEnabled = false;
+            HintButtonEnabled = false;
+            SplitButtonEnabled = false;
+            HitButton.Content = "Hit";
+            StandButton.Content = "Stand";
+            // Reset variables.
+            PlayerHandValue = 0;
+            DealerHandValue = 0;
+            SplitHandValue = 0;
+            // Start a new round in the backend.
+            blackjack.NextRound();
+
+            // Reset the UI representation of the hands.
+            myHand.Clear();
+            dealerHand.Clear();
+            splitHand.Clear();
+        }
+
         /// <summary>
         /// Called when the Hit button in the gamePage is pressed by the user.
         /// Adds a card and checks for bust. Also starts a new round when necessary.
@@ -180,7 +234,7 @@ namespace Blackjack
                         return;
                     }
                 }
-                // Hit the player hand
+                // Hit the player hand if no split or left hand is finished during a split.
                 else
                 {
                     blackjack.Hit(blackjack.player);
@@ -196,14 +250,12 @@ namespace Blackjack
                         StandButton.Content = "Stand-Right";
                     }
                 }
-                System.Diagnostics.Debug.WriteLine($"{blackjack.player.handValue + "   " + blackjack.splitPlayer.handValue}\n {blackjack.player.numElevens + "   " + blackjack.splitPlayer.numElevens}");
             }
             // TODO: Figure out what exceptions can be raised and handle.
             catch(Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine(ex.Message);
+                throw;
             }
-
 
             // If bust, reinitialize UI hand to the now-reset Blackjack.cs hand. Called on a split only if both hands have busted.
             if ((!blackjack.split && blackjack.player.busted) || (blackjack.splitPlayer.busted && blackjack.player.busted))
@@ -224,7 +276,7 @@ namespace Blackjack
 
                 Loading.IsActive = false;                       // Loading ring off
 
-                NextRoundUI();
+                WaitForBet();
             }
             else ButtonsEnabled = true;
         }
@@ -305,6 +357,7 @@ namespace Blackjack
                     }
                     catch (ArgumentOutOfRangeException)     // Exception is thrown when there are no more cards to add to dealer UI hand from blackjack dealer hand.
                     {
+                        DealerHandValue = blackjack.dealer.handValue;
                         // Change display message based on hand values and display.
                         PlayerBlackjackMessage.Text = blackjack.CalculateWinner();
                         PlayerBlackjackMessage.Visibility = Visibility.Visible;
@@ -319,32 +372,36 @@ namespace Blackjack
                     }
                 } while (success);
             }
-            NextRoundUI();
+            WaitForBet();
         }
 
-        private async void DoubleDown(object sender, RoutedEventArgs e)
+        private void DoubleDown(object sender, RoutedEventArgs e)
         {
             ButtonsEnabled = false;
             HintButtonEnabled = false;
-            
-            // TODO: Add logic to double bet in blackjack class
-            // blackjack.DoubleDown();
-            await Task.Delay(TimeSpan.FromSeconds(0.7));
 
+            UIChips = UIChips - CurrentBet;
+            CurrentBet = CurrentBet * 2;    // Double current bet in the UI.
+
+            blackjack.DoubleDown();
             Hit(this, e);
-            await Task.Delay(TimeSpan.FromSeconds(0.7));
+            ButtonsEnabled = false;
+
 
             if (!blackjack.player.busted)
                 Stand(this, e);
         }
 
-        private async void Split(object sender, RoutedEventArgs e)
+        private void Split(object sender, RoutedEventArgs e)
         {
             SplitButtonEnabled = false;
             buttonsEnabled = false;
             blackjack.Split();
             // Enable the split hand in the UI.
             SplitHand.ItemsSource = splitHand;
+            // Double current bet in UI.
+            UIChips = UIChips - CurrentBet;
+            CurrentBet = CurrentBet * 2;
             // Split the cards.
             splitHand.Add(myHand[1]);
             myHand.RemoveAt(1);
@@ -363,8 +420,8 @@ namespace Blackjack
         private async void Surrender(object sender, RoutedEventArgs e)
         {
             ButtonsEnabled = false;
-
-            // TODO: add logic for returning half of chips bet to the player
+            CurrentBet = CurrentBet / 2;
+            blackjack.Surrender();
             PlayerBlackjackMessage.Text = "You Surrendered!";
             PlayerBlackjackMessage.Visibility = Visibility.Visible;
 
@@ -376,12 +433,7 @@ namespace Blackjack
             Loading.IsActive = false;                       // Loading ring off
 
             DealerCardBack.Visibility = Visibility.Collapsed;
-            NextRoundUI();
-        }
-
-        private void BetAmount_Click(object sender, RoutedEventArgs e)
-        {
-
+            WaitForBet();
         }
 
         /// <summary>
@@ -415,7 +467,7 @@ namespace Blackjack
             Loading.IsActive = false;                   // Loading ring off
             PlayerBlackjackMessage.Visibility = Visibility.Collapsed;
 
-            NextRoundUI();
+            WaitForBet();
         }
 
 
@@ -424,22 +476,7 @@ namespace Blackjack
         /// </summary>
         private async void NextRoundUI()
         {
-            ButtonsEnabled = false;
-            HintButtonEnabled = false;
-            SplitButtonEnabled = false;
-            HitButton.Content = "Hit";
-            StandButton.Content = "Stand";
-
-            PlayerHandValue = 0;
-            DealerHandValue = 0;
-            SplitHandValue = 0;
-            SplitStack.Visibility = Visibility.Collapsed;
-            blackjack.NextRound();
-
-            // Reset the UI representation of the hands.
-            myHand.Clear();
-            dealerHand.Clear();
-            splitHand.Clear();
+            blackjack.playerBet = CurrentBet;      // Set current bet in blackjack class for payout calculation.
             // Generate hands.
             await Task.Delay(TimeSpan.FromSeconds(0.7));
             myHand.Add(blackjack.player.hand[0]);
@@ -472,85 +509,6 @@ namespace Blackjack
             ButtonsEnabled = true;
         }
 
-        /// <summary>
-        /// Pressing settings button will bring up the options menu.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Settings_Click(object sender, RoutedEventArgs e)
-        {
-            Settings.IsPaneOpen = !Settings.IsPaneOpen;
-        }
-
-        /// <summary>
-        /// Returns to title screen from game page.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Return_Title(object sender, RoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(MainPage));
-        }
-
-        /// <summary>
-        /// Closes flyout from return to title screen if user cancels.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Close_Flyout(object sender, RoutedEventArgs e)
-        {
-            //QuitFlyout.Hide();
-        }
-
-        /// <summary>
-        /// Exits game on player confirmation.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Quit_Game(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Exit();
-        }
-
-        private async void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (RulesListBox.IsSelected)
-            {
-                MessageDialog myMessage = new MessageDialog("BlackJack Rules: The dealer deals the cards and runs all the action at the blackjack table.\n" +
-                    "The game starts after the player places their bet. Blackjack games use chips instead of cash. You'll buy your chips from the side menu bar.\n" +
-                    "You should buy your chips between hands, don't try to interrupt a hand that's being played to get chips.\n" +
-                    "Once you and any other players have placed your bets, the dealer starts the game.\n" +
-                    "The game begins when the dealer deals 2 cards. The dealer deals himself a 2 card hand, but he deals himself one card face up and the other card face down.\n" +
-                    "This is important, because that face up card gives the player a lot of information about how she should play her hand. Since you're starting with a 2 card hand, " +
-                    "the highest possible total you could have is 21 - that's an ace (which counts as 11) and a ten.");
-                await myMessage.ShowAsync();
-            }
-            else if (InfoBox.IsSelected)
-            {
-                MessageDialog myMessage2 = new MessageDialog(
-                    "Brandon, " +
-                    "Carlo, " +
-                    "Ferdinand, " +
-                    "Matt, " +
-                    "Huy, " +
-                    "Anush. ");
-                await myMessage2.ShowAsync();
-            }
-            else if (SaveGame.IsSelected)
-            {
-                //to do
-            }
-            else if (ReturnPage.IsSelected)
-            {
-                Frame.Navigate(typeof(MainPage));
-            }
-            else if (ExitGame.IsSelected)
-            {
-                Application.Current.Exit();
-            }
-        }
-
-        /// <summary>
         /// Displays a hint to the user, based on which hand is in play.
         /// </summary>
         /// <param name="sender"></param>
@@ -568,6 +526,89 @@ namespace Blackjack
                 myMessage2 = new MessageDialog($"{Strategy.Hints(blackjack.player.hand[0], blackjack.player.hand[1], blackjack.dealer.hand[1])}");
             }
             await myMessage2.ShowAsync();
+        }
+
+
+        private async void BetButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (UIChips >= 20)
+            {
+                CurrentBet += 20;
+                UIChips -= 20;
+                DealButton.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                MessageDialog myMessage = new MessageDialog("Not enough chips to place a bet, adding 500 chips.");
+                await myMessage.ShowAsync();
+                UIChips += 500;
+                blackjack.availableChips += 500;
+                CurrentBet += 20;
+                UIChips -= 20;
+                DealButton.Visibility = Visibility.Visible;
+            }
+        }
+
+        /// <summary>
+        /// Hides the deal button and starts the round after user has bet.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DealButton_Click(object sender, RoutedEventArgs e)
+        {
+            DealButton.Visibility = Visibility.Collapsed;
+            PlayerBlackjackMessage.Visibility = Visibility.Collapsed;
+            BetButton.Visibility = Visibility.Collapsed;
+            NextRoundUI();
+        }
+
+        /// <summary>
+        /// Pressing settings button will bring up the options menu.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Settings_Click(object sender, RoutedEventArgs e)
+        {
+            Settings.IsPaneOpen = !Settings.IsPaneOpen;
+        }
+
+        /// <summary>
+        /// Controls all the menu options on click.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (RulesListBox.IsSelected)
+            {
+                MessageDialog myMessage = new MessageDialog("BlackJack Rules: The dealer deals the cards and runs all the action at the blackjack table.\n" +
+                    "The game starts after the player places their bet. Blackjack games use chips instead of cash. You'll buy your chips from the side menu bar.\n" +
+                    "You should buy your chips between hands, don't try to interrupt a hand that's being played to get chips.\n" +
+                    "Once you and any other players have placed your bets, the dealer starts the game.\n" +
+                    "The game begins when the dealer deals 2 cards. The dealer deals himself a 2 card hand, but he deals himself one card face up and the other card face down.\n" +
+                    "This is important, because that face up card gives the player a lot of information about how she should play her hand. Since you're starting with a 2 card hand, " +
+                    "the highest possible total you could have is 21 - that's an ace (which counts as 11) and a ten.");
+                await myMessage.ShowAsync();
+            }
+            else if (CreatorsBox.IsSelected)
+            {
+                MessageDialog myMessage2 = new MessageDialog(
+                    "Brandon, " +
+                    "Carlo, " +
+                    "Ferdinand, " +
+                    "Matt, " +
+                    "Huy, " +
+                    "Anush. ");
+                await myMessage2.ShowAsync();
+            }
+            else if (GithubLink.IsSelected)
+            {
+
+            }
+            else if (ReturnPage.IsSelected)
+            {
+                Frame.Navigate(typeof(MainPage));
+            }
         }
     }
 }

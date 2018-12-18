@@ -29,12 +29,12 @@
 
             <!--Start and Exit Buttons-->
             <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Vertical" Margin="0,150,0,0" HorizontalAlignment="Center">
-                <Button Name="StartMode1" Margin="0,0,0,26" Content="Enter Game"
+                <Button Name="StartGame" Margin="0,0,0,26" Content="Enter Game"
                         Background="#006400"  BorderThickness="6" BorderBrush="Black" Foreground="Black" 
-                        FontSize="60" Click="Start_Mode1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                        FontSize="60" Click="Start_Game" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                 <Button Name="QuitButton" Content="Exit Game" HorizontalAlignment="Stretch"
                         FontSize="60" Background="#FFFC0000" BorderBrush="Black" BorderThickness="6"
-                        Margin="0,0,0,0" VerticalAlignment="Stretch" Click="QuitButton_Click">
+                        Margin="0,0,0,0" VerticalAlignment="Stretch">
                     <!--Creates a popup confirming application shutdown-->
                     <Button.Flyout>
                         <Flyout x:Name="QuitFlyout">
