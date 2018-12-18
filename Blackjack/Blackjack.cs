@@ -188,9 +188,9 @@ namespace Blackjack
             //      the player's chips so that it stays up to date after bets/ winnings
 
             // Deal the cards to the player and the dealer
-            player.AddCard("Assets/2_C.png");
+            player.AddCard(newDeck.Deal_Card());
             dealer.AddCard(newDeck.Deal_Card());
-            player.AddCard("Assets/2_C.png");
+            player.AddCard(newDeck.Deal_Card());
             dealer.AddCard(newDeck.Deal_Card());
             if (player.handValue == 21) player.naturalBlackjack = true;
             if (dealer.handValue == 21) dealer.naturalBlackjack = true;
