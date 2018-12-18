@@ -539,13 +539,8 @@ namespace Blackjack
             }
             else
             {
-                MessageDialog myMessage = new MessageDialog("Not enough chips to place a bet, adding 500 chips.");
+                MessageDialog myMessage = new MessageDialog("Not enough chips to place a bet, try getting more chips from the settings menu.");
                 await myMessage.ShowAsync();
-                UIChips += 500;
-                blackjack.availableChips += 500;
-                CurrentBet += 20;
-                UIChips -= 20;
-                DealButton.Visibility = Visibility.Visible;
             }
         }
 
@@ -589,6 +584,13 @@ namespace Blackjack
                     "This is important, because that face up card gives the player a lot of information about how she should play her hand. Since you're starting with a 2 card hand, " +
                     "the highest possible total you could have is 21 - that's an ace (which counts as 11) and a ten.");
                 await myMessage.ShowAsync();
+            }
+            else if (MoreChips.IsSelected)
+            {
+                MessageDialog myMessage = new MessageDialog("So you used up all your chips? Don't worry here's another 100. Enjoy.");
+                await myMessage.ShowAsync();
+                UIChips += 100;
+                blackjack.availableChips += 100;
             }
             else if (InfoBox.IsSelected)
             {

@@ -53,7 +53,7 @@
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Foreground="White" FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE7bf;"/>
                                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                               Margin="20,0,0,0" FontSize="20" Foreground="White" >More Chips
+                                               Margin="20,0,0,0" FontSize="20" Foreground="White" >Get Chips
                                     </TextBlock>
                                 </StackPanel>
                             </ListBoxItem>
