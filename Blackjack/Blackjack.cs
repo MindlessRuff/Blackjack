@@ -128,6 +128,7 @@ namespace Blackjack
         public void Surrender()
         {
             //Here the player losses half their bet 
+            chips.Surrendered(playerBet);
             NextRound();
         }
 
