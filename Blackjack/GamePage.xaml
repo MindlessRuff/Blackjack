@@ -42,45 +42,45 @@
                             <!--Game Rules-->
                             <ListBoxItem x:Name="RulesListBox" Background="#333">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock x:Name="GameRules" FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE7fc;"/>
+                                    <TextBlock Foreground="White" FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE7fc;"/>
                                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                               Margin="20,0,0,0" FontSize="20">Game Rules
+                                               Margin="20,0,0,0" FontSize="20" Foreground="White" >Game Rules
                                     </TextBlock>
                                 </StackPanel>
                             </ListBoxItem>
                             <!--Get More Chips-->
                             <ListBoxItem x:Name="MoreChips" Background="#333">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE7bf;"/>
+                                    <TextBlock Foreground="White" FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE7bf;"/>
                                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                               Margin="20,0,0,0" FontSize="20">More Chips
+                                               Margin="20,0,0,0" FontSize="20" Foreground="White" >More Chips
                                     </TextBlock>
                                 </StackPanel>
                             </ListBoxItem>
                             <!--Info-->
                             <ListBoxItem x:Name="InfoBox" Background="#333">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE70f;"/>
+                                    <TextBlock Foreground="White" FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE70f;"/>
                                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                               Margin="20,0,0,0" FontSize="20">Creators
+                                               Margin="20,0,0,0" FontSize="20" Foreground="White" >More Info
                                     </TextBlock>
                                 </StackPanel>
                             </ListBoxItem>
                             <!--Save Game-->
                             <ListBoxItem x:Name="SaveGame" Background="#333">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE74e;"/>
+                                    <TextBlock Foreground="White" FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE74e;"/>
                                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                               Margin="10,0,0,0" FontSize="20">Save Game
+                                               Margin="10,0,0,0" FontSize="20" Foreground="White" >Save Game
                                     </TextBlock>
                                 </StackPanel>
                             </ListBoxItem>
                             <!--Return to Title Page-->
                             <ListBoxItem x:Name="ReturnPage" Background="#333">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE97a;"/>
+                                    <TextBlock Foreground="White" FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE97a;"/>
                                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                               Margin="10,0,0,0" FontSize="20">Return To Title
+                                               Margin="10,0,0,0" FontSize="20" Foreground="White" >Return To Title
                                     </TextBlock>
                                 </StackPanel>
                             </ListBoxItem>
@@ -113,7 +113,7 @@
                                Foreground="Yellow" FontSize="30" FontWeight="ExtraBlack" HorizontalAlignment="Stretch" Height="50" Margin="0,0,0,0" VerticalAlignment="Top" />
                     </Border>
                 </StackPanel>
-                
+
                 <!--Split Hand Stack-->
                 <StackPanel x:Name="SplitStack" RelativePanel.RightOf="PlayerStack"  Visibility="Collapsed">
                     <!--Loading ring here is only to balance UI, never enabled.-->
@@ -169,7 +169,7 @@
                     FontSize="35" FontWeight="ExtraBold" HorizontalAlignment="Left" Click="BetButton_Click"
                     BorderBrush="Yellow" BorderThickness="6" Foreground="White"
                     Background="#66FFFFFF" Height="70" Width="200"/>
-            
+
             <!-- Busted Messsage, Initially not visible-->
             <TextBlock Name="BustMessage" Text="BUST!" 
                        FontSize="50" Foreground="DarkRed" FontWeight="ExtraBlack"
@@ -187,7 +187,7 @@
             <!--Player Control (Hit/Stand, etc) anchored under logo. These should be bound to a bool in GamePage.xaml.cs-->
             <RelativePanel HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Grid.Column="2" Grid.RowSpan="3">
                 <!--Logo-->
-                <Image Name="CornerLogo" Stretch="None" Margin="0,0,0,100"
+                <Image Name="CornerLogo" Stretch="None"
                    HorizontalAlignment="Center" VerticalAlignment="Top"  
                    Source="Assets/blackjack.png"/>
                 <!--Player Controls-->
@@ -224,7 +224,7 @@
                                Foreground="White"  FontSize="20" FontWeight="ExtraBlack" VerticalAlignment="Center"/>
                 </Border>
             </StackPanel>
-            
+
         </Grid>
     </ScrollViewer>
 </Page>

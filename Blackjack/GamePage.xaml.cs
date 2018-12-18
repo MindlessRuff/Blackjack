@@ -600,6 +600,7 @@ namespace Blackjack
                     "Huy, " +
                     "Anush. ");
                 await myMessage2.ShowAsync();
+
             }
             else if (ReturnPage.IsSelected)
             {
