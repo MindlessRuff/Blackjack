@@ -26,12 +26,12 @@ namespace Blackjack
 
 
 
-
+        
         public int CompareTo(GambleChips other)
         {
             throw new NotImplementedException();
         }
-
+        /*
         public GambleChips()
         {
             playerChips = 500; //$500
@@ -48,7 +48,7 @@ namespace Blackjack
             return 0;
             
         }
-
+        
         public void WinDoubleDown (int doubleDownChips)
         {
             playerChips += (doubleDownChips * 2);
@@ -64,7 +64,7 @@ namespace Blackjack
         public void surrenderChips(int divideChips)
         {
             // TODO: Algorithm and code the losses 
-            /*if (userBet == OneDollarChip)
+            if (userBet == OneDollarChip)
             {
                 DoubleOneDollarBet = userBet * 2;
                 return DoubleOneDollarBet;
@@ -88,7 +88,6 @@ namespace Blackjack
             {
                 return 0;
             }
-            */
 
             surrendingHand = userBet / 2;
             return surrendingHand;
@@ -103,5 +102,6 @@ namespace Blackjack
         {
             return base.ToString();
         }
+        */
     }
 }

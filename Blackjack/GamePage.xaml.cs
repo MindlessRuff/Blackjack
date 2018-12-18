@@ -258,7 +258,7 @@ namespace Blackjack
             }
 
             // Dealer hits until busting or hard > 17, will only run if player hasn't busted.
-            else if (!blackjack.player.busted || blackjack.split && !blackjack.splitPlayer.busted)
+            else if (!blackjack.player.busted || (blackjack.split && !blackjack.splitPlayer.busted))
             {
                 
                 // Try-catch block will attempt until failure, adding a new card to the
@@ -268,12 +268,17 @@ namespace Blackjack
                 {
                     try
                     {
-                        await Task.Delay(TimeSpan.FromSeconds(1));                                                  // 1 Sec Delay between dealer cards.
+                        await Task.Delay(TimeSpan.FromSeconds(1));                                  // 1 Sec Delay between dealer cards.
                         dealerHand.Add(blackjack.dealer.hand[dealerHand.Count]);
-                        DealerHandValue += blackjack.dealer.Card_Value(blackjack.dealer.hand[dealerHand.Count-1]);   // Add value to UI dealer hand value.
-
-                        // UI hand value representation has to be corrected for acess
-                        if (blackjack.dealer.numOnes > 0)
+                        int temp = blackjack.dealer.Card_Value(blackjack.dealer.hand[dealerHand.Count-1]);     // Get value of last card added.
+                        // If it returned as a one, need to remove one from numOnes or the UI hand value will be 10 lower than it should be.
+                        if (temp == 1)                  
+                        {
+                            blackjack.dealer.numOnes -= 1;
+                        }
+                        DealerHandValue += temp;        // Add the value to UI hand.
+                        // Correct UI hand value for aces if necessary.
+                        if (blackjack.dealer.numOnes > 0 && dealerHandValue > 10)
                         {
                             DealerHandValue -= 10;
                             blackjack.dealer.numOnes -= 1;
@@ -350,7 +355,8 @@ namespace Blackjack
 
             PlayerBlackjackMessage.Visibility = Visibility.Collapsed;
             Loading.IsActive = false;                       // Loading ring off
-            
+
+            DealerCardBack.Visibility = Visibility.Collapsed;
             NextRoundUI();
         }
 
