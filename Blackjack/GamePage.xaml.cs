@@ -590,7 +590,7 @@ namespace Blackjack
                     "the highest possible total you could have is 21 - that's an ace (which counts as 11) and a ten.");
                 await myMessage.ShowAsync();
             }
-            else if (CreatorsBox.IsSelected)
+            else if (InfoBox.IsSelected)
             {
                 MessageDialog myMessage2 = new MessageDialog(
                     "Brandon, " +
@@ -600,10 +600,6 @@ namespace Blackjack
                     "Huy, " +
                     "Anush. ");
                 await myMessage2.ShowAsync();
-            }
-            else if (GithubLink.IsSelected)
-            {
-
             }
             else if (ReturnPage.IsSelected)
             {
