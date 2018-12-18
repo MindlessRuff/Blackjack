@@ -360,7 +360,7 @@ namespace Blackjack
                 "The game begins when the dealer deals 2 cards. The dealer deals himself a 2 card hand, but he deals himself one card face up and the other card face down.\n" +
                 "This is important, because that face up card gives the player a lot of information about how she should play her hand. Since you're starting with a 2 card hand, " +
                 "the highest possible total you could have is 21 - that's an ace (which counts as 11) and a ten.");
-             await myMessage.ShowAsync();
+            await myMessage.ShowAsync();
         }
 
         /// <summary>

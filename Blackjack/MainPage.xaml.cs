@@ -94,5 +94,10 @@ namespace Blackjack
         {
             QuitFlyout.Hide();
         }
+
+        private void QuitButton_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Exit();
+        }
     }
 }
