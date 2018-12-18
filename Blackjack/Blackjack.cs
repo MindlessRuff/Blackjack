@@ -140,7 +140,8 @@ namespace Blackjack
                 if ((dealer.busted && !player.busted && !splitPlayer.busted) || ((player.handValue > dealer.handValue && !player.busted) &&
                     (splitPlayer.handValue > dealer.handValue && !splitPlayer.busted))) return "Both Hands Win!";
                 else if (!dealer.busted && (player.busted && (splitPlayer.busted || splitPlayer.handValue < dealer.handValue)) ||
-                    (player.handValue < dealer.handValue && splitPlayer.busted)) return "Both Hands Lose!";
+                    (player.handValue < dealer.handValue && splitPlayer.busted) ||
+                    (player.handValue < dealer.handValue && splitPlayer.handValue < dealer.handValue)) return "Both Hands Lose!";
 
                 // Cases with 1.5x payout due to one push and one win.
                 else if ((player.handValue > dealer.handValue && !dealer.busted && splitPlayer.handValue == dealer.handValue) ||
@@ -183,9 +184,9 @@ namespace Blackjack
             stand = false;
             // Deal the cards to the player and the dealer
 
-            player.AddCard(newDeck.Deal_Card());
+            player.AddCard("Assets/2_C.png");
             dealer.AddCard(newDeck.Deal_Card());
-            player.AddCard(newDeck.Deal_Card());
+            player.AddCard("Assets/2_C.png");
             dealer.AddCard(newDeck.Deal_Card());
             if (player.handValue == 21) player.naturalBlackjack = true;
             if (dealer.handValue == 21) dealer.naturalBlackjack = true;
