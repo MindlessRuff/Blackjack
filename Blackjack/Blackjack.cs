@@ -13,34 +13,30 @@ namespace Blackjack
     class Blackjack : IComparable<Blackjack>
     {
         Deck newDeck = new Deck();
-        GambleChips chips = new GambleChips();
-
         public Player player = new Player();
         public Player splitPlayer = new Player();
         public Player dealer = new Player();
         bool doubleDown { get; set; }
         public bool split { get; set; }
         public bool stand { get; set; }     // Used when the left side of a split hand stands.
-        // Bind "playerBet" to UI chip to allow the user to set the number of chips he/she would like to bet.
-        public int playerBet { get; set; }  // playerBet will be passed as a parameter to the methods inside of the GambleChips class.
-
+        public int playerBet { get; set; }  // playerBet keeps track of each round's bet, needs to be limited to denominations of 20 to keep as int.
+        public int availableChips { get; set; }       // Total chips available to bet, will start at 500.
 
         /// <summary>
         /// This constructor will shuffle the deck, deal cards to the dealer and player.
         /// </summary>
         public Blackjack()
         {
+            availableChips = 500;
             // create new deck object first            
             // Shuffle the deck and generate the stack
             newDeck.Shuffle_Deck();
 
             // Deal the cards to the player and the dealer
-
-            NextRound();
         }    
 
         /// <summary>
-        /// 
+        /// Basic hit function, takes a player parameter so that split hand can also utilize this function
         /// </summary>
         public void Hit(Player hitPlayer)
         {          
@@ -58,7 +54,12 @@ namespace Blackjack
                 else
                 {
                     hitPlayer.busted = true;
-                }     
+                }
+            }
+            // If hand is not split and player busted, calculate loss. Also skip if doubledown, as doubledown calls stand.
+            if (!split && hitPlayer.busted && !doubleDown)
+            {
+                availableChips = availableChips - playerBet;
             }
         }
 
@@ -70,7 +71,11 @@ namespace Blackjack
         public void Stand()
         {
             // If dealer has naturalBlackjack after user stands, dealer wins. Control is passed back to UI.
-            if (dealer.naturalBlackjack) return;
+            if (dealer.naturalBlackjack)
+            {
+                availableChips = availableChips - playerBet;
+                return;
+            }
 
             // Dealer hit block.
             while ((dealer.handValue < 17 || dealer.numElevens > 0) && dealer.handValue != 21)
@@ -88,25 +93,23 @@ namespace Blackjack
             if (dealer.handValue > 21)
             {
                 dealer.busted = true;
-                chips.DoubleChips(playerBet);
             }
             return;
         }
 
         public void DoubleDown()
         {
-            //TODO:Implment the chips being doubled
-            //Deduct the previously betted value (doubling the bet)
-            chips.DeductChips(playerBet);
             //Double the amount of bet
             playerBet = playerBet * 2;
-            player.AddCard(newDeck.Deal_Card());
+            // Hit split if doubling down on the split hand, else hit normally.
             Stand();
         }
 
         public void Split()
         {
             split = true;
+            // Double the bet
+            playerBet = playerBet * 2;
             player.numElevens = 0;
             // Divide the cards between player and splitPlayer hands. -> Set player handvalue equal to first card only.
             splitPlayer.AddCard(player.hand[1]);
@@ -127,42 +130,79 @@ namespace Blackjack
 
         public void Surrender()
         {
-            //Here the player losses half their bet 
-            chips.Surrendered(playerBet);
-            NextRound();
+            //Here the player loses half their bet 
+            availableChips = availableChips - (playerBet / 2);
         }
 
-        // Called at the end of dealer's turn to calculate the winner and output message to UI.
+        /// <summary>
+        /// Called at the end of dealer's turn to calculate the winner, payout, and output message to UI.
+        /// The available chips in the blackjack class is not updated until the END of each round, even though
+        /// the player bets before each round. UI available chips will update immediately.
+        /// </summary>
+        /// <returns></returns>
         public string CalculateWinner()
         {
             // Hand was split
             if (split)
             {
                 if ((dealer.busted && !player.busted && !splitPlayer.busted) || ((player.handValue > dealer.handValue && !player.busted) &&
-                    (splitPlayer.handValue > dealer.handValue && !splitPlayer.busted))) return "Both Hands Win!";
+                    (splitPlayer.handValue > dealer.handValue && !splitPlayer.busted)))
+                {
+                    availableChips = availableChips + playerBet;    // Bet was already doubled in split function.
+                    return "Both Hands Win!";
+                }
                 else if (!dealer.busted && (player.busted && (splitPlayer.busted || splitPlayer.handValue < dealer.handValue)) ||
                     (player.handValue < dealer.handValue && splitPlayer.busted) ||
-                    (player.handValue < dealer.handValue && splitPlayer.handValue < dealer.handValue)) return "Both Hands Lose!";
+                    (player.handValue < dealer.handValue && splitPlayer.handValue < dealer.handValue))
+                {
+                    availableChips = availableChips - playerBet;
+                    return "Both Hands Lose!";
+                }
 
                 // Cases with 1.5x payout due to one push and one win.
                 else if ((player.handValue > dealer.handValue && !dealer.busted && splitPlayer.handValue == dealer.handValue) ||
-                    (splitPlayer.busted && dealer.busted && !player.busted)) return "Win + Push, 1.5x Payout";
+                    (splitPlayer.busted && dealer.busted && !player.busted))
+                {
+                    availableChips = availableChips + (playerBet / 2);
+                    return "Win + Push, 1.5x Payout";
+                }
                 else if ((splitPlayer.handValue > dealer.handValue && !dealer.busted && player.handValue == dealer.handValue) ||
-                    (player.busted && dealer.busted && !splitPlayer.busted)) return "Push + Win, 1.5x Payout";
+                    (player.busted && dealer.busted && !splitPlayer.busted))
+                {
+                    availableChips = availableChips + (playerBet / 2);
+                    return "Push + Win, 1.5x Payout";
+                }
 
                 // Cases with 0.5x payout due to one push and one loss.
-                else if (!dealer.busted && splitPlayer.handValue == dealer.handValue && 
-                    (player.handValue < dealer.handValue || player.busted)) return "Lose + Push, 0.5x Payout";
+                else if (!dealer.busted && splitPlayer.handValue == dealer.handValue &&
+                    (player.handValue < dealer.handValue || player.busted))
+                {
+                    availableChips = availableChips - (playerBet / 2);
+                    return "Lose + Push, 0.5x Payout";
+                }
                 else if (!dealer.busted && player.handValue == dealer.handValue &&
-                    (splitPlayer.handValue < dealer.handValue || splitPlayer.busted)) return "Push + Lose, 0.5x Payout";
+                    (splitPlayer.handValue < dealer.handValue || splitPlayer.busted))
+                {
+                    availableChips = availableChips - (playerBet / 2);
+                    return "Push + Lose, 0.5x Payout";
+                }
+                // The case in which one hand wins and the other loses, or both hands tie the dealer.
+                else return "Push";     // No change in available chips, reason noted in the summary of this function.
 
-                else return "Push"; // The case in which one hand wins and the other loses, or both hands tie the dealer.
             }
             else
             {
-                if (player.handValue > dealer.handValue || dealer.handValue > 21) return "You Win!";
-                else if (player.handValue < dealer.handValue && dealer.handValue <= 21) return "You Lose!";
-                else return "Push!";
+                if (player.handValue > dealer.handValue || dealer.handValue > 21)
+                {
+                    availableChips = availableChips + playerBet;
+                    return "You Win!";
+                }
+                else if (player.handValue < dealer.handValue && dealer.handValue <= 21)
+                {
+                    availableChips = availableChips - playerBet;
+                    return "You Lose!";
+                }
+                else return "Push!";    // No change in available chips, reason noted in the summary of this function.
             }
         }
 
@@ -183,9 +223,8 @@ namespace Blackjack
             splitPlayer.Reset();
             split = false;
             stand = false;
-            
-            //TODO: set the value of the playerBet through UI and then call the chip deduction method to deduce
-            //      the player's chips so that it stays up to date after bets/ winnings
+            doubleDown = false;
+            playerBet = 0;
 
             // Deal the cards to the player and the dealer
             player.AddCard(newDeck.Deal_Card());

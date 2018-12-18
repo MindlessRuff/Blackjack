@@ -40,7 +40,7 @@
                     <SplitView.Pane>
                         <ListBox SelectionMode="Single" SelectionChanged="ListBox_SelectionChanged">
                             <!--Game Rules-->
-                            <ListBoxItem x:Name="RulesListBox" Background="#333" >
+                            <ListBoxItem x:Name="RulesListBox" Background="#333">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock x:Name="GameRules" FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE7fc;"/>
                                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" 
@@ -90,15 +90,6 @@
                                     <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE97a;"/>
                                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" 
                                                Margin="10,0,0,0" FontSize="20">Return To Title
-                                    </TextBlock>
-                                </StackPanel>
-                            </ListBoxItem>
-                            <!--Exit Game-->
-                            <ListBoxItem x:Name="ExitGame" Background="#333">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE7e8;"/>
-                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                               Margin="20,0,0,0" FontSize="20">Exit Game
                                     </TextBlock>
                                 </StackPanel>
                             </ListBoxItem>
@@ -174,8 +165,20 @@
                            Width="100" Height="150" Stretch="Fill" VerticalAlignment="Top"
                            Margin="4,0,0,0" Visibility="Collapsed"/>
                 </StackPanel>
+                <!--Button to start each round, invisible until player has bet.-->
+                <Button Name="DealButton" Content="Deal" Visibility="Collapsed"
+                        FontSize="30" FontWeight="Bold" HorizontalAlignment="Stretch" Click="DealButton_Click"
+                        BorderBrush="Yellow" BorderThickness="6" Foreground="White"
+                        Background="#66FFFFFF" Height="70" Width="200"/>
             </StackPanel>
 
+            <!--Button to increase bet by 20, visible at before each round only.-->
+            <Button Name="BetButton" Content="Bet (+20)" Grid.Row="2" Grid.Column="1"
+                    Margin="0,0,0,20" Visibility="Collapsed" VerticalAlignment="Center"
+                    FontSize="35" FontWeight="ExtraBold" HorizontalAlignment="Left" Click="BetButton_Click"
+                    BorderBrush="Yellow" BorderThickness="6" Foreground="White"
+                    Background="#66FFFFFF" Height="70" Width="200"/>
+            
             <!-- Busted Messsage, Initially not visible-->
             <TextBlock Name="BustMessage" Text="BUST!" 
                        FontSize="50" Foreground="DarkRed" FontWeight="ExtraBlack"
@@ -220,15 +223,15 @@
                         BorderBrush="Black" BorderThickness="6" IsEnabled="{Binding HintButtonEnabled}"
                         Background="#66FFFFFF" Height="60" Width="125">
                 </Button>
-                <Button Name="Bet" Content="Bet" Margin="0,0,0,20"
-                        FontSize="25" HorizontalAlignment="Stretch" 
-                        BorderBrush="Black" BorderThickness="6"
-                        Background="#66FFFFFF" Height="60" Width="125">
-                </Button>
-                <Button Name="Chips" Content="Chips" FontSize="25" 
-                        Background="#66FFFFFF" Width="125" Height="60"
-                        HorizontalAlignment="Stretch" BorderThickness="6" BorderBrush="Black">
-                </Button>
+                <TextBlock Text="Current Bet" FontSize="20" HorizontalAlignment="Center" Foreground="White"/>
+                <TextBlock Foreground="White" Text="{x:Bind CurrentBet, Mode=OneWay}" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                    FontSize="20" FontWeight="Bold" Margin="0,5,0,10"/>
+                <TextBlock Text="Chips" HorizontalAlignment="Center" FontSize="20" Foreground="White"/>
+                <Border BorderThickness="6" BorderBrush="Black" Background="Red" 
+                        CornerRadius="50" Width="80" Height="80" Margin="0,0,0,10">
+                    <TextBlock Name ="NumberChips" TextAlignment="Center" Text="{x:Bind UIChips, Mode=OneWay}" HorizontalAlignment="Center"
+                               Foreground="White"  FontSize="20" FontWeight="ExtraBlack" VerticalAlignment="Center"/>
+                </Border>
             </StackPanel>
             
         </Grid>
