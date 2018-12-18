@@ -91,12 +91,12 @@ namespace Blackjack
                 dealer.busted = true;
                 if (wonDoubleDown)
                 {
-                    chips.WinDoubleDown(playerBet);
+                    //chips.WinDoubleDown(playerBet);
                     wonDoubleDown = false;
                 }
                 else
                 {
-                    chips.DoubleChips(playerBet);
+                   // chips.DoubleChips(playerBet);
                 }
             }
             return;
@@ -104,9 +104,9 @@ namespace Blackjack
 
         public void DoubleDown()
         {
-            //Implment the chips being doubled 
+            //TODO:Implment the chips being doubled 
             player.AddCard(newDeck.Deal_Card());
-            chips.DoubleChips();
+            // chips.DoubleChips();
             Stand();
         }
 
@@ -129,7 +129,6 @@ namespace Blackjack
             player.AddCard(newDeck.Deal_Card());        // Add card to first hand.
             splitPlayer.AddCard(newDeck.Deal_Card());   // Add card to split hand, will not show in UI hand until first hand stands or busts.
 
-            System.Diagnostics.Debug.WriteLine(this.ToString());
         }    
 
         public void Surrender()
