@@ -4,36 +4,21 @@ namespace Blackjack
 {
     internal class GambleChips : IComparable<GambleChips>
     {
-        private const int OneDollarChip = 1;
-        private const int FiveDollarChip = 5;
-        private const int TwentyFiveDollarChip = 25;
-        private const int FiftyDollarChip = 50;
-        private const int HundredDollarChip = 100;
-        private int doubledownHand;
-        private int losingHand;
-        private int surrendingHand;
-        private int userBet;
-
-        private int winningHand;
-
-        private int DoubleOneDollarBet;
-        private int DoubleFiveDollarBet;
-        private int DoubleTwentyFiveDollarBet;
-        private int DoubleFiftyDollarBet;
-        private int DoubleHundredDollarBet;
-
-        
-
-
-
+        public int playerChips { get; set; }
 
         public int CompareTo(GambleChips other)
         {
             throw new NotImplementedException();
         }
 
-        public int DoubleChips()
+        public GambleChips()
         {
+            playerChips = 500; //$500
+        }
+
+        public void DoubleChips(int doubleBet)
+        {
+            playerChips += (doubleBet * 2);
             // TODO: Algorithm and code to add up total chips won
 
             /*if (userBet == OneDollarChip)
@@ -62,18 +47,24 @@ namespace Blackjack
             }
             */
 
-            return 0;
+            //return 0;
             
         }
 
-        public int LossChips()
+        public void WinDoubleDown (int doubleDownChips)
+        {
+            playerChips += (doubleDownChips * 2);
+        }
+
+        public int LoseChips()
         {
             // TODO: Algorithm and code the losses of chips
             return 0;
         }
 
-        public int surrenderChips()
+        public void surrenderChips(int divideChips)
         {
+            playerChips /= (divideChips / 2);
             // TODO: Algorithm and code the losses 
             /*if (userBet == OneDollarChip)
             {
@@ -101,8 +92,8 @@ namespace Blackjack
             }
             */
 
-            surrendingHand = userBet / 2;
-            return surrendingHand;
+            //surrendingHand = userBet / 2;
+            //return surrendingHand;
         }
 
         public override int GetHashCode()
