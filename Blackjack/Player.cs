@@ -16,7 +16,6 @@ namespace Blackjack
         public bool naturalBlackjack { get; set; }      // Tracks 21 on deal, which is higher than other 21's. Set in blackjack class.
         public int numOnes { get; set; }                // Tracks number of soft aces, used in UI stand function to correct dealer UI hand value representation.
 
-
         //Explicit public constructor
         public Player()
         {
