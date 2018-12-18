@@ -179,7 +179,9 @@ namespace Blackjack
                 PropertyChanged(this, new PropertyChangedEventArgs(propName));
             }
         }
-
+        /// <summary>
+        /// This method waits for a bet to be placed before enabling the buttons
+        /// </summary>
         private void WaitForBet()
         {
             CurrentBet = 0;
@@ -254,7 +256,7 @@ namespace Blackjack
             // TODO: Figure out what exceptions can be raised and handle.
             catch(Exception ex)
             {
-                throw;
+                System.Diagnostics.Debug.WriteLine(ex);
             }
 
             // If bust, reinitialize UI hand to the now-reset Blackjack.cs hand. Called on a split only if both hands have busted.
@@ -375,6 +377,12 @@ namespace Blackjack
             WaitForBet();
         }
 
+        /// <summary>
+        /// This method handles the logic for when a player hits the DoubleDown button
+        /// Gives double the userBet after dealing one card to the player
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DoubleDown(object sender, RoutedEventArgs e)
         {
             ButtonsEnabled = false;
@@ -392,6 +400,12 @@ namespace Blackjack
                 Stand(this, e);
         }
 
+        /// <summary>
+        /// This method handles the Split button and will create an extra split hand
+        /// to display when the user is able to split a pair
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Split(object sender, RoutedEventArgs e)
         {
             SplitButtonEnabled = false;
