@@ -43,7 +43,7 @@ namespace Blackjack
         private int playerHandValue = 0;      // This int works in the same way ButtonsEnabled does, used in HandValue on event.
         private int dealerHandValue = 0;
         private int splitHandValue = 0;
-        private int UIchips = 500;
+        private int UIchips = 200;
         private int currentBet = 0;
 
         /// <summary>
@@ -587,10 +587,19 @@ namespace Blackjack
             }
             else if (MoreChips.IsSelected)
             {
-                MessageDialog myMessage = new MessageDialog("So you used up all your chips? Don't worry here's another 100. Enjoy.");
-                await myMessage.ShowAsync();
-                UIChips += 100;
-                blackjack.availableChips += 100;
+                if (UIchips == 0)
+                {
+                    MessageDialog myMessage = new MessageDialog("So you used up all your chips? Don't worry here's another 100. Enjoy.");
+                    await myMessage.ShowAsync();
+                    UIChips += 100;
+                    blackjack.availableChips += 100;
+                }
+                else
+                {
+                    MessageDialog myMessage2 = new MessageDialog("You have more than enough chips!!");
+                    await myMessage2.ShowAsync();
+                }
+
             }
             else if (InfoBox.IsSelected)
             {
