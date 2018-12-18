@@ -97,7 +97,6 @@
     </Compile>
     <Compile Include="Blackjack.cs" />
     <Compile Include="Deck.cs" />
-    <Compile Include="GambleChips.cs" />
     <Compile Include="GamePage.xaml.cs">
       <DependentUpon>GamePage.xaml</DependentUpon>
     </Compile>

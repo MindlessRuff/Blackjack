@@ -21,6 +21,7 @@ namespace Blackjack
         {
             handValue = 0;
             numElevens = 0;
+            numOnes = 0;
             naturalBlackjack = false;
             busted = false;
         }
