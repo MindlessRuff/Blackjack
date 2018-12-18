@@ -9,7 +9,11 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <ScrollViewer VerticalScrollBarVisibility="Visible">
-        <Grid Background="#222">
+        <Grid>
+            <Grid.Background>
+                <ImageBrush Stretch="Fill" ImageSource="Assets/bg2.jpg" AlignmentX="Center"
+                            AlignmentY="Top"/>
+            </Grid.Background>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -22,39 +26,6 @@
                 <!--Middle column takes 3/5 of total width-->
                 <ColumnDefinition Width= "*" />
             </Grid.ColumnDefinitions>
-
-            <!--Settings Bar--><!--Do we need this?-->
-            <RelativePanel  Grid.ColumnSpan="2">
-                <!--Settings Menu Button-->
-                <Button
-                Name="Menu" Content="&#xE713;" FontFamily="Segoe MDL2 Assets" FontSize="25"  
-                Click="Settings_Click" VerticalAlignment="Top" RequestedTheme="Default" FontWeight="Bold"
-                Foreground="White" Background="Black" IsDoubleTapEnabled="False" />
-                <!--Settings Menu-->
-                <SplitView OpenPaneLength="100" RelativePanel.Below="Menu" Name="Settings"
-                           DisplayMode="Inline" RequestedTheme="Dark" >
-                    <SplitView.Pane>
-                        <StackPanel Orientation="Vertical">
-                            <!--Outer stack to stack different options vertically-->
-                            <StackPanel Orientation="Vertical">
-                                <!--Inner stacks orientate each separate option horizontally-->
-                                <TextBlock VerticalAlignment="Center" Margin="0,0,20,0" FontWeight="Bold" Text="Option 1" />
-                                <RadioButton
-                                    Name ="Option1a" Content="Yes" GroupName="Group1"  Checked="Toggle_Option_1" IsChecked="True"/>
-                                <RadioButton
-                                     Name="Option1b" Content="No" Margin="0,0,0,10" GroupName="Group1" Checked="Toggle_Option_1"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Vertical">
-                                <TextBlock VerticalAlignment="Center" Margin="0,0,20,0" Text="Option 2"/>
-                                <RadioButton
-                                    Name="Option2a" Content="Yes" GroupName="Group2" Checked="Toggle_Option_2" IsChecked="True"/>
-                                <RadioButton
-                                    Name="Option2b" Content="No" GroupName="Group2" Checked="Toggle_Option_2" IsChecked="False"/>
-                            </StackPanel>
-                        </StackPanel>
-                    </SplitView.Pane>
-                </SplitView>
-            </RelativePanel>
 
             <!--Start and Exit Buttons-->
             <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Vertical" Margin="0,150,0,0" HorizontalAlignment="Center">
@@ -90,12 +61,12 @@
 
             <TextBlock Name="Title" Grid.Row="0" Grid.Column="1" Margin ="0,50,0,0" Text="B.G. BlackJack" 
                        TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Center"
-                       Style="{ThemeResource TitleTextBlockStyle}" Foreground="#FFF6E2E2" 
-                       FontWeight="Bold" FontSize="80"/>
+                       Style="{ThemeResource TitleTextBlockStyle}" 
+                       FontWeight="Bold" FontSize="80" Foreground="White"/>
             <TextBlock Name="SubTitle" Grid.Row="0" Grid.Column="1" Margin ="0,150,0,0"
-                       Text="Welcome to our game. Our goal is to help make your rich! This game is for novice as well as experienced players. Disclaimer: We are not responsible for any harm casued by the game. ENJOY." 
+                       Text="Welcome to our game. Our goal is to help make your rich! This game is for novice as well as experienced players. Disclaimer: We are not responsible for any harm casued by the game. ENJOY, LOL." 
                        TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Center"
-                       Style="{ThemeResource TitleTextBlockStyle}" Foreground="#FFF6E2E2" 
+                       Style="{ThemeResource TitleTextBlockStyle}" Foreground="White" 
                        FontWeight="Bold" FontSize="12"/>
 
         </Grid>

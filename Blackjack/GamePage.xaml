@@ -48,15 +48,6 @@
                                     </TextBlock>
                                 </StackPanel>
                             </ListBoxItem>
-                            <!--Player Stats-->
-                            <ListBoxItem x:Name="PlayerStats" Background="#333">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE76e;"/>
-                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                               Margin="20,0,0,0" FontSize="20">Player Stats
-                                    </TextBlock>
-                                </StackPanel>
-                            </ListBoxItem>
                             <!--Get More Chips-->
                             <ListBoxItem x:Name="MoreChips" Background="#333">
                                 <StackPanel Orientation="Horizontal">
@@ -66,8 +57,8 @@
                                     </TextBlock>
                                 </StackPanel>
                             </ListBoxItem>
-                            <!--Creators-->
-                            <ListBoxItem x:Name="CreatorsBox" Background="#333">
+                            <!--Info-->
+                            <ListBoxItem x:Name="InfoBox" Background="#333">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE70f;"/>
                                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" 
@@ -75,12 +66,12 @@
                                     </TextBlock>
                                 </StackPanel>
                             </ListBoxItem>
-                            <!--Github Link-->
-                            <ListBoxItem x:Name="GithubLink" Background="#333">
+                            <!--Save Game-->
+                            <ListBoxItem x:Name="SaveGame" Background="#333">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE72d;"/>
+                                    <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE74e;"/>
                                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                               Margin="20,0,0,0" FontSize="20">Github Link
+                                               Margin="10,0,0,0" FontSize="20">Save Game
                                     </TextBlock>
                                 </StackPanel>
                             </ListBoxItem>
@@ -128,7 +119,7 @@
                     <TextBox HorizontalAlignment="Center" Text="Player" TextAlignment="Center" Margin="0,0,0,10"/>
                     <Border Padding="10" BorderThickness="5" BorderBrush="White"  CornerRadius="50" Width="80" Height="80">
                         <TextBlock Name ="PlayerValue" TextAlignment="Center" Text="{x:Bind PlayerHandValue, Mode=OneWay}" 
-                               Foreground="Yellow" FontSize="30" FontWeight="ExtraBlack" />
+                               Foreground="Yellow" FontSize="30" FontWeight="ExtraBlack" HorizontalAlignment="Stretch" Height="50" Margin="0,0,0,0" VerticalAlignment="Top" />
                     </Border>
                 </StackPanel>
                 

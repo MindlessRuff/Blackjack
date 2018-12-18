@@ -151,6 +151,9 @@
     <Content Include="Assets\A_D.png" />
     <Content Include="Assets\A_H.png" />
     <Content Include="Assets\A_S.png" />
+    <Content Include="Assets\background3.jpg" />
+    <Content Include="Assets\bg1.jpg" />
+    <Content Include="Assets\bg2.jpg" />
     <Content Include="Assets\blackjack.png" />
     <Content Include="Assets\Blackjacklogo.jpg" />
     <Content Include="Assets\J_C.png" />
