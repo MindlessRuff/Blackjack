@@ -490,6 +490,8 @@ namespace Blackjack
         /// </summary>
         private async void NextRoundUI()
         {
+            
+
             blackjack.playerBet = CurrentBet;      // Set current bet in blackjack class for payout calculation.
             // Generate hands.
             await Task.Delay(TimeSpan.FromSeconds(0.7));
@@ -630,6 +632,21 @@ namespace Blackjack
             else if (ReturnPage.IsSelected)
             {
                 Frame.Navigate(typeof(MainPage));
+            }
+            else if (SaveGame.IsSelected)
+            {
+                /*
+             
+                try
+                {
+                    save.SaveObject(blackjack);
+                }
+                catch (UnauthorizedAccessException ez)
+                {
+                    System.Diagnostics.Debug.WriteLine(ez);
+                }
+                */
+            
             }
         }
     }

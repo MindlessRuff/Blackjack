@@ -21,7 +21,7 @@ namespace Blackjack
 
         public SaveGame(object save)
         {
-            path = @"Saves/SaveGame.txt";
+            path = @"BlackjackSaves/SaveGame.txt";
         }
 
         public void SaveObject(object save)
