@@ -36,7 +36,7 @@ namespace Blackjack
         // whenever the ButtonsEnabled or Split bools are changed in a function.
         // SOURCE: https://stackoverflow.com/questions/23641688/changing-a-label-when-a-bool-variable-turns-true
         private bool buttonsEnabled = false;
-        private bool splitButtonEnabled = false;
+        private bool splitButtonEnabled = true;
         private bool hintButtonEnabled = false;
         public event PropertyChangedEventHandler PropertyChanged;   // Event handler to handle all events
 
@@ -190,10 +190,11 @@ namespace Blackjack
             PlayerBlackjackMessage.Text = "Place Your Bet";
             PlayerBlackjackMessage.Visibility = Visibility.Visible;
             BetButton.Visibility = Visibility.Visible;
+            SplitStack.Visibility = Visibility.Collapsed;
             // Fix other buttons.
             ButtonsEnabled = false;
             HintButtonEnabled = false;
-            SplitButtonEnabled = false;
+            //SplitButtonEnabled = false;
             HitButton.Content = "Hit";
             StandButton.Content = "Stand";
             // Reset variables.
@@ -219,7 +220,7 @@ namespace Blackjack
         {
             // Turn buttons off immediately to prevent user from spamming hit button.
             ButtonsEnabled = false;
-            SplitButtonEnabled = false;
+            //SplitButtonEnabled = false;
             HintButtonEnabled = false;
             try
             {  
@@ -303,7 +304,7 @@ namespace Blackjack
             }
 
             ButtonsEnabled = false;      // Disable user buttons.
-            SplitButtonEnabled = false;
+            //SplitButtonEnabled = false;
             HintButtonEnabled = false;
             // Reveal dealer's 2nd card.
             DealerCardBack.Visibility = Visibility.Collapsed;
@@ -408,7 +409,7 @@ namespace Blackjack
         /// <param name="e"></param>
         private void Split(object sender, RoutedEventArgs e)
         {
-            SplitButtonEnabled = false;
+            //SplitButtonEnabled = false;
             buttonsEnabled = false;
             blackjack.Split();
             // Enable the split hand in the UI.
@@ -601,7 +602,7 @@ namespace Blackjack
             }
             else if (MoreChips.IsSelected)
             {
-                if (UIchips == 0)
+                if (UIchips <= 100)
                 {
                     MessageDialog myMessage = new MessageDialog("So you used up all your chips? Don't worry here's another 100. Enjoy.");
                     await myMessage.ShowAsync();

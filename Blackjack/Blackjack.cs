@@ -27,7 +27,7 @@ namespace Blackjack
         /// </summary>
         public Blackjack()
         {
-            availableChips = 500;
+            availableChips = 200;
             // create new deck object first            
             // Shuffle the deck and generate the stack
             newDeck.Shuffle_Deck();
