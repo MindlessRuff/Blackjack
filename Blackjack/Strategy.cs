@@ -15,7 +15,6 @@ namespace Blackjack
         /// 
         /// Strategy Reference: https://www.blackjackapprenticeship.com/blackjack-strategy-charts/
         /// Feel free to change this method of strategy else if you feel that there is a better approach.
-        /// 
         /// </summary>
         /// <returns></returns>
         public static string Hints(string playerC0, string playerC1, string dealerC1)

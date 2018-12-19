@@ -35,10 +35,11 @@ namespace Blackjack
         // The following bools and event will control all user buttons
         // whenever the ButtonsEnabled or Split bools are changed in a function.
         // SOURCE: https://stackoverflow.com/questions/23641688/changing-a-label-when-a-bool-variable-turns-true
+        public event PropertyChangedEventHandler PropertyChanged;   // Event handler to handle all event
+
         private bool buttonsEnabled = false;
         private bool splitButtonEnabled = true;
         private bool hintButtonEnabled = false;
-        public event PropertyChangedEventHandler PropertyChanged;   // Event handler to handle all events
 
         private int playerHandValue = 0;      // This int works in the same way ButtonsEnabled does, used in HandValue on event.
         private int dealerHandValue = 0;
@@ -591,6 +592,7 @@ namespace Blackjack
         {
             if (RulesListBox.IsSelected)
             {
+                RulesListBox.IsSelected = false;
                 MessageDialog myMessage = new MessageDialog("BlackJack Rules: The dealer deals the cards and runs all the action at the blackjack table.\n" +
                     "The game starts after the player places their bet. Blackjack games use chips instead of cash. You'll buy your chips from the side menu bar.\n" +
                     "You should buy your chips between hands, don't try to interrupt a hand that's being played to get chips.\n" +
@@ -602,6 +604,7 @@ namespace Blackjack
             }
             else if (MoreChips.IsSelected)
             {
+                MoreChips.IsSelected = false;
                 if (UIchips <= 100)
                 {
                     MessageDialog myMessage = new MessageDialog("So you used up all your chips? Don't worry here's another 100. Enjoy.");
@@ -618,6 +621,7 @@ namespace Blackjack
             }
             else if (InfoBox.IsSelected)
             {
+                InfoBox.IsSelected = false;
                 MessageDialog myMessage2 = new MessageDialog(
                     "Brandon, " +
                     "Carlo, " +
@@ -630,6 +634,7 @@ namespace Blackjack
             }
             else if (ReturnPage.IsSelected)
             {
+                ReturnPage.IsSelected = false;
                 Frame.Navigate(typeof(MainPage));
             }
         }
