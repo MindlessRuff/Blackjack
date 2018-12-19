@@ -12,7 +12,11 @@
 
     <!--Grid Definitions-->
     <ScrollViewer VerticalScrollBarVisibility="Visible">
-        <Grid x:Name="GridBackground" Background="DarkGreen">
+        <Grid x:Name="GridBackground" >
+            <Grid.Background>
+                <ImageBrush Stretch="Fill" ImageSource="Assets/bg2.jpg" AlignmentX="Center"
+                            AlignmentY="Top"/>
+            </Grid.Background>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
@@ -199,7 +203,7 @@
                     <Button Name="StandButton" Content="Stand" Click="Stand" Margin="0,0,0,12" FontSize="30" Background="#66FFFFFF" Width="200"
                         HorizontalAlignment="Stretch" BorderThickness="6" BorderBrush="Black" IsEnabled="{Binding ButtonsEnabled}"/>
                     <Button Name="DoubleDownButton" Content="DoubleDown" Click="DoubleDown" Margin="0,0,0,12" FontSize="30" Background="#66FFFFFF"
-                        Width="200" HorizontalAlignment="Stretch" BorderThickness="6" BorderBrush="Black" IsEnabled="{Binding ButtonsEnabled}"/>
+                        Width="200" HorizontalAlignment="Stretch" BorderThickness="6" BorderBrush="Black" IsEnabled="{Binding DoubleDownButtonEnabled}"/>
                     <Button Name="SplitButton" Content="Split" Click="Split" Margin="0,0,0,12" FontSize="30" Background="#66FFFFFF"
                         Width="200" HorizontalAlignment="Stretch" BorderThickness="6" BorderBrush="Black" IsEnabled="{Binding SplitButtonEnabled}"/>
                     <Button Name="SurrenderButton" Content="Surrender" Click="Surrender" FontSize="30" Background="#66FFFFFF"

@@ -27,7 +27,7 @@ namespace Blackjack
     {
         // These need to be outside of the constructor so they can be accessed be the other methods
         Blackjack blackjack = new Blackjack();
-        // SaveGame save = new SaveGame();
+        SaveGame save = new SaveGame();
         ObservableCollection<String> myHand = new ObservableCollection<string>();
         ObservableCollection<String> dealerHand = new ObservableCollection<string>();
         ObservableCollection<String> splitHand = new ObservableCollection<string>();
@@ -38,8 +38,9 @@ namespace Blackjack
         public event PropertyChangedEventHandler PropertyChanged;   // Event handler to handle all event
 
         private bool buttonsEnabled = false;
-        private bool splitButtonEnabled = true;
+        private bool splitButtonEnabled = false;
         private bool hintButtonEnabled = false;
+        private bool doubleDownButtonEnabled = false;
 
         private int playerHandValue = 0;      // This int works in the same way ButtonsEnabled does, used in HandValue on event.
         private int dealerHandValue = 0;
@@ -141,7 +142,15 @@ namespace Blackjack
                 OnPropertyChanged("ButtonsEnabled");
             }
         }
-
+        public bool DoubleDownButtonEnabled
+        {
+            get { return doubleDownButtonEnabled; }
+            set
+            {
+                doubleDownButtonEnabled = value;
+                OnPropertyChanged("DoubleDownButtonEnabled");
+            }
+        }
         /// <summary>
         /// Creates a bool that can be changed using an event handler.
         /// Bound to the split button that will only be toggled with two equal-faced cards on deal.
@@ -195,7 +204,8 @@ namespace Blackjack
             // Fix other buttons.
             ButtonsEnabled = false;
             HintButtonEnabled = false;
-            //SplitButtonEnabled = false;
+            DoubleDownButtonEnabled = false;
+            SplitButtonEnabled = false;
             HitButton.Content = "Hit";
             StandButton.Content = "Stand";
             // Reset variables.
@@ -221,8 +231,10 @@ namespace Blackjack
         {
             // Turn buttons off immediately to prevent user from spamming hit button.
             ButtonsEnabled = false;
-            //SplitButtonEnabled = false;
+            SplitButtonEnabled = false;
             HintButtonEnabled = false;
+            DoubleDownButtonEnabled = false;
+
             try
             {  
                 // If split and left hand is no longer in play, hit the split hand.
@@ -307,6 +319,8 @@ namespace Blackjack
             ButtonsEnabled = false;      // Disable user buttons.
             //SplitButtonEnabled = false;
             HintButtonEnabled = false;
+            DoubleDownButtonEnabled = false;
+
             // Reveal dealer's 2nd card.
             DealerCardBack.Visibility = Visibility.Collapsed;
             dealerHand.Add(blackjack.dealer.hand[1]);
@@ -385,10 +399,21 @@ namespace Blackjack
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void DoubleDown(object sender, RoutedEventArgs e)
+        private async void DoubleDown(object sender, RoutedEventArgs e)
         {
+            if (UIChips < blackjack.playerBet * 2)
+            {
+                MessageDialog myMessage = new MessageDialog($"You don't have enough chips.");
+
+                await myMessage.ShowAsync();
+                return;
+            }
+                
+
             ButtonsEnabled = false;
             HintButtonEnabled = false;
+            DoubleDownButtonEnabled = false;
+
 
             UIChips = UIChips - CurrentBet;
             CurrentBet = CurrentBet * 2;    // Double current bet in the UI.
@@ -408,10 +433,19 @@ namespace Blackjack
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Split(object sender, RoutedEventArgs e)
+        private async void Split(object sender, RoutedEventArgs e)
         {
-            //SplitButtonEnabled = false;
+            if (UIChips < blackjack.playerBet * 2)
+            {
+                MessageDialog myMessage = new MessageDialog($"You don't have enough chips.");
+
+                await myMessage.ShowAsync();
+                return;
+            }
+
+            SplitButtonEnabled = false;
             buttonsEnabled = false;
+            DoubleDownButtonEnabled = false;
             blackjack.Split();
             // Enable the split hand in the UI.
             SplitHand.ItemsSource = splitHand;
@@ -523,6 +557,8 @@ namespace Blackjack
             }
             HintButtonEnabled = true;
             ButtonsEnabled = true;
+            DoubleDownButtonEnabled = true;
+
         }
 
         /// Displays a hint to the user, based on which hand is in play.
@@ -636,6 +672,29 @@ namespace Blackjack
             {
                 ReturnPage.IsSelected = false;
                 Frame.Navigate(typeof(MainPage));
+            }
+            else if (SaveGame.IsSelected)
+            {
+                /*
+                try
+                {
+                    save.SaveObject(blackjack);
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine(ex);
+                }
+                */
+                
+                
+                    MessageDialog myMessage = new MessageDialog($"You don't have enough brainpower to implement a save function.");
+
+                    await myMessage.ShowAsync();
+                    
+                
+
+
+
             }
         }
     }
