@@ -27,7 +27,7 @@ namespace Blackjack
     {
         // These need to be outside of the constructor so they can be accessed be the other methods
         Blackjack blackjack = new Blackjack();
-        SaveGame save = new SaveGame();
+        // SaveGame save = new SaveGame();
         ObservableCollection<String> myHand = new ObservableCollection<string>();
         ObservableCollection<String> dealerHand = new ObservableCollection<string>();
         ObservableCollection<String> splitHand = new ObservableCollection<string>();
@@ -534,11 +534,11 @@ namespace Blackjack
             // If hand is split, and split hand is in play, display a hint for the split hand.
             if (blackjack.split && (blackjack.player.busted || blackjack.stand))
             {
-                myMessage2 = new MessageDialog($"{Strategy.Hints(blackjack.splitPlayer.hand[0], blackjack.splitPlayer.hand[1], blackjack.dealer.hand[0])}");
+                myMessage2 = new MessageDialog($"{Strategy.Hints(blackjack.splitPlayer.hand[0], blackjack.splitPlayer.hand[1], blackjack.dealer.hand[1])}");
             }
             else
             {
-                myMessage2 = new MessageDialog($"{Strategy.Hints(blackjack.player.hand[0], blackjack.player.hand[1], blackjack.dealer.hand[0])}");
+                myMessage2 = new MessageDialog($"{Strategy.Hints(blackjack.player.hand[0], blackjack.player.hand[1], blackjack.dealer.hand[1])}");
             }
             await myMessage2.ShowAsync();
         }
